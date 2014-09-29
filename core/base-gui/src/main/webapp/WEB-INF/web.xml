@@ -528,6 +528,14 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+    <servlet>
+        <servlet-name>CXFOsgiWrapperServler</servlet-name>
+        <display-name>CXF OsgiDispachServlet</display-name>
+        <servlet-class>
+            org.aperteworkflow.service.CXFOsgiWrapperServler <!-- no spring, please! -->
+        </servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
 
 	<servlet>
 		<servlet-name>NotificationServlet</servlet-name>
@@ -538,6 +546,11 @@
 		<servlet-name>CXFServlet</servlet-name>
 		<url-pattern>/services/*</url-pattern>
 	</servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>CXFOsgiWrapperServler</servlet-name>
+        <url-pattern>/osgi_services/*</url-pattern>
+    </servlet-mapping>
 
 	<servlet-mapping>
 		<servlet-name>GenerateTokenServlet</servlet-name>

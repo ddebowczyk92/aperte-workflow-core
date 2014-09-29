@@ -2,7 +2,6 @@ package org.aperteworkflow.files.model;
 
 import org.hibernate.annotations.Index;
 import pl.net.bluesoft.rnd.processtool.model.PersistentEntity;
-import pl.net.bluesoft.rnd.processtool.model.ProcessInstance;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -13,13 +12,13 @@ import java.util.Date;
 @Entity
 @Table(name = "pt_files_repository_item")
 @org.hibernate.annotations.Table(
-        appliesTo="pt_files_repository_item",
+        appliesTo = "pt_files_repository_item",
         indexes = {
                 @Index(name = "idx_pt_repository_item_pk",
                         columnNames = {"id"}
                 )
         })
-public class FilesRepositoryItem extends PersistentEntity {
+public class FilesRepositoryItem extends PersistentEntity implements IFilesRepositoryItem {
 
     public static final String COLUMN_PROCESS_INSTANCE_ID = "process_instance_id";
     public static final String COLUMN_NAME = "name";
@@ -28,13 +27,10 @@ public class FilesRepositoryItem extends PersistentEntity {
     public static final String COLUMN_CREATE_DATE = "create_date";
     public static final String COLUMN_CREATOR_LOGIN = "creator_login";
     public static final String COLUMN_CONTENT_TYPE = "content_type";
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = COLUMN_PROCESS_INSTANCE_ID)
-    private ProcessInstance processInstance;
+    public static final String COLUMN_SEND_WITH_MAIL = "send_with_mail";
 
     @Column(name = COLUMN_NAME, nullable = false)
-    @Index(name="idx_pt_files_name")
+    @Index(name = "idx_pt_files_name")
     private String name;
 
     @Column(name = COLUMN_RELATIVE_PATH, nullable = false)
@@ -46,11 +42,14 @@ public class FilesRepositoryItem extends PersistentEntity {
     @Column(name = COLUMN_CONTENT_TYPE, nullable = false)
     private String contentType;
 
+    @Column(name = COLUMN_SEND_WITH_MAIL)
+    private Boolean sendWithMail = false;
+
     @Column(name = COLUMN_CREATE_DATE, nullable = false)
     private Date createDate;
 
     @Column(name = COLUMN_CREATOR_LOGIN, nullable = false)
-    @Index(name="idx_pt_files_creator_login")
+    @Index(name = "idx_pt_files_creator_login")
     private String creatorLogin;
 
     public String getName() {
@@ -93,19 +92,19 @@ public class FilesRepositoryItem extends PersistentEntity {
         this.creatorLogin = creatorLogin;
     }
 
-    public ProcessInstance getProcessInstance() {
-        return processInstance;
-    }
-
-    public void setProcessInstance(ProcessInstance processInstance) {
-        this.processInstance = processInstance;
-    }
-
     public void setContentType(String contentType) {
         this.contentType = contentType;
     }
 
     public String getContentType() {
         return contentType;
+    }
+
+    public Boolean getSendWithMail() {
+        return sendWithMail == null ? false : sendWithMail;
+    }
+
+    public void setSendWithMail(Boolean sendWithMail) {
+        this.sendWithMail = sendWithMail;
     }
 }

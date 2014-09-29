@@ -13,6 +13,7 @@
     <artifactId>plugins</artifactId>
 
     <modules>
+		<module>case-management</module>
         <module>base-widgets</module>
         <module>bpm-notifications</module>
         <!--<module>cmis-widget</module>-->
