@@ -20,6 +20,12 @@
         </dependency>
         <dependency>
             <groupId>org.aperteworkflow</groupId>
+            <artifactId>gui-commons</artifactId>
+            <version>3.0-beta2-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.aperteworkflow</groupId>
             <artifactId>integration-interface</artifactId>
             <version>3.0-beta2-SNAPSHOT</version>
             <scope>provided</scope>
@@ -41,6 +47,12 @@
             <artifactId>freemarker</artifactId>
             <version>2.3.19</version>
         </dependency>
+        <dependency>
+            <groupId>org.aperteworkflow</groupId>
+            <artifactId>integration</artifactId>
+            <version>3.0-beta2-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
 		<dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin</artifactId>
@@ -60,10 +72,9 @@
 			<scope>provided</scope>
 		</dependency>
         <dependency>
-            <groupId>org.aperteworkflow</groupId>
-            <artifactId>gui-commons</artifactId>
-            <version>3.0-beta2-SNAPSHOT</version>
-            <scope>provided</scope>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>14.0.1</version>
         </dependency>
     </dependencies>
 
@@ -87,7 +98,7 @@
                         <Export-Package>
                         	pl.net.bluesoft.rnd.pt.ext.bpmnotifications,
                             pl.net.bluesoft.rnd.pt.ext.bpmnotifications.service,
-                       <!--     pl.net.bluesoft.rnd.pt.ext.bpmnotifications.utils, -->
+                            pl.net.bluesoft.rnd.pt.ext.bpmnotifications.utils,
                             pl.net.bluesoft.rnd.pt.ext.bpmnotifications.templates,
                             pl.net.bluesoft.rnd.pt.ext.bpmnotifications.sessions,
                             pl.net.bluesoft.rnd.pt.ext.bpmnotifications.model,
@@ -99,11 +110,14 @@
                         <Import-Package>
                             org.aperteworkflow.bpmnotifications.addons.impl;resolution:=optional,
                             javax.mail;version=!,
-                            pl.net.bluesoft.rnd.util.i18n.impl,
+							javax.mail.internet;version=!,
+							javax.mail.util;version=!,
+							pl.net.bluesoft.rnd.util.i18n.impl,
                             javassist.util.proxy,org.hibernate.proxy,
                             org.osgi.framework,
+                            org.springframework.jdbc,
+                            org.springframework.jdbc.datasource,
                             org.hibernate.exception,
-                            javax.mail.internet;version=!,
                             *;resolution:=optional,
                             pl.net.bluesoft.util.eventbus,
                             pl.net.bluesoft.rnd.pt.ext.sched.service,
@@ -121,7 +135,7 @@
                             org.quartz,
                             pl.net.bluesoft.rnd.pt.ext.bpmnotifications,
                             pl.net.bluesoft.rnd.pt.ext.bpmnotifications.service,
-                         <!--   pl.net.bluesoft.rnd.pt.ext.bpmnotifications.utils, -->
+                            pl.net.bluesoft.rnd.pt.ext.bpmnotifications.utils,
                             pl.net.bluesoft.rnd.pt.ext.bpmnotifications.templates,
                             pl.net.bluesoft.rnd.pt.ext.bpmnotifications.sessions,
                             pl.net.bluesoft.rnd.pt.ext.bpmnotifications.model,

@@ -410,6 +410,20 @@
 }
 @media (min-width: 768px)
 {
+	div.apw label,
+	div.apw .table>caption+thead>tr:first-child>th, 
+	div.apw .table>colgroup+thead>tr:first-child>th, 
+	div.apw .table>thead:first-child>tr:first-child>th, 
+	div.apw .table>caption+thead>tr:first-child>td, 
+	div.apw .table>colgroup+thead>tr:first-child>td, 
+	div.apw .table>thead:first-child>tr:first-child>td
+	{
+		font-size: 12px;
+	}
+	.modal
+	{
+		padding: 10px;
+	}
 	.standalone-version-body
 	{
 		padding: 10px;
@@ -631,7 +645,7 @@
 	.process-table td,
 	.search-table td
 	{
-		font-size: 16px;
+		font-size: 14px;
 		border-bottom:none;
 		border-left:none;
 		border-right:none;
@@ -801,6 +815,10 @@ div.apw .panel-heading.panel-heading-aperte-queues,
 	color: #ffffff;
 }
 
+div.apw .panel-nomargin {
+    margin-bottom: 0px;
+}
+
 .vaadin-widget-view
 {
 	background-repeat: no-repeat;
@@ -845,6 +863,15 @@ div.apw .panel-heading.panel-heading-aperte-queues,
 	background-image: url(../images/progress_bar/loading_animation_1.gif);
 	background-position:center; 
 	z-index:10;
+}
+
+.saver {
+    top: 0% !important;
+    left: 0% !important;
+    z-index:1000 !important;
+    background-color: #eee !important;
+    opacity:0.5 !important;
+    position: fixed !important;
 }
 
 .icon-white
@@ -1480,4 +1507,11 @@ margin-bottom: 14px;
 background-color: #f7f7f9;
 border: 1px solid #e1e1e8;
 border-radius: 4px;
+}
+
+.sticky {
+    position: fixed;
+    top: 0;
+    z-index: 1;
+    background-color: white;
 }

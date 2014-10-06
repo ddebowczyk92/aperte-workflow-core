@@ -1,10 +1,9 @@
 package pl.net.bluesoft.rnd.processtool.application.activity.window;
 
-import java.util.Locale;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
+import com.vaadin.terminal.ParameterHandler;
+import com.vaadin.ui.*;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import pl.net.bluesoft.rnd.processtool.ProcessToolContext;
@@ -25,16 +24,9 @@ import pl.net.bluesoft.rnd.processtool.usersource.IPortalUserSource;
 import pl.net.bluesoft.rnd.util.i18n.I18NSource;
 import pl.net.bluesoft.rnd.util.i18n.I18NSourceFactory;
 
-import com.vaadin.terminal.ParameterHandler;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.PasswordField;
-import com.vaadin.ui.TextField;
-import com.vaadin.ui.Window;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Locale;
+import java.util.Map;
 
 import static pl.net.bluesoft.rnd.processtool.plugins.ProcessToolRegistry.Util.getRegistry;
 
@@ -289,7 +281,6 @@ public class StandaloneWindowTab extends Window implements ParameterHandler, Cli
     	String providedLogin = (String)login.getValue();
     	String providedPassword = (String)password.getValue();
     	user = authorizationService.authenticateByLogin(providedLogin, providedPassword);
-		
 	}
 	
 	@Override
@@ -301,22 +292,11 @@ public class StandaloneWindowTab extends Window implements ParameterHandler, Cli
 	
     @Override
     public String getMessage(String key) {
-        return i18NSource.getMessage(key, key);
-    }
-
-    @Override
-    public String getMessage(String key, String defaultValue) {
-        return i18NSource.getMessage(key, defaultValue);
+        return i18NSource.getMessage(key);
     }
 
     @Override
     public String getMessage(String key, Object... params) {
         return i18NSource.getMessage(key, params);
     }
-
-    @Override
-    public String getMessage(String key, String defaultValue, Object... params) {
-        return i18NSource.getMessage(key, defaultValue, params);
-    }
-
 }

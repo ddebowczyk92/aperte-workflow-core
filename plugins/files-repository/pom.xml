@@ -59,6 +59,12 @@
         <version>3.0-beta2-SNAPSHOT</version>
         <scope>test</scope>
     </dependency>
+    <dependency>
+        <groupId>org.postgresql</groupId>
+        <artifactId>postgresql</artifactId>
+        <version>9.2-1004-jdbc4</version>
+        <scope>test</scope>
+    </dependency>
 
 </dependencies>
 
@@ -111,7 +117,9 @@
                         org.aperteworkflow.files.controller.FilesController
                     </ProcessTool-Controller>
                     <ProcessTool-Model-Enhancement>
-                        org.aperteworkflow.files.model.FilesRepositoryItem
+                        org.aperteworkflow.files.model.FilesRepositoryItem,
+                        org.aperteworkflow.files.model.IFilesRepositoryAttribute,
+                        org.aperteworkflow.files.model.FilesRepositoryProcessAttribute
                     </ProcessTool-Model-Enhancement>
                     <ProcessTool-Spring-Beans>
                         org.aperteworkflow.files.FilesRepositoryFacade

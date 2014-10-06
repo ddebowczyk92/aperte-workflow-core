@@ -716,12 +716,12 @@ public class ProcessesListController extends AbstractProcessToolServletControlle
 
 		long t1 = System.currentTimeMillis();
 
-        AbstractTaskListView listView = getProcessToolRegistry().getGuiRegistry().getTasksListView(viewName);
+/*        AbstractTaskListView listView = getProcessToolRegistry().getGuiRegistry().getTasksListView(viewName);
         if(listView == null) {
             listView = getProcessToolRegistry().getGuiRegistry().getTasksListView(GuiRegistry.STANDARD_PROCESS_QUEUE_ID);
         }
 
-        final AbstractTaskListView finalListView = listView;
+        final AbstractTaskListView finalListView = listView;*/
 
         getProcessToolRegistry().withProcessToolContext(new ProcessToolContextCallback() {
 
@@ -731,11 +731,25 @@ public class ProcessesListController extends AbstractProcessToolServletControlle
 
                 I18NSource messageSource = context.getMessageSource();
 
-                Map<String, Object> listViewParameters = new HashMap<String, Object>();
+
+/*                Map<String, Object> listViewParameters = new HashMap<String, Object>();
                 listViewParameters.put(AbstractTaskListView.PARAMETER_USER_LOGIN, ownerLogin);
                 listViewParameters.put(AbstractTaskListView.PARAMETER_QUEUE_ID, viewName);
 
-                ProcessInstanceFilter filter = finalListView.getProcessInstanceFilter(listViewParameters);
+                ProcessInstanceFilter filter = finalListView.getProcessInstanceFilter(listViewParameters);*/
+
+                boolean isQueue = "queue".equals(queueType);
+
+                ProcessInstanceFilter filter = new ProcessInstanceFilter();
+                if (isQueue) {
+                    filter.addQueue(queueName);
+                    filter.setFilterOwnerLogin(queueName);
+                } else if ("process".equals(queueType)) {
+                    filter.addOwner(ownerLogin);
+                    filter.setFilterOwnerLogin(ownerLogin);
+                    filter.addQueueType(QueueType.fromQueueId(queueName));
+                    filter.setName(queueName);
+                }
 
                 filter.setExpression(searchString);
                 filter.setLocale(messageSource.getLocale());
@@ -759,7 +773,7 @@ public class ProcessesListController extends AbstractProcessToolServletControlle
                 long t2 = System.currentTimeMillis();
 
                 for (BpmTask task : tasks) {
-                    TasksListViewBean taskViewBean = new TasksListViewBeanFactoryWrapper().createFrom(task, messageSource, finalListView.getQueueId());
+                    TasksListViewBean taskViewBean = new TasksListViewBeanFactoryWrapper().createFrom(task, messageSource, viewName);
 
                     if(hasUserRightsToTask(context, task))
                         taskViewBean.setUserCanClaim(true);

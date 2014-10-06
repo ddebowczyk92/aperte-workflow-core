@@ -73,6 +73,8 @@
                     <instructions>
                         <Export-Package>
                             pl.net.bluesoft.rnd.processtool.ui.basewidgets,
+                            pl.net.bluesoft.rnd.processtool.ui.basewidgets.view,
+                            pl.net.bluesoft.rnd.processtool.ui.basewidgets.datahandler,
                             pl.net.bluesoft.rnd.processtool.ui.buttons, 
                             pl.net.bluesoft.rnd.processtool.ui.buttons.dialog,
                             !com.ctc.wstx.stax,
@@ -95,7 +97,9 @@
                             org.vaadin.addon.customfield,
                             org.aperteworkflow.util.vaadin,
                             org.aperteworkflow.util.vaadin.ui,
+							pl.net.bluesoft.rnd.util,
                             pl.net.bluesoft.rnd.util.i18n,
+							pl.net.bluesoft.rnd.processtool.web.domain,
                             javassist.util.proxy,
                             org.hibernate.proxy,org.osgi.framework,
                             pl.net.bluesoft.rnd.processtool.plugins.osgi,
@@ -164,9 +168,12 @@
                         <ProcessTool-Controller>
                             pl.net.bluesoft.rnd.processtool.ui.basewidgets.controller.UserController,
                             pl.net.bluesoft.rnd.processtool.ui.basewidgets.controller.SubstitutionsController,
-                            
+                            org.aperteworkflow.admin.controller.ProcessDefinitionsController,
 							org.aperteworkflow.admin.controller.ProcessInstanceController
                         </ProcessTool-Controller>
+                        <ProcessTool-TaskList-View>
+                            pl.net.bluesoft.rnd.processtool.ui.basewidgets.view.BpmQueueView
+                        </ProcessTool-TaskList-View>
                       <!--  <ProcessTool-Widget-Script>
                         requests-scripts.js;provider:=file
                         </ProcessTool-Widget-Script>-->

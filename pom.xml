@@ -25,6 +25,7 @@
         <module>utils</module>
         <module>samples</module>
         <module>server-libs</module>
+
     </modules>
 
     <licenses>

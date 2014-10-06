@@ -12,7 +12,6 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import org.springframework.web.portlet.ModelAndView;
 import org.springframework.web.portlet.bind.annotation.RenderMapping;
 import org.springframework.web.portlet.bind.annotation.ResourceMapping;
-import org.springframework.web.servlet.ViewResolver;
 import pl.net.bluesoft.rnd.processtool.BasicSettings;
 import pl.net.bluesoft.rnd.processtool.ProcessToolContext;
 import pl.net.bluesoft.rnd.processtool.ProcessToolContextCallback;
@@ -20,11 +19,9 @@ import pl.net.bluesoft.rnd.processtool.model.UserData;
 import pl.net.bluesoft.rnd.processtool.plugins.ProcessToolRegistry;
 import pl.net.bluesoft.rnd.processtool.usersource.IPortalUserSource;
 
-import javax.annotation.PostConstruct;
 import javax.portlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -41,7 +38,6 @@ public class CaseManagementPortletController {
     protected static final String REFRESH_INTERVAL = "refreshInterval";
 
     private static Logger logger = Logger.getLogger(CaseManagementPortletController.class.getName());
-
 
     @Autowired(required = false)
     private DispatcherController mainDispatcher;
@@ -174,6 +170,5 @@ public class CaseManagementPortletController {
             throw new RuntimeException(ex);
         }
     }
-
 
 }

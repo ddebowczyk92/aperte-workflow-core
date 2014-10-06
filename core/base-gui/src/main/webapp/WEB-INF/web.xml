@@ -529,10 +529,10 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
     <servlet>
-        <servlet-name>CXFOsgiWrapperServler</servlet-name>
+        <servlet-name>CXFOsgiWrapperServlet</servlet-name>
         <display-name>CXF OsgiDispachServlet</display-name>
         <servlet-class>
-            org.aperteworkflow.service.CXFOsgiWrapperServler <!-- no spring, please! -->
+            org.aperteworkflow.service.CXFOsgiWrapperServlet <!-- no spring, please! -->
         </servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
@@ -548,7 +548,7 @@
 	</servlet-mapping>
 
     <servlet-mapping>
-        <servlet-name>CXFOsgiWrapperServler</servlet-name>
+        <servlet-name>CXFOsgiWrapperServlet</servlet-name>
         <url-pattern>/osgi_services/*</url-pattern>
     </servlet-mapping>
 

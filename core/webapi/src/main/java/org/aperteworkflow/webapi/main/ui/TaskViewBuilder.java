@@ -90,21 +90,21 @@ public class TaskViewBuilder extends AbstractViewBuilder<TaskViewBuilder> {
         if (iconName == null || iconName.isEmpty())
             iconName = "arrow-right";
 
-		String btnClass = "btn btn-" + actionType;
-		String styleName = action.getAttributeValue("styleName");
+        String btnClass = "btn btn-" + actionType;
+        String styleName = action.getAttributeValue("styleName");
 
-		if (hasText(styleName)) {
-			btnClass += ' ' + styleName;
-		}
+        if (hasText(styleName)) {
+            btnClass += ' ' + styleName;
+        }
 
-		Element buttonNode = parent.ownerDocument().createElement("button")
+        Element buttonNode = parent.ownerDocument().createElement("button")
                 .attr("class", btnClass)
                 .attr("disabled", "true")
                 .attr("type", "button")
                 .attr("id", actionButtonId)
                 .attr("data-toggle", "tooltip")
                 .attr("data-placement", "bottom")
-                .attr("title", i18Source.getMessage(action.getDescription()));
+                .attr("title", i18Source.getMessage(action.getDescription() != null ? action.getDescription() : "descrption"));
         parent.appendChild(buttonNode);
 
 
