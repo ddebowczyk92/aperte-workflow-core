@@ -1,15 +1,25 @@
 package org.aperteworkflow.editor.ui.permission;
 
-import com.vaadin.ui.*;
-import org.aperteworkflow.editor.domain.Permission;
-import org.aperteworkflow.editor.vaadin.DataHandler;
-import org.aperteworkflow.util.liferay.LiferayBridge;
-import pl.net.bluesoft.rnd.util.i18n.I18NSource;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+
+import org.aperteworkflow.editor.domain.Permission;
+import org.aperteworkflow.editor.vaadin.DataHandler;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
+import pl.net.bluesoft.rnd.processtool.di.ObjectFactory;
+import pl.net.bluesoft.rnd.processtool.roles.IUserRolesManager;
+import pl.net.bluesoft.rnd.util.i18n.I18NSource;
+
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.GridLayout;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.Layout;
 
 /**
  * Component used to edit role names inside single privilege name
@@ -23,8 +33,14 @@ public class PrivilegeNameEditor extends GridLayout implements PermissionWrapper
     private RoleNameComboBox roleNameComboBox;
     private Layout roleNameLayout;
 
+    @Autowired
+    private IUserRolesManager userRolesManager;
+
     public PrivilegeNameEditor(PermissionDefinition permissionDefinition) {
         super(2, 3);
+
+        SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
+
         setSpacing(true);
         this.permissionDefinition = permissionDefinition;
         initComponent();
@@ -141,7 +157,9 @@ public class PrivilegeNameEditor extends GridLayout implements PermissionWrapper
     public void loadData() {
         roleNameComboBox.removeAllItems();
         roleNameComboBox.addItem(".*");
-		for (String roleName : LiferayBridge.getRegularRoleNames()) {
+        
+
+		for (String roleName : userRolesManager.getAllRolesNames()) {
 			roleNameComboBox.addItem(roleName);
 		}
 		roleNameLayout.removeAllComponents();

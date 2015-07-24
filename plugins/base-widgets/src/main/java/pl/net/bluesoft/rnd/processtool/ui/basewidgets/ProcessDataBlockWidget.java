@@ -25,12 +25,14 @@ import org.aperteworkflow.util.vaadin.VaadinUtility;
 import pl.net.bluesoft.rnd.processtool.ProcessToolContext;
 import pl.net.bluesoft.rnd.processtool.bpm.ProcessToolBpmSession;
 import pl.net.bluesoft.rnd.processtool.dict.ProcessDictionaryRegistry;
-import pl.net.bluesoft.rnd.processtool.model.*;
+import pl.net.bluesoft.rnd.processtool.model.BpmTask;
+import pl.net.bluesoft.rnd.processtool.model.ProcessInstance;
 import pl.net.bluesoft.rnd.processtool.model.config.ProcessStateConfiguration;
 import pl.net.bluesoft.rnd.processtool.model.config.ProcessStateWidget;
 import pl.net.bluesoft.rnd.processtool.model.dict.ProcessDictionary;
 import pl.net.bluesoft.rnd.processtool.model.dict.ProcessDictionaryItem;
 import pl.net.bluesoft.rnd.processtool.model.dict.ProcessDictionaryItemValue;
+import pl.net.bluesoft.rnd.processtool.model.processdata.*;
 import pl.net.bluesoft.rnd.processtool.ui.basewidgets.editor.ProcessDataWidgetsDefinitionEditor;
 import pl.net.bluesoft.rnd.processtool.ui.basewidgets.editor.ScriptCodeEditor;
 import pl.net.bluesoft.rnd.processtool.ui.basewidgets.editor.ScriptUrlEditor;
@@ -62,6 +64,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static com.vaadin.ui.Alignment.*;
+import static pl.net.bluesoft.rnd.processtool.plugins.ProcessToolRegistry.Util.getRegistry;
 import static pl.net.bluesoft.util.lang.FormatUtil.nvl;
 import static pl.net.bluesoft.util.lang.StringUtil.hasText;
 
@@ -82,7 +85,7 @@ public class ProcessDataBlockWidget extends BaseProcessToolVaadinWidget implemen
     private Map<Property, WidgetElement> boundProperties = new ConcurrentHashMap<Property, WidgetElement>();
     private Map<AbstractSelect, WidgetElement> dictContainers = new HashMap<AbstractSelect, WidgetElement>();
     private Map<AbstractSelect, WidgetElement> instanceDictContainers = new HashMap<AbstractSelect, WidgetElement>();
-    private Map<String, ProcessInstanceAttribute> processAttributes = new HashMap<String, ProcessInstanceAttribute>();
+    private Map<String, AbstractProcessInstanceAttribute> processAttributes = new HashMap<String, AbstractProcessInstanceAttribute>();
     protected WidgetsDefinitionElement widgetsDefinitionElement;
     private ProcessInstance processInstance;
     private Map<WidgetElement, Property> widgetDataSources = new HashMap<WidgetElement, Property>();
@@ -185,7 +188,7 @@ public class ProcessDataBlockWidget extends BaseProcessToolVaadinWidget implemen
     }
 
     @Override
-    public Collection<String> validateData(final BpmTask task, boolean skipRequired) {
+    public Collection<String> validateData(BpmTask task, boolean skipRequired) {
         final List<String> errors = new ArrayList<String>();
         new ComponentEvaluator<Property>(boundProperties) {
             @Override
@@ -212,14 +215,14 @@ public class ProcessDataBlockWidget extends BaseProcessToolVaadinWidget implemen
         return errors;
     }
 
-    private ProcessInstanceAttribute fetchOrCreateAttribute(WidgetElement element) throws InstantiationException, IllegalAccessException,
+    private AbstractProcessInstanceAttribute fetchOrCreateAttribute(WidgetElement element) throws InstantiationException, IllegalAccessException,
             ClassNotFoundException, InvocationTargetException, NoSuchMethodException {
         int index = element.getBind().indexOf('.');
         String attributeName = index == -1 ? element.getBind() : element.getBind().substring(0, index);
-        ProcessInstanceAttribute attribute = processAttributes.get(attributeName);
+		AbstractProcessInstanceAttribute attribute = processAttributes.get(attributeName);
         if (attribute == null && (hasText(element.getInheritedAttributeClass()) || index == -1)) {
             attribute = hasText(element.getInheritedAttributeClass())
-                    ? (ProcessInstanceAttribute) getClass().getClassLoader().loadClass(element.getInheritedAttributeClass()).newInstance()
+                    ? (AbstractProcessInstanceAttribute) getClass().getClassLoader().loadClass(element.getInheritedAttributeClass()).newInstance()
                     : new ProcessInstanceSimpleAttribute();
             attribute.setProcessInstance(processInstance);
             attribute.setKey(attributeName);
@@ -249,7 +252,7 @@ public class ProcessDataBlockWidget extends BaseProcessToolVaadinWidget implemen
     public void saveData(final BpmTask task) {
         ProcessInstance pi = task.getProcessInstance();
         processAttributes.clear();
-        for (ProcessInstanceAttribute attribute : pi.getProcessAttributes()) {
+        for (AbstractProcessInstanceAttribute attribute : pi.getAllProcessAttributes()) {
             processAttributes.put(attribute.getKey(), attribute);
         }
 
@@ -257,7 +260,7 @@ public class ProcessDataBlockWidget extends BaseProcessToolVaadinWidget implemen
             @Override
             public void evaluate(Property component, WidgetElement element) throws Exception {
                 if (!component.isReadOnly()) {
-                    ProcessInstanceAttribute attribute = fetchOrCreateAttribute(element);
+					AbstractProcessInstanceAttribute attribute = fetchOrCreateAttribute(element);
                     if (component instanceof FileUploadComponent) {
                         ProcessInstanceAttachmentAttribute attachment = (ProcessInstanceAttachmentAttribute) component.getValue();
                         if (attachment==null) return;
@@ -280,7 +283,7 @@ public class ProcessDataBlockWidget extends BaseProcessToolVaadinWidget implemen
                 }
             }
         };
-        pi.setProcessAttributes(new HashSet<ProcessInstanceAttribute>(processAttributes.values()));
+        pi.setAllProcessAttributes(new HashSet<AbstractProcessInstanceAttribute>(processAttributes.values()));
     }
 
     @Override
@@ -292,7 +295,7 @@ public class ProcessDataBlockWidget extends BaseProcessToolVaadinWidget implemen
         }
         this.processInstance = task.getProcessInstance();
         processAttributes.clear();
-        for (ProcessInstanceAttribute attribute : processInstance.getProcessAttributes()) {
+        for (AbstractProcessInstanceAttribute attribute : processInstance.getAllProcessAttributes()) {
             processAttributes.put(attribute.getKey(), attribute);
         }
     }
@@ -348,38 +351,31 @@ public class ProcessDataBlockWidget extends BaseProcessToolVaadinWidget implemen
         new ComponentEvaluator<AbstractSelect>(dictContainers) {
             @Override
             public void evaluate(AbstractSelect component, WidgetElement element) throws Exception {
-            	
-                ProcessDictionary dict = nvl(element.getGlobal(), false) ?
-                        processDictionaryRegistry.getSpecificOrDefaultGlobalDictionary(element.getProvider(),
-                                element.getDict(), i18NSource.getLocale().toString()) :
-                        processDictionaryRegistry.getSpecificOrDefaultProcessDictionary(
-                                processInstance.getDefinition(), element.getProvider(),
-                                element.getDict(), i18NSource.getLocale().toString());
+                ProcessDictionary dict = processDictionaryRegistry.getDictionary(element.getDict());
 
                 if (dict != null) {
                     Date validForDate = getValidForDate(element);
                     int i = 0;
-                    for (Object o : dict.items()) {
-                        ProcessDictionaryItem item = (ProcessDictionaryItem) o;
-                        component.addItem(item.getKey());
-                        String itemKey = item.getKey().toString();
-                        ProcessDictionaryItemValue val = item.getValueForDate(validForDate);
-                        String message = getMessage((String) (val != null ? val.getValue() : item.getKey()));
-                        component.setItemCaption(item.getKey(),message);
-                        if (element instanceof AbstractSelectWidgetElement) {
+
+                    for (ProcessDictionaryItem item : dict.items()) {
+						component.addItem(item.getKey());
+
+						ProcessDictionaryItemValue val = item.getValueForDate(validForDate);
+                        String message = getMessage(val != null ? val.getValue(i18NSource.getLocale()) : item.getKey());
+
+						component.setItemCaption(item.getKey(),message);
+
+						if (element instanceof AbstractSelectWidgetElement) {
                             AbstractSelectWidgetElement select = (AbstractSelectWidgetElement) element;
+
                             if (select.getDefaultSelect() != null && i == select.getDefaultSelect()) {
                                 component.setValue(item.getKey());
                             }
-                            List<ItemElement> values = select.getValues();
-                            values.add(new ItemElement(itemKey, message));
-                            
+							select.getValues().add(new ItemElement(item.getKey(), message));
                         }
-                        
                         ++i;
                     }
                 }
-                
             }
         };
     }
@@ -533,8 +529,7 @@ public class ProcessDataBlockWidget extends BaseProcessToolVaadinWidget implemen
                 return executed;
             Map<String, Object> fields = getFieldsMap(widgetsDefinitionElement.getWidgets());
             fields.put("process", processInstance);
-
-            ScriptProcessorRegistry registry = ProcessToolContext.Util.getThreadProcessToolContext().getRegistry().lookupService(
+            ScriptProcessorRegistry registry = getRegistry().lookupService(
                     ScriptProcessorRegistry.class.getName());
 //          TODO: some smart cacheing
             InputStream is = loadScriptCode();
@@ -619,7 +614,9 @@ public class ProcessDataBlockWidget extends BaseProcessToolVaadinWidget implemen
 
         if (component != null) {
             component.setImmediate(true);
-            component.setEnabled(hasPermission("EDIT"));
+			if (component instanceof Field) {
+            	component.setEnabled(hasPermission("EDIT"));
+			}
             if (component.isReadOnly() || !component.isEnabled()) {
                 component.setHeight(null);
             }
@@ -915,7 +912,7 @@ addListinersToComponents(dynamicValidationComponents);
         if (iwe.getMaxLength() != null) {
             field.setMaxLength(iwe.getMaxLength());
         }
-        if (hasText(iwe.getRegexp()) && hasText(iwe.getRegexp())) {
+        if (hasText(iwe.getRegexp())) {
             field.addValidator(new RegexpValidator(WidgetDefinitionLoader.replaceXmlEscapeCharacters(iwe.getRegexp()), iwe.getErrorKey() != null ?
                     iwe.getErrorKey() : getMessage("processdata.block.error.regexp").replaceFirst("%s", iwe.getRegexp())));
         }

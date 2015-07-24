@@ -4,7 +4,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @XStreamAlias("entry")
@@ -12,16 +12,16 @@ public class DictionaryEntry {
     @XStreamAsAttribute
     private String key;
     @XStreamAsAttribute
-    private String value;
-    @XStreamAsAttribute
     private String description;
+    @XStreamImplicit(itemFieldName = "i18n-description")
+    private List<DictionaryI18N> localizedDescriptions;
     @XStreamAsAttribute
     private String valueType;
     @XStreamImplicit
     private List<DictionaryEntryValue> values;
 
     public List<DictionaryEntryValue> getValues() {
-        return values == null ? (values = new ArrayList<DictionaryEntryValue>()) : values;
+        return values != null ? values : Collections.<DictionaryEntryValue>emptyList();
     }
 
     public void setValues(List<DictionaryEntryValue> values) {
@@ -44,19 +44,19 @@ public class DictionaryEntry {
         this.key = key;
     }
 
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<DictionaryI18N> getLocalizedDescriptions() {
+        return localizedDescriptions != null ? localizedDescriptions : Collections.<DictionaryI18N>emptyList();
+    }
+
+    public void setLocalizedDescriptions(List<DictionaryI18N> localizedDescriptions) {
+        this.localizedDescriptions = localizedDescriptions;
     }
 }

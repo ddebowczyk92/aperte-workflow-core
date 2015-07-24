@@ -4,7 +4,7 @@
     <parent>
         <artifactId>aperteworkflow-core</artifactId>
         <groupId>org.aperteworkflow</groupId>
-        <version>2.1-SNAPSHOT</version>
+        <version>3.1</version>
     </parent>
 
     <name>Aperte Workflow Core</name>
@@ -18,12 +18,13 @@
         <module>base-gui</module>
         <module>integration</module>
         <module>integration-interface</module>
-        <module>activiti-gui</module>
-        <module>activiti-context</module>
         <module>jbpm-context</module>
         <module>jbpm-gui</module>
         <module>editor</module>
         <module>editor-interface</module>
+        <module>webapi</module>
+
     </modules>
+
 
 </project>

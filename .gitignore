@@ -1,6 +1,7 @@
 *.iml
 *.iws
 *.iwp
+*.ipr
 .idea/
 .settings
 .project
@@ -8,4 +9,6 @@
 rebel.xml
 rebel-remote.xml
 *.orig
+*.bak
 target
+${liferay.dir}

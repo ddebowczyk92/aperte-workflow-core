@@ -1,19 +1,22 @@
 package pl.net.bluesoft.rnd.processtool.model.dict.db;
 
-import org.hibernate.annotations.*;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.GenericGenerator;
 import pl.net.bluesoft.rnd.processtool.model.AbstractPersistentEntity;
-import pl.net.bluesoft.rnd.processtool.model.PersistentEntity;
 import pl.net.bluesoft.rnd.processtool.model.dict.ProcessDictionaryItemExtension;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
-import javax.persistence.Parameter;
-import javax.persistence.Table;
 
 @Entity
 @Table(name = "pt_dictionary_item_ext")
-public class ProcessDBDictionaryItemExtension extends AbstractPersistentEntity implements ProcessDictionaryItemExtension<String> {
+public class ProcessDBDictionaryItemExtension extends AbstractPersistentEntity implements ProcessDictionaryItemExtension {
+    public static final String _ITEM_VALUE = "itemValue";
+	public static final String _NAME = "name";
+	public static final String _VALUE = "value";
+	public static final String _DESCRIPTION = "description";
+	public static final String _VALUE_TYPE = "valueType";
+
 	@Id
 	@GeneratedValue(generator = "idGenerator")
 	@GenericGenerator(
@@ -28,7 +31,7 @@ public class ProcessDBDictionaryItemExtension extends AbstractPersistentEntity i
 	@Column(name = "id")
 	protected Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
     @Cascade(value = {CascadeType.ALL})
     private ProcessDBDictionaryItemValue itemValue;
 
@@ -39,38 +42,36 @@ public class ProcessDBDictionaryItemExtension extends AbstractPersistentEntity i
     private String description;
     private String valueType;
 
+	private Boolean default_;
+
     public ProcessDBDictionaryItemExtension() {
     }
 
     private ProcessDBDictionaryItemExtension(ProcessDBDictionaryItemExtension ext) {
-        id = ext.getId();
-        name = ext.getName();
-        value = ext.getValue();
-        valueType = ext.getValue();
-        description = ext.getDescription();
-        itemValue = ext.getItemValue();
+        id = ext.id;
+        name = ext.name;
+        value = ext.value;
+        valueType = ext.value;
+        description = ext.description;
+        itemValue = ext.itemValue;
+		default_ = ext.default_;
     }
 
+    public ProcessDBDictionaryItemExtension exactCopy() {
+        return new ProcessDBDictionaryItemExtension(this);
+    }
+
+	@Override
 	public Long getId() {
 		return id;
 	}
 
+	@Override
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public ProcessDBDictionaryItemExtension exactCopy() {
-        return new ProcessDBDictionaryItemExtension(this);
-    }
-
-    public ProcessDBDictionaryItemExtension shallowCopy() {
-        ProcessDBDictionaryItemExtension ext = exactCopy();
-        ext.setItemValue(null);
-        ext.setId(null);
-        return ext;
-    }
-
-    public ProcessDBDictionaryItemValue getItemValue() {
+	public ProcessDBDictionaryItemValue getItemValue() {
         return itemValue;
     }
 
@@ -78,7 +79,8 @@ public class ProcessDBDictionaryItemExtension extends AbstractPersistentEntity i
         this.itemValue = itemValue;
     }
 
-    public String getName() {
+    @Override
+	public String getName() {
         return name;
     }
 
@@ -86,7 +88,8 @@ public class ProcessDBDictionaryItemExtension extends AbstractPersistentEntity i
         this.name = name;
     }
 
-    public String getValue() {
+    @Override
+	public String getValue() {
         return value;
     }
 
@@ -94,15 +97,8 @@ public class ProcessDBDictionaryItemExtension extends AbstractPersistentEntity i
         this.value = value;
     }
 
-	public String getStringValue() {
-		return getValue();
-	}
-
-	public void setStringValue(String value) {
-		setValue(value);
-	}
-
-    public String getValueType() {
+    @Override
+	public String getValueType() {
         return valueType;
     }
 
@@ -110,11 +106,20 @@ public class ProcessDBDictionaryItemExtension extends AbstractPersistentEntity i
         this.valueType = valueType;
     }
 
-    public String getDescription() {
+    @Override
+	public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
     }
+
+	public Boolean getDefault_() {
+		return default_ != null ? default_ : false;
+	}
+
+	public void setDefault_(Boolean default_) {
+		this.default_ = default_;
+	}
 }

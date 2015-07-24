@@ -3,13 +3,13 @@ package pl.net.bluesoft.rnd.processtool.dict.mapping.providers;
 import org.apache.commons.beanutils.ConvertUtilsBean;
 import pl.net.bluesoft.rnd.processtool.ProcessToolContext;
 import pl.net.bluesoft.rnd.processtool.dict.ProcessDictionaryRegistry;
+import pl.net.bluesoft.rnd.processtool.dict.exception.DictItemHasNoValueException;
 import pl.net.bluesoft.rnd.processtool.dict.mapping.DictEntryFilter;
 import pl.net.bluesoft.rnd.processtool.dict.mapping.metadata.dict.PTDictDescription;
 import pl.net.bluesoft.rnd.processtool.dict.mapping.metadata.entry.EntryInfo;
 import pl.net.bluesoft.rnd.processtool.dict.mapping.metadata.entry.ExtInfo;
 import pl.net.bluesoft.rnd.processtool.model.dict.ProcessDictionary;
 import pl.net.bluesoft.rnd.processtool.model.dict.ProcessDictionaryItem;
-import pl.net.bluesoft.rnd.processtool.model.dict.ProcessDictionaryItemExtension;
 import pl.net.bluesoft.rnd.processtool.model.dict.ProcessDictionaryItemValue;
 import pl.net.bluesoft.rnd.util.i18n.I18NSource;
 
@@ -30,10 +30,13 @@ public abstract class PTDictEntryProvider implements DictEntryProvider {
 	private Map<String, ?> entries;
 	private EntryInfo entryInfo;
 	private I18NSource i18NSource;
+	private Date entriesDate;
+	
+	private Collection<String> errorMessages = new HashSet<String>();
 	
 	private ProcessDictionary dict;
 
-	public PTDictEntryProvider(PTDictDescription dictDesc) {
+	protected PTDictEntryProvider(PTDictDescription dictDesc) {
 		this.dictDesc = dictDesc;
 	}
 
@@ -41,11 +44,17 @@ public abstract class PTDictEntryProvider implements DictEntryProvider {
 	public Map getEntries() {
 		return getEntries(null);
 	}
+	
+	@Override
+	public Collection<String> getErrorMessages()
+	{
+		return errorMessages;
+	}
 
 	@Override
 	public Map<String, ?> getEntries(DictEntryFilter entryFilter) {
 		if (entryFilter != null) {
-			Map<String, Object> result = new HashMap();
+			Map<String, Object> result = new HashMap<String, Object>();
 			for (Map.Entry<String, ?> e : entries.entrySet()) {
 				if (entryFilter.filter(e.getValue())) {
 					result.put(e.getKey(), e.getValue());
@@ -70,20 +79,23 @@ public abstract class PTDictEntryProvider implements DictEntryProvider {
 		ProcessToolContext ctx = ProcessToolContext.Util.getThreadProcessToolContext();
 		ProcessDictionaryRegistry processDictionaryRegistry = ctx.getProcessDictionaryRegistry();
 		dict = getDictionary(processDictionaryRegistry, params);
+		
+		/* Save entries value date */
+		entriesDate = params.getDate();
 
 		if (dict != null) {
 			if (dictDesc.getEntryClass() != null) {
 				entries = getDictionaryItemMap(
 						dict,
 						entryInfo,
-						params.getDate());
+						entriesDate);
 			}
 			else {
-				entries = getDictionaryItemMap(dict, params.getDate());
+				entries = getDictionaryItemMap(dict, entriesDate);
 			}
 		}
 		else {
-			entries = new HashMap();
+			entries = new HashMap<String, Object>();
 		}
 	}
 
@@ -113,14 +125,25 @@ public abstract class PTDictEntryProvider implements DictEntryProvider {
 		return getKeyValueMap().get(key);
 	}
 
-	private Object getMapValue(String key) {
-		return dictDesc.getCustomValueProvider() != null
-				? dictDesc.getCustomValueProvider().getValue(key, this, i18NSource)
-				: entryInfo.getDescriptionProperty() != null
-				? getProperty(entries.get(key), entryInfo.getDescriptionProperty())
-				: entryInfo.getValueProperty() != null
-				? getProperty(entries.get(key), entryInfo.getValueProperty())
-				: key;
+	private Object getMapValue(String key) 
+	{
+		if(dictDesc.getCustomValueProvider() != null)
+			return dictDesc.getCustomValueProvider().getValue(key, this, i18NSource);
+		
+		Object entry = entries.get(key);
+		
+		/* There is no entry value for dictionry item, throw exception */
+		if(entry == null) {
+			throw new DictItemHasNoValueException(i18NSource.getMessage("dictionary.novaluefor", "item", key, entriesDate));
+		}
+
+		if(entryInfo.getDescriptionProperty() != null)
+			return getProperty(entry, entryInfo.getDescriptionProperty());
+		
+		if(entryInfo.getValueProperty() != null)
+			return getProperty(entry, entryInfo.getValueProperty());
+		
+		return key;
 	}	
 
 	private Map<String, Object> getDictionaryItemMap(ProcessDictionary dict, EntryInfo entryInfo, Date date) {
@@ -128,9 +151,17 @@ public abstract class PTDictEntryProvider implements DictEntryProvider {
 
         for (Object item : dict.items()) {
             ProcessDictionaryItem pdItem = (ProcessDictionaryItem)item; 
-            ProcessDictionaryItemValue<String> value = date != null ? pdItem.getValueForDate(date) : pdItem.getValueForCurrentDate();
-			Object mappedItem = mapTo(entryInfo, pdItem, value);
-			items.put(getKey(pdItem), mappedItem);
+            ProcessDictionaryItemValue value = date != null ? pdItem.getValueForDate(date) : pdItem.getValueForCurrentDate();
+            
+            if(value != null)
+            {
+				Object mappedItem = mapTo(entryInfo, pdItem, value);
+				items.put(getKey(pdItem), mappedItem);
+            }
+            else
+            {
+            	errorMessages.add(i18NSource.getMessage("dictionary.novaluefor", "item", pdItem.getKey(), entriesDate));
+            }
         }
         return items;
     }
@@ -140,13 +171,13 @@ public abstract class PTDictEntryProvider implements DictEntryProvider {
 
         for (Object item : dict.items()) {
             ProcessDictionaryItem pdItem = (ProcessDictionaryItem)item;
-            ProcessDictionaryItemValue<String> value = date != null ? pdItem.getValueForDate(date) : pdItem.getValueForCurrentDate();
-			items.put(getKey(pdItem), value != null ? valueOf(value.getValue()) : null);
+            ProcessDictionaryItemValue value = date != null ? pdItem.getValueForDate(date) : pdItem.getValueForCurrentDate();
+			items.put(getKey(pdItem), value != null ? valueOf(value.getValue(i18NSource.getLocale())) : null);
 		}
 		return items;
 	}
 
-	private Object mapTo(EntryInfo entryInfo, ProcessDictionaryItem pdItem, ProcessDictionaryItemValue<String> value) {
+	private Object mapTo(EntryInfo entryInfo, ProcessDictionaryItem pdItem, ProcessDictionaryItemValue value) {
 		if (value == null) {
 			return null;
 		}
@@ -159,7 +190,7 @@ public abstract class PTDictEntryProvider implements DictEntryProvider {
 			setProperty(item, entryInfo.getValueProperty(), convert(getValue(value), entryInfo.getValueType(), null));
 		}
 		if (entryInfo.getDescriptionProperty() != null) {
-			setProperty(item, entryInfo.getDescriptionProperty(), convert(pdItem.getDescription(), entryInfo.getDescriptionType(), null));
+			setProperty(item, entryInfo.getDescriptionProperty(), convert(pdItem.getDefaultDescription(), entryInfo.getDescriptionType(), null));
 		}
 		for (ExtInfo extInfo : entryInfo.getExtInfos()) {
 			Object extValue;
@@ -178,19 +209,15 @@ public abstract class PTDictEntryProvider implements DictEntryProvider {
 		return  pdItem.getKey() != null ? valueOf(pdItem.getKey()) : null;
 	}
 
-	private Object getValue(ProcessDictionaryItemValue<String> value) {
-		return value != null ? value.getValue() : null;
+	private Object getValue(ProcessDictionaryItemValue value) {
+		return value != null ? value.getValue(i18NSource.getLocale()) : null;
 	}
 
-	private Object getExtValue(ProcessDictionaryItemValue<String> value, String name) {
+	private Object getExtValue(ProcessDictionaryItemValue value, String name) {
 		if (value == null) {
 			return null;
 		}
-		ProcessDictionaryItemExtension ext = value.getExtensionByName(name);
-		if (ext == null) {
-			return null;
-		}
-		return ext.getValue();
+		return value.getExtValue(name);
 	}
 
 	private Object convert(Object value, Class<?> type, String defaultValue) {
@@ -233,12 +260,12 @@ public abstract class PTDictEntryProvider implements DictEntryProvider {
 		if (dict != null) {
 			ProcessDictionaryItem pdItem = dict.lookup(key);
 			if (pdItem != null) {
-				ProcessDictionaryItemValue<String> value = date != null ? pdItem.getValueForDate(date) : pdItem.getValueForCurrentDate();
+				ProcessDictionaryItemValue value = date != null ? pdItem.getValueForDate(date) : pdItem.getValueForCurrentDate();
 				if (dictDesc.getEntryClass() != null) {				
 					return mapTo(entryInfo, pdItem, value);
 				}
 				else {
-					return value != null ? valueOf(value.getValue()) : null;
+					return value != null ? valueOf(value.getValue(i18NSource.getLocale())) : null;
 				}
 			}
 		}

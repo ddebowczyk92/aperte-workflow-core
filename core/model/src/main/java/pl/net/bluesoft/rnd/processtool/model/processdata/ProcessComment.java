@@ -1,18 +1,22 @@
 package pl.net.bluesoft.rnd.processtool.model.processdata;
 
-import org.hibernate.annotations.*;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Index;
+import org.hibernate.annotations.Type;
 import pl.net.bluesoft.rnd.processtool.model.AbstractPersistentEntity;
-import pl.net.bluesoft.rnd.processtool.model.PersistentEntity;
-import pl.net.bluesoft.rnd.processtool.model.UserData;
+import pl.net.bluesoft.rnd.processtool.model.ProcessInstance;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
-import javax.persistence.Parameter;
-import javax.persistence.Table;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 /**
+ *
+ * Comments for process
+ *
  * @author tlipski@bluesoft.net.pl
+ * @author mpawlak@bluesoft.net.pl
  */
 @Entity
 @Table(name = "pt_process_comment")
@@ -28,10 +32,12 @@ public class ProcessComment extends AbstractPersistentEntity {
 					@org.hibernate.annotations.Parameter(name = "sequence_name", value = "DB_SEQ_ID_PROC_COMMENT")
 			}
 	)
+    @Index(name="idx_p_comment_id")
 	@Column(name = "id")
 	protected Long id;
 
 	@Column(name ="comment_name")
+    @Index(name="idx_p_comment_comment")
     private String comment;
 
     @Column(name = "comment_body", length = Integer.MAX_VALUE)
@@ -40,21 +46,30 @@ public class ProcessComment extends AbstractPersistentEntity {
     @Type(type = "org.hibernate.type.StringClobType")
     private String body;
 
-	@ManyToOne(cascade = {})
-	@JoinColumn(name= "author_id")
-	private UserData author;
+    @Column(name = "author_login")
+	private String authorLogin;
 
-    @ManyToOne(cascade = {})
-	@JoinColumn(name= "author_substitute_id")
-	private UserData authorSubstitute;
+    @Column(name = "comment_type")
+    private String commentType;
+
+    @Column(name = "author_full_name")
+    private String authorFullName;
+
+    @Column(name = "substitute_login")
+	private String substituteLogin;
+
+    @Column(name = "substitute_full_name")
+    private String substituteFullName;
 
 	private String processState;
 	private Date createTime;
 
+	@Override
 	public Long getId() {
 		return id;
 	}
 
+	@Override
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -67,25 +82,32 @@ public class ProcessComment extends AbstractPersistentEntity {
 		this.processState = processState;
 	}
 
-	@ManyToOne
-	@JoinColumn(name = "comments_id")
-	private ProcessComments comments;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="process_instance_id")
+	private ProcessInstance processInstance;
 
-
-	public UserData getAuthor() {
-		return author;
+	public String getAuthorLogin() {
+		return authorLogin;
 	}
 
-	public void setAuthor(UserData author) {
-		this.author = author;
+	public void setAuthorLogin(String authorLogin) {
+		this.authorLogin = authorLogin;
 	}
 
-    public UserData getAuthorSubstitute() {
-        return authorSubstitute;
+    public String getSubstituteLogin() {
+        return substituteLogin;
     }
 
-    public void setAuthorSubstitute(UserData authorSubstitute) {
-        this.authorSubstitute = authorSubstitute;
+    public void setSubstituteLogin(String substituteLogin) {
+        this.substituteLogin = substituteLogin;
+    }
+
+    public String getCommentType() {
+        return commentType;
+    }
+
+    public void setCommentType(String commentType) {
+        this.commentType = commentType;
     }
 
     public String getComment() {
@@ -112,11 +134,35 @@ public class ProcessComment extends AbstractPersistentEntity {
 		this.createTime = createTime;
 	}
 
-	public ProcessComments getComments() {
-		return comments;
+	public ProcessInstance getProcessInstance() {
+		return processInstance;
 	}
 
-	public void setComments(ProcessComments comments) {
-		this.comments = comments;
+	public void setProcessInstance(ProcessInstance processInstance) {
+		this.processInstance = processInstance;
 	}
+
+    public String getAuthorFullName() {
+        return authorFullName;
+    }
+
+    public void setAuthorFullName(String authorFullName) {
+        this.authorFullName = authorFullName;
+    }
+
+    public String getSubstituteFullName() {
+        return substituteFullName;
+    }
+
+    public void setSubstituteFullName(String substituteFullName) {
+        this.substituteFullName = substituteFullName;
+    }
+
+    public String getFormattedDate(String format)
+    {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
+        //TODO user timezone
+        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Europe/Warsaw"));
+        return simpleDateFormat.format(getCreateTime());
+    }
 }

@@ -1,21 +1,13 @@
 package pl.net.bluesoft.rnd.processtool.ui.buttons;
 
-import pl.net.bluesoft.rnd.processtool.ProcessToolContext;
-import pl.net.bluesoft.rnd.processtool.bpm.ProcessToolBpmSession;
 import pl.net.bluesoft.rnd.processtool.model.BpmTask;
 import pl.net.bluesoft.rnd.processtool.model.ProcessInstance;
-import pl.net.bluesoft.rnd.processtool.model.config.ProcessStateAction;
 import pl.net.bluesoft.rnd.processtool.model.processdata.ProcessComment;
-import pl.net.bluesoft.rnd.processtool.model.processdata.ProcessComments;
 import pl.net.bluesoft.rnd.processtool.ui.buttons.dialog.AddCommentDialog;
 import pl.net.bluesoft.rnd.processtool.ui.widgets.annotations.AliasName;
 import pl.net.bluesoft.rnd.processtool.ui.widgets.annotations.AutoWiredProperty;
-import pl.net.bluesoft.rnd.processtool.ui.widgets.annotations.PropertyAutoWiring;
-import pl.net.bluesoft.rnd.util.i18n.I18NSource;
 
 import java.util.Date;
-
-import com.vaadin.Application;
 
 import static pl.net.bluesoft.util.lang.Strings.hasText;
 
@@ -79,35 +71,20 @@ public class CommentRequiredValidatingButton extends StandardValidatingButton {
         	saveComment();
 		}
     }
-	
-//	@Override
-//    public void setContext(ProcessStateAction processStateAction,
-//    		ProcessToolBpmSession bpmSession, Application application,
-//    		I18NSource messageSource) {
-//    	super.setContext(processStateAction, bpmSession, application, messageSource);
-//		PropertyAutoWiring.autowire(this, getAutowiredProperties());
-//    }
 
     private void saveComment() {
 		if (skipAddingComment) {
 			return;
 		}
-        ProcessToolContext ctx = getCurrentContext();
-		ProcessComment pc = dialog.getProcessComment();
-        pc.setAuthor(ctx.getUserDataDAO().loadOrCreateUserByLogin(loggedUser));
-        pc.setAuthorSubstitute(substitutingUser != null ? ctx.getUserDataDAO().loadOrCreateUserByLogin(substitutingUser) : null);
-        pc.setCreateTime(new Date());
-        pc.setProcessState(task.getTaskName());
-        ProcessInstance pi = task.getProcessInstance().getRootProcessInstance();
-        ProcessComments comments = pi.findAttributeByClass(ProcessComments.class);
-        if (comments == null) {
-            comments = new ProcessComments();
-            comments.setProcessInstance(pi);
-            comments.setKey(ProcessComments.class.getName());
-            pi.getProcessAttributes().add(comments);
-        }
-        comments.getComments().add(pc);
-        pc.setComments(comments);
+		ProcessComment comment = dialog.getProcessComment();
+        comment.setAuthorLogin(loggedUser);
+        comment.setSubstituteLogin(substitutingUser);
+        comment.setCreateTime(new Date());
+        comment.setProcessState(task.getTaskName());
+
+		ProcessInstance pi = task.getProcessInstance().getRootProcessInstance();
+
+		pi.addComment(comment);
         pi.setSimpleAttribute("commentAdded", "true");
     }
 }

@@ -14,18 +14,25 @@ import static org.aperteworkflow.util.vaadin.VaadinUtility.htmlLabel;
 import static org.aperteworkflow.util.vaadin.VaadinUtility.styled;
 
 public class ProcessDefinitionTab extends VerticalLayout implements DataHandler {
-
     private ProcessConfig processConfig;
-    
-    private Label commentLabel;
+
+	private Label commentLabel;
     private Label commentInfoLabel;
     private RichTextArea commentArea;
     
     private Label descriptionLabel;
     private Label descriptionInfoLabel;
     private TextField descriptionField;
-    
-    public ProcessDefinitionTab() {
+
+	private Label externalKeyLabel;
+	private Label externalKeyInfoLabel;
+	private TextField externalKeyField;
+
+	private Label processGroupLabel;
+	private Label processGroupInfoLabel;
+	private TextField processGroupField;
+
+	public ProcessDefinitionTab() {
         initComponent();
         initLayout();
     }
@@ -48,6 +55,20 @@ public class ProcessDefinitionTab extends VerticalLayout implements DataHandler 
         commentArea = new RichTextArea();
         commentArea.setNullRepresentation("");
         commentArea.setWidth("100%");
+
+		externalKeyLabel = styled(new Label(messages.getMessage("process.externalKeyPattern.label")), "h2");
+		externalKeyInfoLabel = htmlLabel(messages.getMessage("process.externalKeyPattern.description"));
+
+		externalKeyField = new TextField();
+		externalKeyField.setWidth("100%");
+		externalKeyField.setNullRepresentation("");
+
+		processGroupLabel = styled(new Label(messages.getMessage("process.processGroup.label")), "h2");
+		processGroupInfoLabel = htmlLabel(messages.getMessage("process.processGroup.description"));
+
+		processGroupField = new TextField();
+		processGroupField.setWidth("100%");
+		processGroupField.setNullRepresentation("");
     }
 
     private void initLayout() {
@@ -61,23 +82,34 @@ public class ProcessDefinitionTab extends VerticalLayout implements DataHandler 
         addComponent(commentLabel);
         addComponent(commentInfoLabel);
         addComponent(commentArea);
-    }
+
+		addComponent(externalKeyLabel);
+		addComponent(externalKeyInfoLabel);
+		addComponent(externalKeyField);
+
+		addComponent(processGroupLabel);
+		addComponent(processGroupInfoLabel);
+		addComponent(processGroupField);
+	}
 
     @Override
     public void loadData() {
         commentArea.setValue(processConfig.getComment());
         descriptionField.setValue(processConfig.getDescription());
+		externalKeyField.setValue(processConfig.getExternalKeyPattern());
+		processGroupField.setValue(processConfig.getProcessGroup());
     }
 
     @Override
     public void saveData() {
         processConfig.setComment((String) commentArea.getValue());
         processConfig.setDescription((String) descriptionField.getValue());
+		processConfig.setExternalKeyPattern((String)externalKeyField.getValue());
+		processConfig.setProcessGroup((String)processGroupField.getValue());
     }
 
     @Override
     public Collection<String> validateData() {
         return null;
     }
-
 }

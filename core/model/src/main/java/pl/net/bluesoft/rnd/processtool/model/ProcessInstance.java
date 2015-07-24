@@ -1,20 +1,17 @@
 package pl.net.bluesoft.rnd.processtool.model;
 
-import static pl.net.bluesoft.util.lang.FormatUtil.nvl;
-
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import org.apache.commons.lang3.StringUtils;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Index;
+import pl.net.bluesoft.rnd.processtool.model.config.ProcessDefinitionConfig;
+import pl.net.bluesoft.rnd.processtool.model.processdata.*;
+import pl.net.bluesoft.util.lang.cquery.func.F;
 
 import javax.persistence.*;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Parameter;
-import javax.persistence.Table;
+import java.util.*;
+import java.util.logging.LogRecord;
 
-import org.hibernate.annotations.*;
-import pl.net.bluesoft.rnd.processtool.model.config.ProcessDefinitionConfig;
-import pl.net.bluesoft.rnd.pt.utils.lang.Lang2;
+import static pl.net.bluesoft.util.lang.cquery.CQuery.from;
 
 /**
  * Entity representing process instance data. It should be persisted in appropriate database.
@@ -25,7 +22,30 @@ import pl.net.bluesoft.rnd.pt.utils.lang.Lang2;
 
 @Entity
 @Table(name="pt_process_instance")
-public class ProcessInstance extends AbstractPersistentEntity {
+@org.hibernate.annotations.Table(
+        appliesTo="pt_process_instance",
+        indexes = {
+                @Index(name = "idx_pt_instance_pk",
+                        columnNames = {"id"}
+                )
+        })
+public class ProcessInstance extends AbstractPersistentEntity implements IAttributesProvider, IAttributesConsumer
+{
+	public static final String _EXTERNAL_KEY = "externalKey";
+	public static final String _INTERNAL_ID = "internalId";
+	public static final String _DEFINITION_NAME = "definitionName";
+	public static final String _STATUS = "status";
+	public static final String _CREATE_DATE = "createDate";
+	public static final String _CREATOR_LOGIN = "creatorLogin";
+	public static final String _DEFINITION = "definition";
+	public static final String _PROCESS_ATTRIBUTES = "processAttributes";
+	public static final String _PROCESS_LOGS = "processLogs";
+	public static final String _CHILDREN = "children";
+	public static final String _PARENT = "parent";
+	public static final String _OWNERS = "owners";
+
+    public static final String EXTERNAL_KEY_PROPERTY = "externalKey";
+
 	@Id
 	@GeneratedValue(generator = "idGenerator")
 	@GenericGenerator(
@@ -37,36 +57,28 @@ public class ProcessInstance extends AbstractPersistentEntity {
 					@org.hibernate.annotations.Parameter(name = "sequence_name", value = "DB_SEQ_ID_PROC_INST")
 			}
 	)
+    @Index(name="idx_pt_pk")
 	@Column(name = "id")
 	protected Long id;
-
+    @Index(name="idx_pt_externalkey")
 	private String externalKey;
+
+    @Index(name="idx_pt_internalid")
 	private String internalId;
 	private String definitionName;
-	private String state;
-	private String description;
-	private String keyword;
 
+    /** Technical process status */
     @Enumerated(EnumType.STRING)
     private ProcessStatus status;
 
-	@Transient
-	private String taskId;
-    @Transient
-    private String[] assignees;
-    @Transient
-    private String[] taskQueues;
-
-    @Transient
-    private BpmTask[] activeTasks;
-
-    private Boolean running;
+    /** Business process status */
+    @Index(name="idx_pt_business_status")
+    @Column(name = "business_status", nullable = true)
+    private String businessStatus;
 
 	private Date createDate;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="creator_id")
-	private UserData creator;
+    @Index(name="idx_pt_process_creator")
+	private String creatorLogin;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="definition_id")
@@ -74,7 +86,24 @@ public class ProcessInstance extends AbstractPersistentEntity {
 
 	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
 	@JoinColumn(name="process_instance_id")
+	private Set<ProcessInstanceSimpleLargeAttribute> processSimpleLargeAttributes = new HashSet<ProcessInstanceSimpleLargeAttribute>();
+
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    @JoinColumn(name="process_instance_id")
+    private Set<ProcessInstanceSimpleAttribute> processSimpleAttributes = new HashSet<ProcessInstanceSimpleAttribute>();
+
+	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+	@JoinColumn(name="process_instance_id")
 	private Set<ProcessInstanceAttribute> processAttributes = new HashSet<ProcessInstanceAttribute>();
+
+	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+	@JoinColumn(name="process_instance_id")
+	private Set<ProcessComment> comments;
+
+	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+	@JoinColumn(name="process_instance_id")
+	private Set<ProcessDeadline> deadlines;
+
 
 	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
 	@JoinColumn(name="process_instance_id")
@@ -87,7 +116,7 @@ public class ProcessInstance extends AbstractPersistentEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="parent_id")
 	private ProcessInstance parent;
-	
+
 	/** Owners of the process. Owner is diffrent then process creator. Process can have many owners */
 	@ElementCollection(fetch = FetchType.LAZY)
 	@CollectionTable(name = "pt_process_instance_owners", joinColumns = @JoinColumn(name = "process_id"))
@@ -96,61 +125,48 @@ public class ProcessInstance extends AbstractPersistentEntity {
 	@Transient
 	private Set<ProcessInstanceAttribute> toDelete;
 
+	@Override
 	public Long getId() {
 		return id;
 	}
 
+	@Override
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public ProcessInstance getRootProcessInstance() {
+
+
+    public ProcessInstance getRootProcessInstance() {
     	ProcessInstance parentProcess = this;
-    	while(parentProcess.getParent() != null){
-    		parentProcess = parentProcess.getParent();
+    	while (parentProcess.parent != null){
+    		parentProcess = parentProcess.parent;
     	}
     	return parentProcess;
     }
 
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public String getKeyword() {
-		return keyword;
-	}
-
-	public void setKeyword(String keyword) {
-		this.keyword = keyword;
-	}
-
-	public ProcessInstance(String externalKey, UserData creator, String definionName) {
+	public ProcessInstance(String externalKey, String creatorLogin, String definionName) {
 		this.externalKey = externalKey;
-		this.creator = creator;
+		this.creatorLogin = creatorLogin;
 		this.definitionName = definionName;
 		this.createDate = new Date();
 	}
 
 	public ProcessInstance() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public String getExternalKey() {
-		if(externalKey == null && parent != null){
-			return parent.getExternalKey();
+		ProcessInstance other = this;
+		while (true) {
+			if (other.externalKey == null && other.parent != null) {
+				other = other.parent;
+				continue;
+			}
+			return other.externalKey;
 		}
-		return externalKey;
-	}
-	
-	public String getOwnExternalKey() {
-		return externalKey;
 	}
 
-	public void setExternalKey(String externalKey) {	
+	public void setExternalKey(String externalKey) {
 		this.externalKey = externalKey;
 	}
 
@@ -170,12 +186,12 @@ public class ProcessInstance extends AbstractPersistentEntity {
 		this.createDate = createDate;
 	}
 
-	public UserData getCreator() {
-		return creator;
+	public String getCreatorLogin() {
+		return creatorLogin;
 	}
 
-	public void setCreator(UserData creator) {
-		this.creator = creator;
+	public void setCreatorLogin(String creatorLogin) {
+		this.creatorLogin = creatorLogin;
 	}
 
 	public String getDefinitionName() {
@@ -186,14 +202,6 @@ public class ProcessInstance extends AbstractPersistentEntity {
 		this.definitionName = definitionName;
 	}
 
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-	
 	public Set<String> getOwners() {
 		return owners;
 	}
@@ -201,24 +209,124 @@ public class ProcessInstance extends AbstractPersistentEntity {
 	public void setOwners(Set<String> ownersLogins) {
 		this.owners = ownersLogins;
 	}
-	
-	public void addOwner(String ownerLogin)
-	{
+
+    public String getBusinessStatus() {
+        return businessStatus;
+    }
+
+    public void setBusinessStatus(String businessStatus) {
+        this.businessStatus = businessStatus;
+    }
+
+    public void addOwner(String ownerLogin) {
 		this.owners.add(ownerLogin);
 	}
-	
-	public void removeOwner(String ownerLogin)
-	{
+
+	public void addOwners(Collection<String> ownerLogins) {
+		this.owners.addAll(ownerLogins);
+	}
+
+	public void removeOwner(String ownerLogin) {
 		this.owners.remove(ownerLogin);
 	}
 
+    public Set<ProcessInstanceSimpleLargeAttribute> getProcessSimpleLargeAttributes() {
+        if (processSimpleLargeAttributes == null) {
+            processSimpleLargeAttributes = new HashSet<ProcessInstanceSimpleLargeAttribute>();
+        }
+        return processSimpleLargeAttributes;
+    }
+
+    public void setProcessSimpleLargeAttributes(Set<ProcessInstanceSimpleLargeAttribute> processSimpleLargeAttributes) {
+        this.processSimpleLargeAttributes = processSimpleLargeAttributes;
+    }
+
+    public Set<ProcessInstanceSimpleAttribute> getProcessSimpleAttributes() {
+		if (processSimpleAttributes == null) {
+			processSimpleAttributes = new HashSet<ProcessInstanceSimpleAttribute>();
+		}
+		return processSimpleAttributes;
+	}
+
+	public void setProcessSimpleAttributes(Set<ProcessInstanceSimpleAttribute> processSimpleAttributes) {
+		this.processSimpleAttributes = processSimpleAttributes;
+	}
+
 	public Set<ProcessInstanceAttribute> getProcessAttributes() {
-		if (processAttributes == null) processAttributes = new HashSet<ProcessInstanceAttribute>();
+		if (processAttributes == null) {
+			processAttributes = new HashSet<ProcessInstanceAttribute>();
+		}
 		return processAttributes;
 	}
 
+    public ProcessInstanceAttribute getProcessAttribute(IAttributeName key)
+    {
+        return getProcessAttribute(key.value());
+    }
+
+    public ProcessInstanceAttribute getProcessAttribute(String key)
+    {
+        for (ProcessInstanceAttribute pia : getProcessAttributes()) {
+            if (pia.getKey() != null && pia.getKey().equals(key)) {
+                return pia;
+            }
+        }
+        return null;
+    }
+
 	public void setProcessAttributes(Set<ProcessInstanceAttribute> processAttributes) {
 		this.processAttributes = processAttributes;
+	}
+
+	public Set<ProcessComment> getComments() {
+		if (comments == null) {
+			comments = new HashSet<ProcessComment>();
+		}
+		return comments;
+	}
+
+	public List<ProcessComment> getCommentsOrderedByDate(boolean ascending) {
+		if (ascending) {
+			return from(getComments()).orderBy(BY_CREATE_DATE).toList();
+		}
+		else {
+			return from(getComments()).orderByDescending(BY_CREATE_DATE).toList();
+		}
+	}
+
+	private static final F<ProcessComment, Long> BY_CREATE_DATE = new F<ProcessComment, Long>() {
+		@Override
+		public Long invoke(ProcessComment x) {
+			return x.getCreateTime().getTime();
+		}
+	};
+
+	public void setComments(Set<ProcessComment> comments) {
+		this.comments = comments;
+	}
+
+	public Set<ProcessDeadline> getDeadlines() {
+		if (deadlines == null) {
+			deadlines = new HashSet<ProcessDeadline>();
+		}
+		return deadlines;
+	}
+
+	public void setDeadlines(Set<ProcessDeadline> deadlines) {
+		this.deadlines = deadlines;
+	}
+
+	public ProcessDeadline getDeadline(String taskName) {
+		for (ProcessDeadline deadline : getDeadlines()) {
+			if (taskName.equals(deadline.getTaskName())) {
+				return deadline;
+			}
+		}
+		return null;
+	}
+
+	public ProcessDeadline getDeadline(BpmTask task) {
+		return getDeadline(task.getTaskName());
 	}
 
 	public ProcessDefinitionConfig getDefinition() {
@@ -231,7 +339,7 @@ public class ProcessInstance extends AbstractPersistentEntity {
 
 	public void removeAttribute(ProcessInstanceAttribute attr) {
 		attr.setProcessInstance(null);
-		processAttributes.remove(attr);
+		getProcessAttributes().remove(attr);
 		if (attr.getId() > 0) {
             if (toDelete == null) {
                 toDelete = new HashSet<ProcessInstanceAttribute>();
@@ -240,26 +348,57 @@ public class ProcessInstance extends AbstractPersistentEntity {
         }
 	}
 
+    public void removeAttribute(IAttributeName attributeKey)
+    {
+        removeAttribute(attributeKey.value());
+    }
+
+    public void removeAttribute(String attributeKey)
+    {
+        ProcessInstanceAttribute attr = getProcessAttribute(attributeKey);
+        if(attr == null)
+            return;
+
+        removeAttribute(attr);
+    }
+
+    public void removeSimpleAttribute(IAttributeName attributeKey)
+    {
+        removeAttribute(attributeKey.value());
+    }
+
+    public void removeSimpleAttribute(String attributeKey)
+    {
+        String value = getSimpleAttributeValue(attributeKey);
+        if(value == null)
+            return;
+
+        setSimpleAttribute(attributeKey, null);
+    }
+
 	public Set<ProcessInstanceAttribute> getToDelete() {
 		return toDelete;
 	}
 
 	public void addAttribute(ProcessInstanceAttribute attr) {
 		attr.setProcessInstance(this);
-		processAttributes.add(attr);
-	}
-
-	public String getTaskId() {
-		return taskId;
-	}
-
-	public void setTaskId(String taskId) {
-		this.taskId = taskId;
+		getProcessAttributes().add(attr);
 	}
 
 	public Set<ProcessInstanceLog> getProcessLogs() {
 		return processLogs;
 	}
+
+    public List<ProcessInstanceLog> getProcessLogsSortedByDate() {
+        List<ProcessInstanceLog> list = new ArrayList<ProcessInstanceLog>(processLogs);
+        Collections.sort(list, new Comparator<ProcessInstanceLog>() {
+            @Override
+            public int compare(ProcessInstanceLog o1, ProcessInstanceLog o2) {
+                return o1.getEntryDate().compareTo(o2.getEntryDate());
+            }
+        });
+        return list;
+    }
 
 	public void setProcessLogs(Set<ProcessInstanceLog> processLogs) {
 		this.processLogs = processLogs;
@@ -280,73 +419,113 @@ public class ProcessInstance extends AbstractPersistentEntity {
 		return null;
 	}
 
-    public <T extends ProcessInstanceAttribute> T findAttributeByClass(Class<T> clazz) {
-        Set<ProcessInstanceAttribute> attrs = getProcessAttributes();
-        for (ProcessInstanceAttribute pia : attrs) {
-            if (clazz.isAssignableFrom(pia.getClass())) {
-                return (T) pia;
+	public AbstractProcessInstanceAttribute findAnyAttributeByKey(String key) {
+		ProcessInstanceSimpleAttribute simpleAttribute = findSimpleAttributeByKey(key);
+
+		if (simpleAttribute != null) {
+			return simpleAttribute;
+		}
+		return findAttributeByKey(key);
+	}
+
+	private ProcessInstanceSimpleAttribute findSimpleAttributeByKey(String key) {
+		Set<ProcessInstanceSimpleAttribute> attrs = getProcessSimpleAttributes();
+		for (ProcessInstanceSimpleAttribute pia : attrs) {
+			if (pia.getKey() != null && pia.getKey().equals(key)) {
+				return pia;
+			}
+		}
+		return null;
+	}
+
+    private ProcessInstanceSimpleLargeAttribute findSimpleLargeAttributeByKey(String key) {
+        Set<ProcessInstanceSimpleLargeAttribute> attrs = getProcessSimpleLargeAttributes();
+        for (ProcessInstanceSimpleLargeAttribute pia : attrs) {
+            if (pia.getKey() != null && pia.getKey().equals(key)) {
+                return pia;
             }
         }
         return null;
     }
 
-	public <T extends ProcessInstanceAttribute> T findOrCreateAttribute(Class<T> attrClass) {
-		T attribute = findAttributeByClass(attrClass);
-		if(attribute == null) {
-			try {
-				attribute = attrClass.newInstance();
-				addAttribute(attribute);
-			} catch (InstantiationException e) {
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-			}
-		}
-		return attribute;	
-	}
-    
-    public <T extends ProcessInstanceAttribute> Set<T> findAttributesByClass(Class<T> clazz) {
-        Set<T> result = new HashSet<T>();
-        Set<ProcessInstanceAttribute> attrs = getProcessAttributes();
-        for (ProcessInstanceAttribute pia : attrs) {
-            if (clazz.isAssignableFrom(pia.getClass())) {
-                result.add((T) pia);
-            }
-        }
-        return result;
+    public String getSimpleLargeAttributeValue(String key) {
+        return getSimpleLargeAttributeValue(key, null);
+    }
+
+    public String getSimpleLargeAttributeValue(String key, String default_) {
+        ProcessInstanceSimpleLargeAttribute attr = findSimpleLargeAttributeByKey(key);
+        return attr != null ? attr.getValue() : default_;
     }
 
     public String getSimpleAttributeValue(String key) {
-        ProcessInstanceAttribute attr = findAttributeByKey(key);
-        return attr != null ?  ((ProcessInstanceSimpleAttribute)attr).getValue() : null;
+        return getSimpleAttributeValue(key, null);
+    }
+
+    public String getSimpleAttributeValue(IAttributeName attributeName) {
+        return getSimpleAttributeValue(attributeName.value(), null);
     }
 
     public String getSimpleAttributeValue(String key, String default_) {
-        ProcessInstanceAttribute attr = findAttributeByKey(key);
-        return attr != null ? ((ProcessInstanceSimpleAttribute)attr).getValue() : default_;
+		ProcessInstanceSimpleAttribute attr = findSimpleAttributeByKey(key);
+        return attr != null ? attr.getValue() : default_;
     }
+
+
+	public Map<String, String> getSimpleAttributeValues() {
+		Map<String, String> result = new HashMap<String, String>();
+
+		for (ProcessInstanceSimpleAttribute attribute : getProcessSimpleAttributes()) {
+			result.put(attribute.getKey(), attribute.getValue());
+		}
+		return result;
+	}
+
 
 	public String getInheritedSimpleAttributeValue(String key) {
 		return getInheritedSimpleAttributeValue(key, null);
 	}
 
 	public String getInheritedSimpleAttributeValue(String key, String default_) {
-		for (ProcessInstance pi = this; pi != null; pi = pi.getParent()) {
-			ProcessInstanceAttribute attr = findAttributeByKey(key);
-			if (attr instanceof ProcessInstanceSimpleAttribute) {
-				return ((ProcessInstanceSimpleAttribute)attr).getValue();
+		for (ProcessInstance pi = this; pi != null; pi = pi.parent) {
+			ProcessInstanceSimpleAttribute attr = findSimpleAttributeByKey(key);
+			if (attr != null) {
+				return attr.getValue();
 			}
 		}
 		return default_;
 	}
 
+    public void setSimpleAttribute(IAttributeName key, String value) {
+        setSimpleAttribute(key.value(), value);
+    }
+
     public void setSimpleAttribute(String key, String value) {
-        ProcessInstanceSimpleAttribute attr = (ProcessInstanceSimpleAttribute)findAttributeByKey(key);
+        ProcessInstanceSimpleAttribute attr = findSimpleAttributeByKey(key);
+
         if (attr != null) {
             attr.setValue(value);
         }
         else {
-            addAttribute(new ProcessInstanceSimpleAttribute(key, value));
+			attr = new ProcessInstanceSimpleAttribute(key, value);
+			attr.setProcessInstance(this);
+			getProcessSimpleAttributes().add(attr);
+        }
+    }
+
+    public void setSimpleLargeAttribute(IAttributeName key, String value) {
+        setSimpleLargeAttribute(key.value(), value);
+    }
+
+    public void setSimpleLargeAttribute(String key, String value) {
+        ProcessInstanceSimpleLargeAttribute attr = findSimpleLargeAttributeByKey(key);
+
+        if (attr != null) {
+            attr.setValue(value);
+        }
+        else {
+            attr = new ProcessInstanceSimpleLargeAttribute(key, value);
+            attr.setProcessInstance(this);
+            getProcessSimpleLargeAttributes().add(attr);
         }
     }
 
@@ -356,33 +535,7 @@ public class ProcessInstance extends AbstractPersistentEntity {
             addAttribute(attr = new ProcessInstanceDictionaryAttribute(dictionary));
         }
         attr.put(key, value);
-
-    }
-
-
-    public String[] getAssignees() {
-        return nvl(assignees, new String[] { });
-    }
-
-    public void setAssignees(String... assignees) {
-        this.assignees = assignees;
-    }
-
-    public String[] getTaskQueues() {
-        return nvl(taskQueues, new String[] { });
-    }
-
-    public void setTaskQueues(String... taskQueues) {
-        this.taskQueues = taskQueues;
-    }
-
-    public Boolean getRunning() {
-        return nvl(running,true);
-    }
-
-    public void setRunning(Boolean running) {
-        this.running = running;
-    }
+	}
 
     public ProcessStatus getStatus() {
         return status;
@@ -392,57 +545,25 @@ public class ProcessInstance extends AbstractPersistentEntity {
         this.status = status;
     }
 
-    public BpmTask[] getActiveTasks() {
-        return activeTasks;
-    }
-
-    public void setActiveTasks(BpmTask[] activeTasks) {
-        this.activeTasks = Lang2.noCopy(activeTasks);
-    }
-
 	public Set<ProcessInstance> getChildren() {
 		return children;
 	}
-
 
 	public void setChildren(Set<ProcessInstance> children) {
 		this.children = children;
 	}
 
-
 	public ProcessInstance getParent() {
 		return parent;
 	}
 
-
 	public void setParent(ProcessInstance parent) {
 		this.parent = parent;
 	}
-	
+
 	/** Method checks if the process is in running or new state */
-	public boolean isProcessRunning()
-	{
-		if(getStatus() == null)
-			return false;
-		
-		if(getRunning() != null && !getRunning())
-			return false;
-		
-		return getStatus().equals(ProcessStatus.NEW) || 
-				getStatus().equals(ProcessStatus.RUNNING);
-	}
-	
-	/** Method check, if the given user login is in assigness list */
-	public boolean isAssignee(String assigneeLogin)
-	{
-		if(assignees == null)
-			return false;
-		
-		for(String login: assignees)
-			if(login.equals(assigneeLogin))
-				return true;
-		
-		return false;
+	public boolean isProcessRunning() {
+		return status == ProcessStatus.NEW || status == ProcessStatus.RUNNING;
 	}
 
 	@Override
@@ -452,6 +573,93 @@ public class ProcessInstance extends AbstractPersistentEntity {
 
 	/** Check if process is subprocess (has parent process) */
 	public boolean isSubprocess() {
-		return getParent() != null;
+		return parent != null;
 	}
+
+	public void addComment(ProcessComment comment) {
+		comment.setProcessInstance(this);
+		getComments().add(comment);
+	}
+
+	public void addComments(Collection<ProcessComment> comments) {
+		for (ProcessComment comment : comments) {
+			addComment(comment);
+		}
+	}
+
+	public void addDeadline(ProcessDeadline deadline) {
+		deadline.setProcessInstance(this);
+		getDeadlines().add(deadline);
+	}
+
+	public void setAllProcessAttributes(Collection<AbstractProcessInstanceAttribute> attributes) {
+		Set<ProcessInstanceSimpleAttribute> simpleAttributes = new HashSet<ProcessInstanceSimpleAttribute>();
+		Set<ProcessInstanceAttribute> genericAttributes = new HashSet<ProcessInstanceAttribute>();
+
+		for (AbstractProcessInstanceAttribute attribute : attributes) {
+			if (attribute instanceof ProcessInstanceSimpleAttribute) {
+				simpleAttributes.add((ProcessInstanceSimpleAttribute)attribute);
+			}
+			else {
+				genericAttributes.add((ProcessInstanceAttribute)attribute);
+			}
+			attribute.setProcessInstance(this);
+		}
+
+		processSimpleAttributes = simpleAttributes;
+		processAttributes = genericAttributes;
+	}
+
+	public Collection<AbstractProcessInstanceAttribute> getAllProcessAttributes() {
+		List<AbstractProcessInstanceAttribute> result = new ArrayList<AbstractProcessInstanceAttribute>();
+		result.addAll(getProcessSimpleAttributes());
+		result.addAll(getProcessSimpleLargeAttributes());
+		result.addAll(getProcessAttributes());
+		return result;
+	}
+
+
+
+    public void addProcessLogInfo(String infoHeader, String infoBody, Collection<String> parameters)
+    {
+        ProcessInstanceLog log = new ProcessInstanceLog();
+        log.setState(null);
+        log.setEntryDate(new Date());
+        log.setEventI18NKey(infoHeader);
+        log.setUserLogin("");
+        log.setLogType(ProcessInstanceLog.LOG_TYPE_INFO);
+        log.setOwnProcessInstance(this);
+        log.setLogValue(infoBody);
+        log.setAdditionalInfo(StringUtils.join(parameters, ","));
+        getRootProcessInstance().addProcessLog(log);
+    }
+
+    @Override
+    public ProcessInstance getProcessInstance() {
+        return this;
+    }
+
+    @Override
+    public Object getAttribute(String key) {
+        return getProcessAttribute(key);
+    }
+
+    @Override
+    public Object getProvider() {
+        return this;
+    }
+
+    @Override
+    public void addAttribute(Object attribute) {
+        addAttribute((ProcessInstanceAttribute) attribute);
+    }
+
+    @Override
+    public void setAttribute(String key, Object attribute) {
+        ProcessInstanceAttribute attr = findAttributeByKey(key);
+        if (attr != null) {
+            getProcessAttributes().remove(attr);
+        }
+        addAttribute(attribute);
+    }
 }

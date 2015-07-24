@@ -3,12 +3,14 @@ package pl.net.bluesoft.rnd.processtool.dao;
 import pl.net.bluesoft.rnd.processtool.hibernate.HibernateBean;
 import pl.net.bluesoft.rnd.processtool.hibernate.ResultsPageWrapper;
 import pl.net.bluesoft.rnd.processtool.model.ProcessInstance;
-import pl.net.bluesoft.rnd.processtool.model.ProcessInstanceFilter;
+import pl.net.bluesoft.rnd.processtool.web.view.ProcessInstanceFilter;
 import pl.net.bluesoft.rnd.processtool.model.ProcessInstanceLog;
-import pl.net.bluesoft.rnd.processtool.model.ProcessInstanceSimpleAttribute;
-import pl.net.bluesoft.rnd.processtool.model.UserData;
+import pl.net.bluesoft.rnd.processtool.model.StepInfo;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author tlipski@bluesoft.net.pl
@@ -27,30 +29,22 @@ public interface ProcessInstanceDAO extends HibernateBean<ProcessInstance> {
 
     ProcessInstance getProcessInstanceByExternalId(String externalId);
 
-    List<ProcessInstance> findProcessInstancesByKeyword(String key, String processType);
-
     Map<String, ProcessInstance> getProcessInstanceByInternalIdMap(Collection<String> internalId);
 
     void deleteProcessInstance(ProcessInstance instance);
     
     
-    Collection<ProcessInstanceLog> getUserHistory(UserData user, Date startDate, Date endDate);
-
-//	List<ProcessInstance> getRecentProcesses(UserData userData, Calendar minDate, String filter, int offset, int limit);
+    Collection<ProcessInstanceLog> getUserHistory(String userLogin, Date startDate, Date endDate);
 
     Collection<ProcessInstance> searchProcesses(String filter, int offset, int limit, boolean onlyRunning, String[] userRoles, String assignee, String... queues);
 
-    Collection<ProcessInstance> getUserProcessesAfterDate(UserData userData, Calendar minDate);
+    Collection<ProcessInstance> getUserProcessesAfterDate(String userLogin, Date minDate);
 
-    ResultsPageWrapper<ProcessInstance> getRecentProcesses(UserData userData, Calendar minDate, Integer offset, Integer limit);
+    ResultsPageWrapper<ProcessInstance> getRecentProcesses(String userLogin, Date minDate, Integer offset, Integer limit);
 
-    ResultsPageWrapper<ProcessInstance> getProcessInstanceByInternalIdMapWithFilter(Collection<String> internalIds, ProcessInstanceFilter filter,
-                                                                                    Integer offset, Integer limit);
+	Collection<ProcessInstance> getUserProcessesBetweenDates(String userLogin, Date minDate, Date maxDate);
 
-	Collection<ProcessInstance> getUserProcessesBetweenDates(UserData userData,
-			Calendar minDate, Calendar maxDate);
+	void saveStepInfos(Collection<StepInfo> stepInfos);
 
-
-
-
+	void removeStopInfos(Collection<String> taskId);
 }

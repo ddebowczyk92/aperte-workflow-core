@@ -1,157 +1,387 @@
 package pl.net.bluesoft.rnd.pt.ext.jbpm;
 
-import com.thoughtworks.xstream.XStream;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.jbpm.api.Configuration;
-import org.jbpm.api.ProcessEngine;
+import org.hibernate.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import pl.net.bluesoft.rnd.processtool.ProcessToolContext;
-import pl.net.bluesoft.rnd.processtool.ProcessToolContextCallback;
 import pl.net.bluesoft.rnd.processtool.ProcessToolContextFactory;
 import pl.net.bluesoft.rnd.processtool.ReturningProcessToolContextCallback;
-import pl.net.bluesoft.rnd.processtool.bpm.ProcessToolBpmConstants;
-import pl.net.bluesoft.rnd.processtool.bpm.ProcessToolBpmSession;
-import pl.net.bluesoft.rnd.processtool.dao.ProcessDefinitionDAO;
-import pl.net.bluesoft.rnd.processtool.model.UserData;
-import pl.net.bluesoft.rnd.processtool.model.config.ProcessDefinitionConfig;
-import pl.net.bluesoft.rnd.processtool.model.config.ProcessDefinitionPermission;
-import pl.net.bluesoft.rnd.processtool.model.config.ProcessQueueConfig;
+import pl.net.bluesoft.rnd.processtool.exceptions.ExceptionsUtils;
 import pl.net.bluesoft.rnd.processtool.plugins.ProcessToolRegistry;
-import pl.net.bluesoft.util.lang.Strings;
+import pl.net.bluesoft.rnd.pt.ext.jbpm.service.JbpmService;
 
 import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.transaction.Status;
 import javax.transaction.UserTransaction;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.concurrent.locks.LockSupport;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static pl.net.bluesoft.rnd.processtool.ProcessToolContext.Util.getThreadProcessToolContext;
+
 /**
+ * Process Tool Context factory
+ *
  * @author tlipski@bluesoft.net.pl
+ * @author mpawlak@bluesoft.net.pl
  */
-public class ProcessToolContextFactoryImpl implements ProcessToolContextFactory, ProcessToolBpmConstants {
-
+@Component
+@Scope(value = "singleton")
+public class ProcessToolContextFactoryImpl implements ProcessToolContextFactory
+{
     private static Logger logger = Logger.getLogger(ProcessToolContextFactoryImpl.class.getName());
-    private Configuration configuration;
-    private ProcessToolRegistry registry;
 
-    public ProcessToolContextFactoryImpl(ProcessToolRegistry registry) {
-        this.registry = registry;
+
+    @Autowired
+    private ProcessToolRegistry registry;
+    private static int counter = 0;
+
+    private int ver = 0;
+
+
+
+    public ProcessToolContextFactoryImpl()
+    {
         initJbpmConfiguration();
+        ver = ++counter;
     }
 
     @Override
     public <T> T withExistingOrNewContext(ReturningProcessToolContextCallback<T> callback) {
-        ProcessToolContext ctx = ProcessToolContext.Util.getThreadProcessToolContext();
-        return ctx != null && ctx.isActive() ? callback.processWithContext(ctx) : withProcessToolContext(callback);
+        return withProcessToolContext(callback);
     }
 
     @Override
-	public <T> T withProcessToolContext(ReturningProcessToolContextCallback<T> callback) {
-        if (registry.isJta()) {
-            return withProcessToolContextJta(callback);
-        } else {
-            return withProcessToolContextNonJta(callback);
-        }
+    public <T> T withProcessToolContext(ReturningProcessToolContextCallback<T> callback) {
+        return withProcessToolContext(callback,ExecutionType.TRANSACTION);
     }
 
-	public <T> T withProcessToolContextNonJta(ReturningProcessToolContextCallback<T> callback) {
+    @Override
+    public <T> T withProcessToolContextManualTransaction(ReturningProcessToolContextCallback<T> callback)
+    {
         T result = null;
 
-		Session session = registry.getSessionFactory().openSession();
-		try {
-			ProcessEngine pi = getProcessEngine();
-			try {
-				Transaction tx = session.beginTransaction();
-				try {
-					ProcessToolContextImpl ctx = new ProcessToolContextImpl(session, this, pi);
-					result = callback.processWithContext(ctx);
-				} catch (RuntimeException e) {
-					logger.log(Level.SEVERE, e.getMessage(), e);
-					try {
-						tx.rollback();
-					} catch (Exception e1) {
-						logger.log(Level.WARNING, e1.getMessage(), e1);
-					}
-					throw e;
-				}
-				tx.commit();
-			}
-			finally {
-				pi.close();
-			}
-		} finally {
-			session.close();
-		}
-        return result;
-    }
-
-    public <T> T withProcessToolContextJta(ReturningProcessToolContextCallback<T> callback) {
-        T result = null;
-
+        Session session = registry.getDataRegistry().getSessionFactory().openSession();
+        session.setFlushMode(FlushMode.COMMIT);
+        session.setCacheMode(CacheMode.IGNORE);
         try {
-            UserTransaction ut=null;
+
             try {
-                ut = (UserTransaction) new InitialContext().lookup("java:comp/UserTransaction");
-            } catch (Exception e) {
-                //it should work on jboss regardless. But it does not..
-                logger.warning("java:comp/UserTransaction not found, looking for UserTransaction");
-                ut = (UserTransaction) new InitialContext().lookup("UserTransaction");
+                ProcessToolContext ctx = new ProcessToolContextImpl(session);
+                ProcessToolContext.Util.setThreadProcessToolContext(ctx);
+
+                result = callback.processWithContext(ctx);
+
+                ProcessToolContext.Util.removeThreadProcessToolContext();
+            } catch (RuntimeException e) {
+                logger.log(Level.SEVERE, e.getMessage(), e);
+                throw e;
             }
 
-            logger.fine("ut.getStatus() = " + ut.getStatus());
-            if (ut.getStatus() == Status.STATUS_MARKED_ROLLBACK) {
-                ut.rollback();
-            }
-            if (ut.getStatus() != Status.STATUS_ACTIVE)
-                ut.begin();
-            Session session = registry.getSessionFactory().getCurrentSession();
-            try {
-                ProcessEngine pi = getProcessEngine();
-                try {
-                    try {
-                        ProcessToolContextImpl ctx = new ProcessToolContextImpl(session, this, pi);
-                        result = callback.processWithContext(ctx);
-                    } catch (Exception e) {
-                        logger.log(Level.SEVERE, e.getMessage(), e);
-                        try {
-                            ut.rollback();
-                        } catch (Exception e1) {
-                            logger.log(Level.WARNING, e1.getMessage(), e1);
-                        }
-                        throw e;
-                    }
-                } finally {
-                    pi.close();
-                }
-            } finally {
-                session.flush();
-            }
-            ut.commit();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return result;
-
-
-    }
-
-    private ProcessEngine getProcessEngine() {
-        Thread t = Thread.currentThread();
-        ClassLoader previousLoader = t.getContextClassLoader();
-        try {
-            ClassLoader newClassLoader = getClass().getClassLoader();
-            t.setContextClassLoader(newClassLoader);
-            return configuration.buildProcessEngine();
         } finally {
-            t.setContextClassLoader(previousLoader);
+            session.close();
         }
+        return result;
+    }
+
+    @Override
+    public <T> T withProcessToolContext(ReturningProcessToolContextCallback<T> callback, ExecutionType type) {
+        //logger.info(">>>>>>>>> withProcessToolContext, executionType: " + type.toString() + ", threadId: " + Thread.currentThread().getId());
+        long start = System.currentTimeMillis();
+        ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
+        Thread.currentThread().setContextClassLoader(ProcessToolRegistry.Util.getAwfClassLoader());
+
+        try {
+            ProcessToolRegistry.Util.getAwfClassLoader().loadClass(JbpmStepAction.class.getName());
+        } catch (ClassNotFoundException e) {
+            logger.warning("JbpmStepAction.class was not found");
+        }
+
+        ContextStats stats = null;
+
+        try {
+            ProcessToolContext ctx = getThreadProcessToolContext();
+
+			/* Active context already exists, use it */
+            if (ctx != null && ctx.isActive()) {
+                return callback.processWithContext(ctx);
+            }
+    	
+    		/* Context is set but its session is closed, remove it */
+            if (ctx != null && !ctx.isActive()) {
+                ProcessToolContext.Util.removeThreadProcessToolContext();
+            }
+
+            stats = new ContextStats();
+
+            if (ExecutionType.NO_TRANSACTION.equals(type)) {
+                return executeWithProcessToolContext(callback, stats);
+            } else if (ExecutionType.NO_TRANSACTION_SYNCH.equals(type)) {
+                return executeWithProcessToolContextSynch(callback, stats);
+            } else if (ExecutionType.TRANSACTION_SYNCH.equals(type)) {
+                //jbpm doesn't support external user transactions
+                //if (registry.isJta()) {
+                //	return executeWithProcessToolContextJtaSynch(callback);
+                //} else {
+                return executeWithProcessToolContextNonJtaSynch(callback, stats);
+                //}
+            } else {
+                //jbpm doesn't support external user transactions
+                //if (registry.isJta()) {
+                //	return executeWithProcessToolContextJta(callback);
+                //} else {
+                return executeWithProcessToolContextNonJta(callback, stats);
+                //}
+            }
+
+        }
+        finally {
+            //logger.info("<<<<<<<<< withProcessToolContext: " +  Thread.currentThread().getId() + " time: " + (System.currentTimeMillis() - start) + (stats != null ? " stats:\n" + stats.toString() : ""));
+            Thread.currentThread().setContextClassLoader(contextClassLoader);
+        }
+    }
+
+    private synchronized <T> T executeWithProcessToolContextNonJtaSynch(ReturningProcessToolContextCallback<T> callback, ContextStats stats) {
+        return executeWithProcessToolContextNonJta(callback, stats);
+    }
+
+    private <T> T executeWithProcessToolContextNonJta(ReturningProcessToolContextCallback<T> callback, ContextStats stats) {
+        return executeWithProcessToolContextNonJta(callback, true, stats);
+    }
+
+    private <T> T executeWithProcessToolContextNonJta(ReturningProcessToolContextCallback<T> callback, boolean reload, ContextStats stats)
+    {
+        T result = null;
+
+        stats.beforeOpenSession();
+        Session session = registry.getDataRegistry().getSessionFactory().openSession();
+        stats.afterOpenSession();
+
+        ProcessToolContext ctx = new ProcessToolContextImpl(session);
+        ProcessToolContext.Util.setThreadProcessToolContext(ctx);
+
+        UserTransaction ut = null;
+        try {
+            stats.beforeBeginTransaction();
+            ut = (UserTransaction) new InitialContext().lookup( "java:comp/UserTransaction" );
+            ut.begin();
+            stats.afterBeginTransaction();
+
+            result = callback.processWithContext(ctx);
+
+            if(ut.getStatus() != Status.STATUS_COMMITTED) {
+                stats.beforeCommit();
+                ut.commit();
+                stats.afterCommit();
+            }
+        }
+        catch (Throwable ex)
+        {
+            logger.log(Level.SEVERE, "Problem during context executing", ex);
+            try {
+                if(ut.getStatus() != Status.STATUS_ROLLEDBACK) {
+                    stats.beforeRollback();
+                    ut.rollback();
+                    stats.afterRollback();
+                }
+
+            }
+            catch (Exception e1) {
+                logger.log(Level.WARNING, e1.getMessage(), e1);
+            }
+
+            throw new RuntimeException(ex);
+        }
+        finally
+        {
+            LockSupport.unpark(Thread.currentThread());
+
+            JbpmService.getInstance().destroy();
+            if (session.isOpen()) {
+                stats.beforeOpenSession();
+                session.close();
+                stats.afterOpenSession();
+            }
+
+            ctx.close();
+            ProcessToolContext.Util.removeThreadProcessToolContext();
+        }
+
+        return result;
+    }
+
+
+
+
+    private synchronized <T> T executeWithProcessToolContextSynch(ReturningProcessToolContextCallback<T> callback, ContextStats stats) {
+        return executeWithProcessToolContext(callback, stats);
+    }
+
+    private <T> T executeWithProcessToolContext(ReturningProcessToolContextCallback<T> callback, ContextStats stats) {
+        T result = null;
+
+        stats.beforeOpenSession();
+        Session session = registry.getDataRegistry().getSessionFactory().openSession();
+        session.setDefaultReadOnly(true);
+        session.setFlushMode(FlushMode.MANUAL);
+        stats.afterOpenSession();
+
+        try
+        {
+            ProcessToolContext ctx = new ProcessToolContextImpl(session);
+            ProcessToolContext.Util.setThreadProcessToolContext(ctx);
+            try {
+                result = callback.processWithContext(ctx);
+            } catch (RuntimeException e) {
+                logger.log(Level.SEVERE, e.getMessage(), e);
+            } finally {
+                ctx.close();
+                ProcessToolContext.Util.removeThreadProcessToolContext();
+            }
+        } finally  {
+            if (session.isOpen()) {
+                stats.beforeCloseSession();
+                session.close();
+                stats.afterCloseSession();
+            }
+        }
+        return result;
+    }
+
+    private static class ContextStats {
+        private static class Stat {
+            private final String name;
+            private long start;
+            private int count;
+            private long min = Long.MAX_VALUE, max = Long.MIN_VALUE, total;
+
+            private Stat(String name) {
+                this.name = name;
+            }
+
+            public void start() {
+                start = System.currentTimeMillis();
+            }
+
+            public void end() {
+                long t = System.currentTimeMillis() - start;
+                ++count;
+                min = Math.min(min, t);
+                max = Math.max(max, t);
+                total += t;
+            }
+
+            @Override
+            public String toString() {
+                return count > 0 ? name + " = {" +
+                        "count=" + count +
+                        ", min=" + min +
+                        ", max=" + max +
+                        ", avg=" + total/count +
+                        '}' : "";
+            }
+        }
+
+        private Stat openSession = new Stat("openSession");
+        private Stat closeSession = new Stat("closeSession");
+        private Stat beginTransaction = new Stat("beginTransaction");
+        private Stat commit = new Stat("commit");
+        private Stat rollback = new Stat("rollback");
+        private Stat reloadJbpm = new Stat("reloadJbpm");
+
+        public void beforeOpenSession() {
+            openSession.start();
+        }
+
+        public void afterOpenSession() {
+            openSession.end();
+        }
+
+        public void beforeBeginTransaction() {
+            beginTransaction.start();
+        }
+
+        public void afterBeginTransaction() {
+            beginTransaction.end();
+        }
+
+        public void beforeCommit() {
+            commit.start();
+        }
+
+        public void afterCommit() {
+            commit.end();
+        }
+
+        public void beforeRollback() {
+            rollback.start();
+        }
+
+        public void afterRollback() {
+            rollback.end();
+        }
+
+        public void beforeCloseSession() {
+            closeSession.start();
+        }
+
+        public void afterCloseSession() {
+            closeSession.end();
+        }
+
+        public void beforeReloadJbpm() {
+            reloadJbpm.start();
+        }
+
+        public void afterReloadJbpm() {
+            reloadJbpm.end();
+        }
+
+        @Override
+        public String toString() {
+            String s1 = openSession.toString();
+            String s2 = closeSession.toString();
+            String s3 = beginTransaction.toString();
+            String s4 = commit.toString();
+            String s5 = rollback.toString();
+            String s6 = reloadJbpm.toString();
+
+            StringBuilder sb = new StringBuilder(128);
+            if (!s1.isEmpty()) {
+                sb.append(s1).append('\n');
+            }
+            if (!s2.isEmpty()) {
+                sb.append(s2).append('\n');
+            }
+            if (!s3.isEmpty()) {
+                sb.append(s3).append('\n');
+            }
+            if (!s4.isEmpty()) {
+                sb.append(s4).append('\n');
+            }
+            if (!s5.isEmpty()) {
+                sb.append(s5).append('\n');
+            }
+            if (!s6.isEmpty()) {
+                sb.append(s6).append('\n');
+            }
+            return sb.toString();
+        }
+    }
+
+    private UserTransaction getUserTransaction() throws NamingException {
+        UserTransaction ut;
+        try {
+            ut = (UserTransaction) new InitialContext().lookup("java:comp/UserTransaction");
+        }
+        catch (Exception e) {
+            //it should work on jboss regardless. But it does not..
+            logger.warning("java:comp/UserTransaction not found, looking for UserTransaction");
+            ut = (UserTransaction) new InitialContext().lookup("UserTransaction");
+        }
+        return ut;
     }
 
     @Override
@@ -159,126 +389,14 @@ public class ProcessToolContextFactoryImpl implements ProcessToolContextFactory,
         return registry;
     }
 
-
     @Override
-    public void deployOrUpdateProcessDefinition(final InputStream bpmStream,
-                                                final ProcessDefinitionConfig cfg,
-                                                final ProcessQueueConfig[] queues,
-                                                final InputStream imageStream,
-                                                final InputStream logoStream) {
-        withProcessToolContext(new ProcessToolContextCallback() {
-            @Override
-            public void withContext(ProcessToolContext processToolContext) {
-
-                ProcessToolContext.Util.setThreadProcessToolContext(processToolContext);
-                try {
-                    boolean skipJbpm = false;
-                    InputStream is = bpmStream;
-                    ProcessToolBpmSession session = processToolContext.getProcessToolSessionFactory().createSession(
-                            new UserData("admin", "admin@aperteworkflow.org", "Admin"), Arrays.asList("ADMIN"));
-                    if (cfg.getPermissions() != null) {
-                        for (ProcessDefinitionPermission p : cfg.getPermissions()) {
-                            if (!Strings.hasText(p.getPrivilegeName())) {
-                                p.setPrivilegeName(PRIVILEGE_INCLUDE);
-                            }
-                            if (!Strings.hasText(p.getRoleName())) {
-                                p.setRoleName(PATTERN_MATCH_ALL);
-                            }
-                        }
-                    }
-                    byte[] oldDefinition = session.getProcessLatestDefinition(cfg.getBpmDefinitionKey(), cfg.getProcessName());
-                    if (oldDefinition != null) {
-                        byte[] newDefinition = loadBytesFromStream(is);
-                        is = new ByteArrayInputStream(newDefinition);
-                        if (Arrays.equals(newDefinition, oldDefinition)) {
-                            logger.log(Level.WARNING, "bpm definition for " + cfg.getProcessName() +
-                                    " is the same as in BPM, therefore not updating BPM process definition");
-                            skipJbpm = true;
-                        }
-                    }
-
-                    if (!skipJbpm) {
-                        String deploymentId = session.deployProcessDefinition(cfg.getProcessName(), is, imageStream);
-                        logger.log(Level.INFO, "deployed new BPM Engine definition with id: " + deploymentId);
-                    }
-
-                    ProcessDefinitionDAO processDefinitionDAO = processToolContext.getProcessDefinitionDAO();
-                    processDefinitionDAO.updateOrCreateProcessDefinitionConfig(cfg);
-                    logger.log(Level.INFO, "created  definition with id: " + cfg.getId());
-                    if (queues != null && queues.length > 0) {
-                        processDefinitionDAO.updateOrCreateQueueConfigs(Arrays.asList(queues));
-                        logger.log(Level.INFO, "created/updated " + queues.length + " queues");
-                    }
-                } finally {
-                    ProcessToolContext.Util.removeThreadProcessToolContext();
-                }
-            }
-        });
-    }
-
-    @Override
-    public void deployOrUpdateProcessDefinition(InputStream jpdlStream,
-                                                InputStream processToolConfigStream,
-                                                InputStream queueConfigStream,
-                                                final InputStream imageStream,
-                                                final InputStream logoStream) {
-        if (jpdlStream == null || processToolConfigStream == null || queueConfigStream == null) {
-            throw new IllegalArgumentException("at least one of the streams is null");
-        }
-        XStream xstream = new XStream();
-        xstream.aliasPackage("config", ProcessDefinitionConfig.class.getPackage().getName());
-        xstream.useAttributeFor(String.class);
-        xstream.useAttributeFor(Boolean.class);
-        xstream.useAttributeFor(Integer.class);
-
-        ProcessDefinitionConfig config = (ProcessDefinitionConfig) xstream.fromXML(processToolConfigStream);
-
-        if (logoStream != null) {
-            byte[] logoBytes = loadBytesFromStream(logoStream);
-            if (logoBytes.length > 0) {
-                config.setProcessLogo(logoBytes);
-            }
-        }
-        Collection<ProcessQueueConfig> qConfigs = (Collection<ProcessQueueConfig>) xstream.fromXML(queueConfigStream);
-        deployOrUpdateProcessDefinition(jpdlStream,
-                config,
-                qConfigs.toArray(new ProcessQueueConfig[qConfigs.size()]),
-                imageStream,
-                logoStream);
-    }
-
-//    }
-
-    private byte[] loadBytesFromStream(InputStream stream) {
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        int c;
-        try {
-            while ((c = stream.read()) >= 0) {
-                bos.write(c);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return bos.toByteArray();
-    }
-
     public void updateSessionFactory(SessionFactory sf) {
-        if (configuration != null) {
-            configuration.setHibernateSessionFactory(sf);
-        }
     }
 
     public void initJbpmConfiguration() {
-        Thread t = Thread.currentThread();
-        ClassLoader previousLoader = t.getContextClassLoader();
-        try {
-            ClassLoader newClassLoader = getClass().getClassLoader();
-            t.setContextClassLoader(newClassLoader);
-            configuration = new Configuration();
-            configuration.setHibernateSessionFactory(registry.getSessionFactory());
-        } finally {
-            t.setContextClassLoader(previousLoader);
-        }
+        JbpmService.getInstance().init();
     }
-
+    private void reloadJbpm() {
+        JbpmService.getInstance().destroy();
+    }
 }

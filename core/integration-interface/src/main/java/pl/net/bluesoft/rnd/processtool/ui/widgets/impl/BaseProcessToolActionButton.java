@@ -3,7 +3,6 @@ package pl.net.bluesoft.rnd.processtool.ui.widgets.impl;
 import com.vaadin.Application;
 import pl.net.bluesoft.rnd.processtool.ProcessToolContext;
 import pl.net.bluesoft.rnd.processtool.bpm.ProcessToolBpmSession;
-import pl.net.bluesoft.rnd.processtool.model.UserData;
 import pl.net.bluesoft.rnd.processtool.model.config.ProcessStateAction;
 import pl.net.bluesoft.rnd.processtool.model.config.ProcessStateActionAttribute;
 import pl.net.bluesoft.rnd.processtool.ui.widgets.ProcessToolActionButton;
@@ -25,10 +24,22 @@ public abstract class BaseProcessToolActionButton implements ProcessToolActionBu
 	protected String description;
 
 	@AutoWiredProperty
-	protected Boolean skipSaving = false;
+	protected Boolean commentNeeded = false;
+
+    @AutoWiredProperty
+    protected Boolean skipSaving = false;
+
+    @AutoWiredProperty
+    protected Boolean changeOwner = false;
+
+    @AutoWiredProperty
+    protected String changeOwnerAttributeName;
 
 	@AutoWiredProperty
 	protected Boolean autoHide = false;
+
+    @AutoWiredProperty
+    protected String iconName;
 
 //	@AutoWiredProperty
 	protected String bpmAction;
@@ -54,8 +65,8 @@ public abstract class BaseProcessToolActionButton implements ProcessToolActionBu
 
 	protected ProcessToolBpmSession bpmSession;
 	protected ProcessStateAction definition;
-	protected UserData loggedUser;
-	protected UserData substitutingUser;
+	protected String loggedUser;
+	protected String substitutingUser;
 
 	protected ProcessToolActionCallback callback;
 
@@ -65,9 +76,10 @@ public abstract class BaseProcessToolActionButton implements ProcessToolActionBu
 		this.messageSource = messageSource;
 		this.bpmSession = bpmSession;
 		this.definition = processStateAction;
-		ProcessToolContext ctx = getCurrentContext();
-        this.substitutingUser = bpmSession.getSubstitutingUser(ctx);
-        this.loggedUser = bpmSession.getUser(ctx);
+
+		this.loggedUser = bpmSession.getUserLogin();
+        this.substitutingUser = bpmSession.getSubstitutingUserLogin();
+
 		PropertyAutoWiring.autowire(this, getAutowiredProperties());
 	}
 
@@ -80,6 +92,9 @@ public abstract class BaseProcessToolActionButton implements ProcessToolActionBu
 		map.put("actionType", definition.getActionType());
 		map.put("bpmAction", definition.getBpmName());
 		map.put("skipSaving", String.valueOf(definition.getSkipSaving()));
+        map.put("changeOwner", String.valueOf(definition.getChangeOwner()));
+        map.put("changeOwnerAttributeName", String.valueOf(definition.getChangeOwnerAttributeName()));
+        map.put("commentNeeded", String.valueOf(definition.getCommentNeeded()));
 		map.put("markProcessImportant", String.valueOf(definition.getMarkProcessImportant()));
 		map.put("priority", String.valueOf(definition.getPriority()));
 		map.put("url", String.valueOf(definition.getUrl()));
@@ -230,22 +245,6 @@ public abstract class BaseProcessToolActionButton implements ProcessToolActionBu
         this.definition = definition;
     }
 
-    public UserData getLoggedUser() {
-        return loggedUser;
-    }
-
-    public void setLoggedUser(UserData loggedUser) {
-        this.loggedUser = loggedUser;
-    }
-
-    public UserData getSubstitutingUser() {
-        return substitutingUser;
-    }
-
-    public void setSubstitutingUser(UserData substitutingUser) {
-        this.substitutingUser = substitutingUser;
-    }
-
     public ProcessToolActionCallback getCallback() {
         return callback;
     }
@@ -261,4 +260,36 @@ public abstract class BaseProcessToolActionButton implements ProcessToolActionBu
 	public void setNotification(String notification) {
 		this.notification = notification;
 	}
+
+    public String getIconName() {
+        return iconName;
+    }
+
+    public void setIconName(String iconName) {
+        this.iconName = iconName;
+    }
+
+    public Boolean getCommentNeeded() {
+        return commentNeeded;
+    }
+
+    public void setCommentNeeded(Boolean commentNeeded) {
+        this.commentNeeded = commentNeeded;
+    }
+
+    public Boolean getChangeOwner() {
+        return changeOwner;
+    }
+
+    public void setChangeOwner(Boolean changeOwner) {
+        this.changeOwner = changeOwner;
+    }
+
+    public String getChangeOwnerAttributeName() {
+        return changeOwnerAttributeName;
+    }
+
+    public void setChangeOwnerAttributeName(String changeOwnerAttributeName) {
+        this.changeOwnerAttributeName = changeOwnerAttributeName;
+    }
 }

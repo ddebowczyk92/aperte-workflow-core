@@ -2,37 +2,22 @@ package pl.net.bluesoft.rnd.processtool.plugins;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import org.aperteworkflow.util.liferay.LiferayBridge;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.SerializationConfig.Feature;
 
 import pl.net.bluesoft.rnd.processtool.plugins.util.DictionaryHelpChanger;
-import pl.net.bluesoft.rnd.processtool.plugins.util.UserProcessQueuesSizeProvider;
-import pl.net.bluesoft.rnd.processtool.plugins.util.UserProcessQueuesSizeProvider.UsersQueuesSize;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.servlet.PortalDelegateServlet;
-import com.liferay.portal.model.Role;
-import com.liferay.portal.model.User;
-import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.util.PortalUtil;
 import com.thoughtworks.xstream.XStream;
+
+import static pl.net.bluesoft.rnd.processtool.plugins.ProcessToolRegistry.Util.getRegistry;
 
 /**
  * Servlet with dictionary update logic. It requires active liferay session 
@@ -41,7 +26,7 @@ import com.thoughtworks.xstream.XStream;
  * @author mpawlak@bluesoft.net.pl
  * 
  */
-public class HelpContextChangerServlet extends AbstractLiferayServlet 
+public class HelpContextChangerServlet extends AbstractPortalServlet
 {
 	private static Set<String> authorizedRoles = new HashSet<String>();
 	
@@ -105,9 +90,8 @@ public class HelpContextChangerServlet extends AbstractLiferayServlet
 				.setDictionaryItemValue(dictionaryItemValue);
 			
 			/* All parameters specified, proceed with dictionary item change */
-			ProcessToolRegistry registry = (ProcessToolRegistry) getServletContext().getAttribute(ProcessToolRegistry.class.getName());
-			
-			DictionaryHelpChanger helpChanger = new DictionaryHelpChanger(registry);
+
+			DictionaryHelpChanger helpChanger = new DictionaryHelpChanger(getRegistry());
 			helpChanger.changeDictionaryHelp(dictionaryChangeRequest);
 		}
 		catch(Exception ex)

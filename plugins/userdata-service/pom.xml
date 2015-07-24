@@ -4,10 +4,10 @@
     <parent>
         <artifactId>plugins</artifactId>
         <groupId>org.aperteworkflow</groupId>
-        <version>2.1-SNAPSHOT</version>
+        <version>3.1</version>
     </parent>
 
-    <version>2.1-SNAPSHOT</version>
+    <version>3.1</version>
     <artifactId>userdata-service</artifactId>
     <name>userdata-service</name>
 
@@ -17,7 +17,7 @@
         <dependency>
             <groupId>org.aperteworkflow</groupId>
             <artifactId>integration-interface</artifactId>
-            <version>2.1-SNAPSHOT</version>
+            <version>3.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -26,6 +26,25 @@
             <version>${hibernate.version}</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-servlet-api</artifactId>
+            <version>${tomcat.version}</version>
+            <scope>provided</scope>
+        </dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${spring.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.portlet</groupId>
+			<artifactId>portlet-api</artifactId>
+			<version>2.0</version>
+			<scope>provided</scope>
+		</dependency>
+
     </dependencies>
     <build>
         <plugins>
@@ -59,7 +78,7 @@
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
                 <extensions>true</extensions>
-                <version>2.1.0</version>
+                <version>${maven.bundle.version}</version>
                 <configuration>
                     <instructions>
                         <Implementation-Build>${buildNumber}</Implementation-Build>
@@ -67,8 +86,8 @@
                             pl.net.bluesoft.rnd.pt.ext.user.service
                         </Export-Package>
                         <Import-Package>
-                            *;resolution:=optional,
-                            pl.net.bluesoft.rnd.processtool.model
+                            pl.net.bluesoft.rnd.processtool.model,
+                            *;resolution:=optional
                         </Import-Package>
                         <Embed-Dependency>*;scope=compile|runtime;inline=false</Embed-Dependency>
                         <Bundle-Activator>pl.net.bluesoft.rnd.pt.ext.user.UserServiceActivator</Bundle-Activator>
@@ -76,9 +95,54 @@
                         <Bundle-Version>0.1</Bundle-Version>
                         <Embed-Directory>lib</Embed-Directory>
                         <Embed-Transitive>true</Embed-Transitive>
+						<ProcessTool-Model-Enhancement>
+							pl.net.bluesoft.rnd.pt.ext.user.model.PersistentUserData,
+							pl.net.bluesoft.rnd.pt.ext.user.model.PersistentUserRole
+						</ProcessTool-Model-Enhancement>
                     </instructions>
                 </configuration>
             </plugin>
         </plugins>
     </build>
+	    <!-- Profil dev do automatycznego kopiowania jarow do osgi -->
+    <profiles>
+    
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+	            <plugins>
+		            <plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-dependency-plugin</artifactId>
+						<version>2.4</version>
+						<executions>
+							<execution>
+								 <id>copy-installed</id>
+								<phase>install</phase>
+								<goals>
+								  <goal>copy</goal>
+								</goals>
+								<configuration>
+									<artifactItems>
+										<artifactItem>
+											<groupId>${project.groupId}</groupId>
+											<artifactId>${project.artifactId}</artifactId>
+											<type>jar</type>
+											<version>${project.version}</version>
+											<overWrite>true</overWrite>
+											<outputDirectory>${osgi.dir}</outputDirectory>
+											<destFileName>${project.artifactId}-${project.version}.jar</destFileName>
+										</artifactItem>
+									</artifactItems>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

@@ -1,164 +1,107 @@
 package pl.net.bluesoft.rnd.processtool.bpm;
 
-import java.io.InputStream;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
-
-import org.aperteworkflow.bpm.graph.GraphElement;
-
-import pl.net.bluesoft.rnd.processtool.ProcessToolContext;
-import pl.net.bluesoft.rnd.processtool.model.BpmTask;
-import pl.net.bluesoft.rnd.processtool.model.ProcessInstance;
-import pl.net.bluesoft.rnd.processtool.model.ProcessInstanceFilter;
-import pl.net.bluesoft.rnd.processtool.model.ProcessInstanceLog;
-import pl.net.bluesoft.rnd.processtool.model.QueueType;
-import pl.net.bluesoft.rnd.processtool.model.UserData;
+import pl.net.bluesoft.rnd.processtool.bpm.diagram.ProcessDiagram;
+import pl.net.bluesoft.rnd.processtool.model.*;
 import pl.net.bluesoft.rnd.processtool.model.config.ProcessDefinitionConfig;
 import pl.net.bluesoft.rnd.processtool.model.config.ProcessStateAction;
 import pl.net.bluesoft.rnd.processtool.model.config.ProcessStateWidget;
 import pl.net.bluesoft.rnd.processtool.model.nonpersistent.ProcessQueue;
-import pl.net.bluesoft.util.eventbus.EventBusManager;
+import pl.net.bluesoft.rnd.processtool.web.view.ProcessInstanceFilter;
+import pl.net.bluesoft.rnd.util.i18n.I18NSource;
+
+import java.io.InputStream;
+import java.util.*;
 
 /**
- * The process tool interface, providing basic operations.
+ * The process tool api, providing basic operations.
  * <p/>
  * Any BPM engine supported by process tool should be
- * provided by implementing this interface.
+ * provided by implementing this api.
  *
  * @author tlipski@bluesoft.net.pl
  * @author amichalak@bluesoft.net.pl
  * @author mpawlak@bluesoft.net.pl
  */
+public interface ProcessToolBpmSession {
+	ProcessToolBpmSession createSession(String userLogin);
+    ProcessToolBpmSession createSession(String userLogin, Collection<String> roleNames);
 
-//
-public interface ProcessToolBpmSession extends ProcessToolBpmConstants {
-    ProcessToolBpmSession createSession(UserData user, Collection<String> roleNames, ProcessToolContext ctx);
+	StartProcessResult startProcess(String bpmDefinitionId, String externalKey, String source);
+	StartProcessResult startProcess(String bpmDefinitionId, String externalKey, String source, Map<String, Object> simpleAttributes);
+    StartProcessResult startProcess(String bpmDefinitionId, String externalKey, String source, Map<String, Object> simpleAttributes, Map<String, String> largeAttributes, Map<String, Object> complexAttributes);
+    List<BpmTask> performAction(String actionName, String taskId);
+	List<BpmTask> performAction(String actionName, BpmTask bpmTask);
+	List<BpmTask> performAction(String actionName, BpmTask bpmTask, boolean reloadTask);
+	List<BpmTask> performAction(ProcessStateAction action, BpmTask bpmTask);
+	BpmTask assignTaskFromQueue(String queueName);
+	BpmTask assignTaskFromQueue(String queueName, String taskId);
+    BpmTask assignTaskToUser(String taskId, String userLogin);
 
-    ProcessInstance createProcessInstance(ProcessDefinitionConfig config,
-                                          String externalKey,
-                                          ProcessToolContext ctx,
-                                          String description,
-                                          String keyword,
-                                          String source, String internalId);
+	BpmTask getTaskData(String taskId);
+	BpmTask getPastOrActualTask(ProcessInstanceLog log);
+	BpmTask getPastEndTask(ProcessInstanceLog log);
+	BpmTask refreshTaskData(BpmTask task);
 
-    ProcessInstance getProcessData(String internalId, ProcessToolContext ctx);
+	/** Method returns queue size for given queue type and user login. Methods is significally faster
+	 * than {@link getFilteredTasksCount} but does not provide filtering support.
+	 */
+	int getTasksCount(ProcessInstanceFilter queueFilter);
 
-    ProcessInstance refreshProcessData(ProcessInstance processInstance, ProcessToolContext ctx);
 
-    boolean isProcessRunning(String internalId, ProcessToolContext ctx);
+	/** Method returns queue size for conditions provided by given filter. Methods is slower then
+	 * than {@link getTasksCount} but has full filtering options. It does not load entities to
+	 * memory
+	 */
+	int getFilteredTasksCount(ProcessInstanceFilter filter);
 
-    void saveProcessInstance(ProcessInstance processInstance, ProcessToolContext ctx);
+	BpmTask getHistoryTask(String taskId);
+    BpmTask getLastHistoryTaskByName(Long internalProcessId, String stepName);
 
-    Collection<ProcessDefinitionConfig> getAvailableConfigurations(ProcessToolContext ctx);
+	List<BpmTask> getAllTasks();
 
-    Collection<ProcessQueue> getUserAvailableQueues(ProcessToolContext ctx);
+	List<BpmTask> findUserTasks(ProcessInstance processInstance);
+	List<BpmTask> findUserTasks(Integer offset, Integer limit);
 
-    Set<String> getPermissionsForWidget(ProcessStateWidget widget, ProcessToolContext ctx);
+	List<BpmTask> findProcessTasks(ProcessInstance pi);
+	List<BpmTask> findProcessTasks(ProcessInstance pi, String userLogin);
+	List<BpmTask> findProcessTasks(ProcessInstance pi, String userLogin, Set<String> taskNames);
 
-    Set<String> getPermissionsForAction(ProcessStateAction action, ProcessToolContext ctx);
+	/** Find tasks from user process queue with given queue type and login in filter instance */
+	List<BpmTask> findFilteredTasks(ProcessInstanceFilter filter);
 
+	/** Find tasks from user process queue with given queue type and login in filter instance with given max results limit */
+	List<BpmTask> findFilteredTasks(ProcessInstanceFilter filter, int resultOffset, int maxResults);
+
+	List<BpmTask> findRecentTasks(Date minDate, Integer offset, Integer limit);
+
+	List<BpmTaskNotification> getNotifications(Date date, Locale locale);
+
+	int getRecentTasksCount(Date minDate);
+
+	List<ProcessDefinitionConfig> getAvailableConfigurations();
+    List<ProcessQueue> getUserAvailableQueues();
+    Set<String> getPermissionsForWidget(ProcessStateWidget widget);
+    Set<String> getPermissionsForAction(ProcessStateAction action);
     boolean hasPermissionsForDefinitionConfig(ProcessDefinitionConfig config);
 
-    boolean isProcessOwnedByUser(ProcessInstance processInstance, ProcessToolContext ctx);
-
-    BpmTask assignTaskFromQueue(ProcessQueue q, ProcessToolContext ctx);
-
-    BpmTask assignTaskFromQueue(ProcessQueue q, BpmTask task, ProcessToolContext ctx);
-
-    void assignTaskToUser(ProcessToolContext ctx, String taskId, String userLogin);
-
-    List<BpmTask> getTaskData(String taskExecutionId, String taskName, ProcessToolContext ctx);
-
-    BpmTask getTaskData(String taskId, ProcessToolContext ctx);
-
-    BpmTask getPastOrActualTask(ProcessInstanceLog log, ProcessToolContext ctx);
-
-    BpmTask getPastEndTask(ProcessInstanceLog log, ProcessToolContext ctx);
-
-    BpmTask refreshTaskData(BpmTask task, ProcessToolContext ctx);
-    
-    /** Method returns queue size for given queue type and user login. Methods is significally faster
-     * than {@link getFilteredTasksCount} but does not provide filtering support. 
-     */
-    int getTasksCount(ProcessToolContext ctx, String userLogin, QueueType ... queueTypes);
-    
-    int getTasksCount(ProcessToolContext ctx, String userLogin, Collection<QueueType> queueTypes);
-    
-    /** Method returns queue size for conditions provided by given filter. Methods is slower then
-     * than {@link getTasksCount} but has full filtering options. It does not load entities to
-     * memory
-     */
-	int getFilteredTasksCount(ProcessInstanceFilter filter, ProcessToolContext ctx);
-
-    List<BpmTask> findUserTasks(ProcessInstance processInstance, ProcessToolContext ctx);
-
-    List<BpmTask> findUserTasks(Integer offset, Integer limit, ProcessToolContext ctx);
-
-    List<BpmTask> findProcessTasks(ProcessInstance pi, ProcessToolContext ctx);
-
-    List<BpmTask> findProcessTasks(ProcessInstance pi, String userLogin, ProcessToolContext ctx);
-
-    List<BpmTask> findProcessTasks(ProcessInstance pi, String userLogin, Set<String> taskNames, ProcessToolContext ctx);
-    
-    /** Find tasks from user process queue with given queue type and login in filter instance */
-    List<BpmTask> findFilteredTasks(ProcessInstanceFilter filter, ProcessToolContext ctx);
-    
-    /** Find tasks from user process queue with given queue type and login in filter instance with given max results limit */
-    List<BpmTask> findFilteredTasks(ProcessInstanceFilter filter, ProcessToolContext ctx, int resultOffset, int maxResults);
-
-    List<BpmTask> findRecentTasks(Calendar minDate, Integer offset, Integer limit, ProcessToolContext ctx);
-
-    Integer getRecentTasksCount(Calendar minDate, ProcessToolContext ctx);
-
-    Collection<BpmTask> getAllTasks(ProcessToolContext ctx);
-
-    BpmTask performAction(ProcessStateAction action, BpmTask bpmTask, ProcessToolContext ctx);
-
-    List<String> getOutgoingTransitionNames(String executionId, ProcessToolContext ctx);
-
     String getUserLogin();
+	String getSubstitutingUserLogin();
+	Collection<String> getRoleNames();
 
-    UserData getUser(ProcessToolContext ctx);
+    void adminCancelProcessInstance(String internalId);
+    void adminForwardProcessTask(String taskId, String userLogin, String targetUserLogin);
+    void adminReassignProcessTask(String taskId, String userLogin);
+    void adminCompleteTask(String taskId, String actionName);
 
-    UserData loadOrCreateUser(ProcessToolContext ctx, UserData userData);
+    List<String> getAvailableLogins(String filter);
 
-    UserData getSubstitutingUser(ProcessToolContext ctx);
-
-    EventBusManager getEventBusManager();
-
-
-//    Collection<BpmTask> getTaskList(ProcessInstance pi, final ProcessToolContext ctx, final boolean mustHaveAssignee);
-
-    List<String> getOutgoingTransitionDestinationNames(String executionId, ProcessToolContext ctx);
-
-    Collection<String> getRoleNames();
-
-    void adminCancelProcessInstance(ProcessInstance pi);
-
-    void adminReassignProcessTask(ProcessInstance pi, BpmTask bpmTask, String userLogin);
-
-    void adminCompleteTask(ProcessInstance pi, BpmTask bpmTask, ProcessStateAction action);
-
-    List<String> getAvailableLogins(final String filter);
-
-    List<GraphElement> getProcessHistory(ProcessInstance pi);
-
-    byte[] getProcessLatestDefinition(String bpmDefinitionKey, String processName);
-
+    byte[] getProcessLatestDefinition(String bpmDefinitionKey);
     byte[] getProcessDefinition(ProcessInstance pi);
-
     byte[] getProcessMapImage(ProcessInstance pi);
 
-    String deployProcessDefinition(String processName, InputStream definitionStream, InputStream processMapImageStream);
+	boolean differsFromTheLatest(String bpmDefinitionKey, byte[] newDefinition);
 
-	Collection<BpmTask> getProcessTaskInQueues(ProcessToolContext ctx, final ProcessInstance processInstance);
+    String deployProcessDefinition(String processId, InputStream definitionStream, InputStream processMapImageStream);
 
-	/** Get all tasks in queue with given queue name 
-	 * @param ctx */
-	List<BpmTask> getQueueTasks(ProcessToolContext ctx, String queueName);
-
-	List<BpmTask> findProcessTasksWithUser(ProcessInstance pi,
-			ProcessToolContext ctx);
+	ProcessDiagram getProcessDiagram(BpmTask task, I18NSource i18NSource);
 }

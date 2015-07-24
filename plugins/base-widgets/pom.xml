@@ -4,7 +4,7 @@
     <parent>
         <artifactId>plugins</artifactId>
         <groupId>org.aperteworkflow</groupId>
-        <version>2.1-SNAPSHOT</version>
+        <version>3.1</version>
     </parent>
 
     <artifactId>base-widgets</artifactId>
@@ -15,31 +15,31 @@
         <dependency>
             <groupId>org.aperteworkflow</groupId>
             <artifactId>integration-interface</artifactId>
-            <version>2.1-SNAPSHOT</version>
+            <version>3.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.aperteworkflow</groupId>
             <artifactId>gui-commons</artifactId>
-            <version>2.1-SNAPSHOT</version>
+            <version>3.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.aperteworkflow</groupId>
             <artifactId>xml-utils</artifactId>
-            <version>2.1-SNAPSHOT</version>
+            <version>3.1</version>
         </dependency>
         <dependency>
             <groupId>org.aperteworkflow</groupId>
             <artifactId>scripting</artifactId>
-            <version>2.1-SNAPSHOT</version>
+            <version>3.1</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
+		<dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>3.0.5.RELEASE</version>
-            <scope>test</scope>
+            <artifactId>spring-beans</artifactId>
+            <version>${spring.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.vaadin</groupId>
@@ -47,6 +47,11 @@
             <version>${vaadin.version}</version>
             <scope>provided</scope>
         </dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
     </dependencies>
 
     <build>
@@ -54,7 +59,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>2.2</version>
+                <version>2.4</version>
                 <configuration>
                     <useDefaultManifestFile>true</useDefaultManifestFile>
                 </configuration>
@@ -63,17 +68,28 @@
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
                 <extensions>true</extensions>
-                <version>2.1.0</version>
+                <version>${maven.bundle.plugin}</version>
                 <configuration>
                     <instructions>
                         <Export-Package>
-                            pl.net.bluesoft.rnd.processtool.ui.basewidgets,pl.net.bluesoft.rnd.processtool.ui.buttons, pl.net.bluesoft.rnd.processtool.ui.buttons.dialog
+                            pl.net.bluesoft.rnd.processtool.ui.basewidgets,
+                            pl.net.bluesoft.rnd.processtool.ui.basewidgets.view,
+                            pl.net.bluesoft.rnd.processtool.ui.basewidgets.datahandler,
+                            pl.net.bluesoft.rnd.processtool.ui.basewidgets.dataprovider,
+                            pl.net.bluesoft.rnd.processtool.ui.buttons, 
+                            pl.net.bluesoft.rnd.processtool.ui.buttons.dialog,
+                            !com.ctc.wstx.stax,
+                            !javax.xml.*
                         </Export-Package>
                         <Import-Package>
                             org.aperteworkflow.scripting,
                             com.vaadin.event.dd.acceptcriteria,
                             com.vaadin.event.dd,
                             com.vaadin.event,
+                            org.springframework.beans.factory;version="3.0",
+                            org.springframework.beans.factory.access;version="3.0",
+                            org.springframework.beans.factory.annotation;version="3.0",
+                            org.springframework.beans.factory.config;version="3.0",
                             pl.net.bluesoft.rnd.pt.utils.lang,
                             com.vaadin.terminal.gwt.client.ui.dd,
                             com.vaadin.terminal,
@@ -82,7 +98,26 @@
                             org.vaadin.addon.customfield,
                             org.aperteworkflow.util.vaadin,
                             org.aperteworkflow.util.vaadin.ui,
-                            pl.net.bluesoft.rnd.util.i18n,javassist.util.proxy,org.hibernate.proxy,org.osgi.framework,pl.net.bluesoft.rnd.processtool.plugins.osgi,pl.net.bluesoft.rnd.processtool.plugins,pl.net.bluesoft.rnd.processtool.model,javax.persistence,pl.net.bluesoft.rnd.processtool.ui.widgets,com.vaadin.data,com.vaadin.ui,com.vaadin,pl.net.bluesoft.rnd.processtool.ui.widgets.impl,*;resolution:=optional
+							pl.net.bluesoft.rnd.util,
+                            pl.net.bluesoft.rnd.util.i18n,
+							pl.net.bluesoft.rnd.processtool.web.domain,
+                            javassist.util.proxy,
+                            org.hibernate.proxy,org.osgi.framework,
+                            pl.net.bluesoft.rnd.processtool.plugins.osgi,
+                            pl.net.bluesoft.rnd.processtool.plugins,
+                            pl.net.bluesoft.rnd.processtool.model,
+                            pl.net.bluesoft.rnd.processtool.ui.widgets.form,
+                            javax.persistence,
+                            pl.net.bluesoft.rnd.processtool.ui.widgets,com.vaadin.data,
+                            com.vaadin.ui,
+                            com.vaadin,
+                            pl.net.bluesoft.rnd.processtool.ui.widgets.impl,
+                            javax.xml.stream;version="1.6.1";resolution:=optional,
+                            com.bea.xml.stream;resolution:=optional,
+                            com.ctc.wstx.stax;resolution:=optional,
+                            org.kxml2.io;resolution:=optional,
+                            javax.servlet;resolution:=optional;version="2.5.0",
+                            *
                         </Import-Package>
                         <Embed-Dependency>*;scope=compile|runtime;inline=false</Embed-Dependency>
                         <Bundle-SymbolicName>pl.net.bluesoft.rnd.processtool.ui.widgets</Bundle-SymbolicName>
@@ -90,16 +125,14 @@
                         <Embed-Directory>lib</Embed-Directory>
                         <Embed-Transitive>true</Embed-Transitive>
                         <ProcessTool-Widget-Enhancement>
-                            pl.net.bluesoft.rnd.processtool.ui.basewidgets.LatestProcessCommentsWidget,
                             pl.net.bluesoft.rnd.processtool.ui.basewidgets.LocaleCaptureWidget,
                             pl.net.bluesoft.rnd.processtool.ui.basewidgets.PanelWidget,
-                            pl.net.bluesoft.rnd.processtool.ui.basewidgets.ProcessCommentsWidget,
-                            pl.net.bluesoft.rnd.processtool.ui.basewidgets.ProcessDataBlockWidget,
-                            pl.net.bluesoft.rnd.processtool.ui.basewidgets.ProcessHistoryWidget,
                             pl.net.bluesoft.rnd.processtool.ui.basewidgets.TabSheetWidget,
                             pl.net.bluesoft.rnd.processtool.ui.basewidgets.VerticalLayoutWidget,
-                            pl.net.bluesoft.rnd.processtool.ui.basewidgets.SwitchWidget
+                            pl.net.bluesoft.rnd.processtool.ui.basewidgets.SwitchWidget,
+							pl.net.bluesoft.rnd.processtool.ui.basewidgets.ProcessDataBlockWidget,
                         </ProcessTool-Widget-Enhancement>
+						<!-- pl.net.bluesoft.rnd.processtool.ui.basewidgets.ProcessDataBlockWidget, -->
                         <ProcessTool-Button-Enhancement>
                             pl.net.bluesoft.rnd.processtool.ui.buttons.AssignUserTaskButton,
                             pl.net.bluesoft.rnd.processtool.ui.buttons.CancelTaskButton,
@@ -110,9 +143,89 @@
                             pl.net.bluesoft.rnd.processtool.ui.buttons.YesNoCommentButton
                         </ProcessTool-Button-Enhancement>
                         <ProcessTool-I18N-Property>basewidgets-messages</ProcessTool-I18N-Property>
+                        <ProcessTool-Widget-View>
+                            pl.net.bluesoft.rnd.processtool.ui.basewidgets.LatestComments,
+							pl.net.bluesoft.rnd.processtool.ui.basewidgets.ProcessComments,
+							pl.net.bluesoft.rnd.processtool.ui.basewidgets.ProcessDataBlockHtmlWidget,
+                            pl.net.bluesoft.rnd.processtool.ui.basewidgets.ProcessDiagramWidget,
+							pl.net.bluesoft.rnd.processtool.ui.basewidgets.UserSubstitutionComment,
+                            pl.net.bluesoft.rnd.processtool.ui.basewidgets.ProcessHistoryWidget,
+                            pl.net.bluesoft.rnd.processtool.ui.basewidgets.ShadowStateWidget,
+                            pl.net.bluesoft.rnd.processtool.ui.basewidgets.UserSubstitutionRequestWidget,
+                            pl.net.bluesoft.rnd.processtool.ui.basewidgets.SectionTitle
+                        </ProcessTool-Widget-View>
+                        <ProcessTool-Step-Enhancement>
+                            pl.net.bluesoft.rnd.processtool.ui.basewidgets.steps.ChooseUserWithRoleStep,
+                            pl.net.bluesoft.rnd.processtool.ui.basewidgets.steps.FinishTasksStep,
+                            pl.net.bluesoft.rnd.processtool.ui.basewidgets.steps.HandleSubstitutionAcceptance,
+                            pl.net.bluesoft.rnd.processtool.ui.basewidgets.steps.SetProcessStateConfigurationId,
+                            pl.net.bluesoft.rnd.processtool.ui.basewidgets.steps.SetVariablesStep,
+                            pl.net.bluesoft.rnd.processtool.ui.basewidgets.steps.CopyVariablesStep,
+                            pl.net.bluesoft.rnd.processtool.ui.basewidgets.steps.LogStep,
+                            pl.net.bluesoft.rnd.processtool.ui.basewidgets.steps.GetAssignedToStep,
+                            pl.net.bluesoft.rnd.processtool.ui.basewidgets.steps.SetProcessBusinessStatus,
+                            pl.net.bluesoft.rnd.processtool.ui.basewidgets.steps.AddNewCommentStep,
+                            pl.net.bluesoft.rnd.processtool.ui.basewidgets.steps.GetStepDate,
+                            pl.net.bluesoft.rnd.processtool.ui.basewidgets.steps.GetUsersWithRoleStep
+                        </ProcessTool-Step-Enhancement>
+                        <ProcessTool-Controller>
+                            pl.net.bluesoft.rnd.processtool.ui.basewidgets.controller.UserController,
+                            pl.net.bluesoft.rnd.processtool.ui.basewidgets.controller.SubstitutionsController,
+                            pl.net.bluesoft.rnd.processtool.ui.basewidgets.controller.CommentsController,
+							org.aperteworkflow.admin.controller.ProcessDefinitionsController,
+							org.aperteworkflow.admin.controller.ProcessInstanceController
+                        </ProcessTool-Controller>
+                        <ProcessTool-TaskList-View>
+                            pl.net.bluesoft.rnd.processtool.ui.basewidgets.view.BpmQueueView
+                        </ProcessTool-TaskList-View>
+                      <!--  <ProcessTool-Widget-Script>
+                        requests-scripts.js;provider:=file
+                        </ProcessTool-Widget-Script>-->
                     </instructions>
                 </configuration>
             </plugin>
         </plugins>
     </build>
+	
+		<!-- Profil dev do automatycznego kopiowania jarow do osgi -->
+    <profiles>
+    
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+	            <plugins>
+		            <plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-dependency-plugin</artifactId>
+						<version>2.4</version>
+						<executions>
+							<execution>
+								 <id>copy-installed</id>
+								<phase>install</phase>
+								<goals>
+								  <goal>copy</goal>
+								</goals>
+								<configuration>
+									<artifactItems>
+										<artifactItem>
+											<groupId>${project.groupId}</groupId>
+											<artifactId>${project.artifactId}</artifactId>
+											<type>jar</type>
+											<version>${project.version}</version>
+											<overWrite>true</overWrite>
+											<outputDirectory>${osgi.dir}</outputDirectory>
+											<destFileName>${project.artifactId}-${project.version}.jar</destFileName>
+										</artifactItem>
+									</artifactItems>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

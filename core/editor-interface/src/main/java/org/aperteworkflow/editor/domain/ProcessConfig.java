@@ -5,19 +5,19 @@ import pl.net.bluesoft.rnd.pt.utils.lang.Lang2;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * Main configuration for the process editor application
  */
 public class ProcessConfig implements Serializable {
-
     private List<Permission> processPermissions;
     private List<Queue> queues;
-    
-    private String taskItemClass;
+
     private String description;
     private String comment;
-    private String dictionary;
+    private String version;
     
     // This Map should be parametrized as <Language, String> however Jackson does not support
     // this out of the box, @see http://stackoverflow.com/questions/6371092/can-not-find-a-map-key-deserializer-for-type-simple-type-class-com-comcast-i
@@ -26,7 +26,9 @@ public class ProcessConfig implements Serializable {
 
     private byte[] processIcon;
 	private String defaultLanguage;
-
+	private String defaultStepInfo;
+	private String externalKeyPattern;
+	private String processGroup;
 
 	public List<Permission> getProcessPermissions() {
         return processPermissions;
@@ -76,20 +78,12 @@ public class ProcessConfig implements Serializable {
         this.description = description;
     }
 
-	public String getDictionary() {
-		return dictionary;
+	public String getVersion() {
+		return version;
 	}
 
-	public void setDictionary(String dictionary) {
-		this.dictionary = dictionary;
-	}
-
-	public String getTaskItemClass() {
-		return taskItemClass;
-	} 
-
-	public void setTaskItemClass(String taskItemClass) {
-		this.taskItemClass = taskItemClass;
+	public void setVersion(String version) {
+		this.version = version;
 	}
 
 	public String getDefaultLanguage() {
@@ -98,5 +92,40 @@ public class ProcessConfig implements Serializable {
 
 	public void setDefaultLanguage(String defaultLanguage) {
 		this.defaultLanguage = defaultLanguage;
+	}
+
+	public String getDefaultStepInfo() {
+		return defaultStepInfo;
+	}
+
+	public void setDefaultStepInfo(String defaultStepInfo) {
+		this.defaultStepInfo = defaultStepInfo;
+	}
+
+	public String getExternalKeyPattern() {
+		return externalKeyPattern;
+	}
+
+	public void setExternalKeyPattern(String externalKeyPattern) {
+		this.externalKeyPattern = externalKeyPattern;
+	}
+
+	public String getProcessGroup() {
+		return processGroup;
+	}
+
+	public void setProcessGroup(String processGroup) {
+		this.processGroup = processGroup;
+	}
+
+	// used by modeler
+
+	public Set<String> getUsedLanguages() {
+		Set<String> result = new TreeSet<String>();
+
+		for (String locale : messages.keySet()) {
+			result.add(locale.split("_")[0].trim().toLowerCase());
+		}
+		return result;
 	}
 }

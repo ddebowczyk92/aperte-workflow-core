@@ -4,7 +4,7 @@
     <parent>
         <artifactId>plugins</artifactId>
         <groupId>org.aperteworkflow</groupId>
-        <version>2.1-SNAPSHOT</version>
+        <version>3.1</version>
     </parent>
 
     <artifactId>bpm-notifications</artifactId>
@@ -12,22 +12,16 @@
     <packaging>bundle</packaging>
 
     <dependencies>
-	    <dependency>
-            <groupId>org.quartz-scheduler</groupId>
-            <artifactId>quartz</artifactId>
-            <version>2.1.1</version>
-            <scope>provided</scope>
-        </dependency>
         <dependency>
             <groupId>org.aperteworkflow</groupId>
             <artifactId>scheduler-integration</artifactId>
-            <version>2.1-SNAPSHOT</version>
+            <version>3.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.aperteworkflow</groupId>
             <artifactId>integration-interface</artifactId>
-            <version>2.1-SNAPSHOT</version>
+            <version>3.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -39,13 +33,20 @@
         <dependency>
             <groupId>javax.mail</groupId>
             <artifactId>mail</artifactId>
-            <version>1.4.3</version>
+            <version>${javax.mail.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.freemarker</groupId>
             <artifactId>freemarker</artifactId>
-            <version>2.3.19</version>
+            <version>${freemarker.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.aperteworkflow</groupId>
+            <artifactId>integration</artifactId>
+            <version>3.1</version>
+            <scope>provided</scope>
         </dependency>
 		<dependency>
             <groupId>com.vaadin</groupId>
@@ -53,11 +54,22 @@
             <version>${vaadin.version}</version>
             <scope>provided</scope>
         </dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>${jackson.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.aperteworkflow</groupId>
+			<artifactId>files-repository</artifactId>
+			<version>3.1</version>
+			<scope>provided</scope>
+		</dependency>
         <dependency>
-            <groupId>org.aperteworkflow</groupId>
-            <artifactId>gui-commons</artifactId>
-            <version>2.1-SNAPSHOT</version>
-            <scope>provided</scope>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>14.0.1</version>
         </dependency>
     </dependencies>
 
@@ -75,32 +87,72 @@
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
                 <extensions>true</extensions>
-                <version>2.3.7</version>
+                <version>${maven.bundle.plugin}</version>
                 <configuration>
                     <instructions>
                         <Export-Package>
+                        	pl.net.bluesoft.rnd.pt.ext.bpmnotifications,
                             pl.net.bluesoft.rnd.pt.ext.bpmnotifications.service,
-                            pl.net.bluesoft.rnd.pt.ext.bpmnotifications.util,
+                            pl.net.bluesoft.rnd.pt.ext.bpmnotifications.utils,
                             pl.net.bluesoft.rnd.pt.ext.bpmnotifications.templates,
                             pl.net.bluesoft.rnd.pt.ext.bpmnotifications.sessions,
-                            pl.net.bluesoft.rnd.pt.ext.bpmnotifications.model
+                            pl.net.bluesoft.rnd.pt.ext.bpmnotifications.model,
+                            pl.net.bluesoft.rnd.pt.ext.bpmnotifications.addons,
+                            pl.net.bluesoft.rnd.pt.ext.bpmnotifications.facade,
+                            pl.net.bluesoft.rnd.pt.ext.bpmnotifications.config,
+                            pl.net.bluesoft.rnd.pt.ext.bpmnotifications.controller
                         </Export-Package>
                         <Import-Package>
+                            org.aperteworkflow.bpmnotifications.addons.impl;resolution:=optional,
                             javax.mail;version=!,
-                            pl.net.bluesoft.rnd.util.i18n.impl,
+							javax.mail.internet;version=!,
+							javax.mail.util;version=!,
+							pl.net.bluesoft.rnd.util.i18n.impl,
                             javassist.util.proxy,org.hibernate.proxy,
                             org.osgi.framework,
-                            javax.mail.internet;version=!,
+                            freemarker.cache;version="2.3.22",
+                            freemarker.template;version="2.3.22",
+                            org.springframework.jdbc,
+                            org.springframework.jdbc.datasource,
+                            org.hibernate.exception,
                             *;resolution:=optional,
                             pl.net.bluesoft.util.eventbus,
-                            org.quartz,
                             pl.net.bluesoft.rnd.pt.ext.sched.service,
+                            pl.net.bluesoft.rnd.processtool.di,
                             pl.net.bluesoft.rnd.processtool.plugins,
                             pl.net.bluesoft.rnd.processtool.plugins.osgi,
+                            pl.net.bluesoft.rnd.processtool.hibernate,
+                            pl.net.bluesoft.rnd.processtool.hibernate.lock,
+                            pl.net.bluesoft.rnd.processtool.hibernate.lock.exception,
+                            pl.net.bluesoft.rnd.processtool.hibernate.transform,
+                            pl.net.bluesoft.rnd.processtool.hibernate.types,
                             org.aperteworkflow.util.vaadin,
                             org.aperteworkflow.util.vaadin.ui,
                             org.aperteworkflow.util.vaadin.ui.table,
+                            org.quartz,
+                            pl.net.bluesoft.rnd.pt.ext.bpmnotifications,
+                            pl.net.bluesoft.rnd.pt.ext.bpmnotifications.service,
+                            pl.net.bluesoft.rnd.pt.ext.bpmnotifications.utils,
+                            pl.net.bluesoft.rnd.pt.ext.bpmnotifications.templates,
+                            pl.net.bluesoft.rnd.pt.ext.bpmnotifications.sessions,
+                            pl.net.bluesoft.rnd.pt.ext.bpmnotifications.model,
+                            pl.net.bluesoft.rnd.pt.ext.bpmnotifications.addons,
+                            pl.net.bluesoft.rnd.pt.ext.bpmnotifications.facade,
+							org.codehaus.jackson;version="1.9.13",
+							org.codehaus.jackson.map;version="1.9.13",
+							org.codehaus.jackson.type;version="1.9.13",
+							org.codehaus.jackson.map.type;version="1.9.13"
                         </Import-Package>
+                        <Private-Package>
+                        	pl.net.bluesoft.rnd.pt.ext.bpmnotifications,
+							pl.net.bluesoft.rnd.pt.ext.bpmnotifications.dao,
+                        	pl.net.bluesoft.rnd.pt.ext.bpmnotifications.event,
+                        	pl.net.bluesoft.rnd.pt.ext.bpmnotifications.portlet,
+							pl.net.bluesoft.rnd.pt.ext.bpmnotifications.portlet.components,
+							pl.net.bluesoft.rnd.pt.ext.bpmnotifications.settings,
+							pl.net.bluesoft.rnd.pt.ext.bpmnotifications.step,
+                        	pl.net.bluesoft.rnd.pt.ext.bpmnotifications.addons.mock.impl,
+                        </Private-Package>
                         <Embed-Dependency>*;scope=compile|runtime;inline=false</Embed-Dependency>
                         <Bundle-Activator>pl.net.bluesoft.rnd.pt.ext.bpmnotifications.Activator</Bundle-Activator>
                         <Bundle-SymbolicName>pl.net.bluesoft.rnd.pt.ext.bpmnotifications</Bundle-SymbolicName>
@@ -109,15 +161,65 @@
                         <Embed-Transitive>true</Embed-Transitive>
                         <ProcessTool-Step-Enhancement>pl.net.bluesoft.rnd.pt.ext.bpmnotifications.step.SendMailStep</ProcessTool-Step-Enhancement>
                         <ProcessTool-Model-Enhancement>
-                        	pl.net.bluesoft.rnd.pt.ext.bpmnotifications.model.BpmNotificationTemplate,
+                            pl.net.bluesoft.rnd.pt.ext.bpmnotifications.model.BpmNotificationTemplate,
                             pl.net.bluesoft.rnd.pt.ext.bpmnotifications.model.BpmNotification,
                             pl.net.bluesoft.rnd.pt.ext.bpmnotifications.model.BpmNotificationConfig,
-                            pl.net.bluesoft.rnd.pt.ext.bpmnotifications.model.BpmNotificationMailProperties
+                            pl.net.bluesoft.rnd.pt.ext.bpmnotifications.model.BpmNotificationMailProperties,
+                            pl.net.bluesoft.rnd.processtool.model.config.ProcessToolSetting
                         </ProcessTool-Model-Enhancement>
                         <ProcessTool-I18N-Property>messages</ProcessTool-I18N-Property>
+                        <ProcessTool-Controller>
+                            pl.net.bluesoft.rnd.pt.ext.bpmnotifications.controller.SettingsController,
+                            pl.net.bluesoft.rnd.pt.ext.bpmnotifications.controller.BpmNotificationsController
+                        </ProcessTool-Controller>
+                        <ProcessTool-Spring-Beans>
+                            pl.net.bluesoft.rnd.pt.ext.bpmnotifications.BpmNotificationEngine,
+                            pl.net.bluesoft.rnd.pt.ext.bpmnotifications.sessions.IMAPPropertiesSessionProvider
+                        </ProcessTool-Spring-Beans>
                     </instructions>
                 </configuration>
             </plugin>
         </plugins>
     </build>
+	    <!-- Profil dev do automatycznego kopiowania jarow do osgi -->
+    <profiles>
+    
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+	            <plugins>
+		            <plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-dependency-plugin</artifactId>
+						<version>${maven.dependency.version}</version>
+						<executions>
+							<execution>
+								 <id>copy-installed</id>
+								<phase>install</phase>
+								<goals>
+								  <goal>copy</goal>
+								</goals>
+								<configuration>
+									<artifactItems>
+										<artifactItem>
+											<groupId>${project.groupId}</groupId>
+											<artifactId>${project.artifactId}</artifactId>
+											<type>jar</type>
+											<version>${project.version}</version>
+											<overWrite>true</overWrite>
+											<outputDirectory>${osgi.dir}</outputDirectory>
+											<destFileName>${project.artifactId}-${project.version}.jar</destFileName>
+										</artifactItem>
+									</artifactItems>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

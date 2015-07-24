@@ -7,9 +7,13 @@ import java.util.Collection;
 /**
  * @author tlipski@bluesoft.net.pl
  */
-public interface ProcessToolSessionFactory extends ProcessToolBpmConstants {
+public interface ProcessToolSessionFactory {
+	String getBpmDefinitionLanguage();
 
-	ProcessToolBpmSession createSession(UserData user, Collection<String> roles);
+	ProcessToolBpmSession createSession(UserData user);
+
+	ProcessToolBpmSession createSession(String userLogin);
+	ProcessToolBpmSession createSession(String userLogin, Collection<String> roles);
 
     ProcessToolBpmSession createAutoSession();
 	ProcessToolBpmSession createAutoSession(Collection<String> roles);

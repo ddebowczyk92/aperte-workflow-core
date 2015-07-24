@@ -1,22 +1,21 @@
 package org.aperteworkflow.service;
 
+import org.aperteworkflow.service.fault.AperteWsIllegalArgumentException;
+import org.aperteworkflow.service.fault.AperteWsWrongArgumentException;
 import pl.net.bluesoft.rnd.processtool.hibernate.ResultsPageWrapper;
-import pl.net.bluesoft.rnd.processtool.model.*;
+import pl.net.bluesoft.rnd.processtool.model.ProcessInstance;
+import pl.net.bluesoft.rnd.processtool.model.ProcessInstanceLog;
+import pl.net.bluesoft.rnd.processtool.model.UserDataBean;
 import pl.net.bluesoft.rnd.processtool.model.config.ProcessDefinitionConfig;
 import pl.net.bluesoft.rnd.processtool.model.config.ProcessQueueConfig;
-import pl.net.bluesoft.rnd.processtool.model.config.ProcessStateAction;
 import pl.net.bluesoft.rnd.processtool.model.config.ProcessStateConfiguration;
+import pl.net.bluesoft.rnd.processtool.model.nonpersistent.BpmTaskBean;
 
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-
-import org.aperteworkflow.service.fault.AperteWsIllegalArgumentException;
-import org.aperteworkflow.service.fault.AperteWsWrongArgumentException;
- 
 /**
  * @author tlipski@bluesoft.net.pl
  * @author kkolodziej@bluesoft.net.pl
@@ -62,8 +61,7 @@ public interface AperteWorkflowDataService {
 	 * @throws AperteWsWrongArgumentException If process instance does not exists (including param null or empty values).  
 	 * @return  Process instance from pt_process_instance.
 	 *</pre>*/
-	ProcessInstance getProcessInstanceByInternalId(String internalId)
-			throws AperteWsWrongArgumentException;
+	ProcessInstance getProcessInstanceByInternalId(String internalId) throws AperteWsWrongArgumentException;
 
 	/**<pre>
 	 * Returns the process instance, on the basis of externalId.
@@ -74,18 +72,6 @@ public interface AperteWorkflowDataService {
 	 * @return New Process Instance
 	 *</pre>*/
 	ProcessInstance getProcessInstanceByExternalId(String externalId);
-
-	/**<pre>
-	 * Returns the process instance, on the basis of externalId.
-	 * 
-	 *  <b>Warning! Method is exclude from WSDL!</b>
-	 * 
-	 * @param key key from pt_process_instance table
-	 * @param processType do nothing, filing this attribute, has no consequence.
-	 * @return List od Process instances.
-	 *</pre>*/
-	List<ProcessInstance> findProcessInstancesByKeyword(String key,
-			String processType);
 
 	/**<pre>
 	 * Process deletion.
@@ -107,15 +93,6 @@ public interface AperteWorkflowDataService {
 	 *</pre>*/
 	Collection<ProcessInstanceLog> getUserHistory(String userLogin,
 			Date startDate, Date endDate) throws AperteWsWrongArgumentException;
-
-	/**<pre>
-	 * The method creates user, or  returns existing one if logins  match each other.
-	 * 
-	 * @param ud User Informations*
-	 * @return Created user.
-	 * @return User in form of Userdata object.
-	 *</pre>*/
-	UserData findOrCreateUser(UserData ud);
 
 	/**<pre>
 	 * Method finds the process instance using Lucena. 
@@ -143,8 +120,7 @@ public interface AperteWorkflowDataService {
 	 * @param minDate The oldest allowed date.
 	 * @return List of processInstances,
 	 *</pre>*/
-	Collection<ProcessInstance> getUserProcessesAfterDate(UserData userData,
-			Calendar minDate);
+	Collection<ProcessInstance> getUserProcessesAfterDate(UserDataBean userData, Date minDate);
 
 	/**<pre>
 	 * Returns process witch, assigned user is userData, and entry date is no older than minDate. Results are limited with "limit", and "offset".
@@ -157,8 +133,8 @@ public interface AperteWorkflowDataService {
 	 * @param limit Maximum number of results.
 	 * @return List of processInstances.
 	 *</pre>*/
-	ResultsPageWrapper<ProcessInstance> getRecentProcesses(UserData userData,
-			Calendar minDate, Integer offset, Integer limit);
+	ResultsPageWrapper<ProcessInstance> getRecentProcesses(UserDataBean userData,
+														   Date minDate, Integer offset, Integer limit);
 
 	/**<pre>
 	 * Service returns a list of  all, process definitions. From the table: "pt_process_definition_config".
@@ -205,7 +181,7 @@ public interface AperteWorkflowDataService {
 	 * @param task BpmTask only "taskName", and "processInstance/definition/id" is mandatory
 	 * @return process State configuration.
 	 *</pre>*/
-	ProcessStateConfiguration getProcessStateConfiguration(BpmTask task);
+	ProcessStateConfiguration getProcessStateConfiguration(BpmTaskBean task);
 
 	/**<pre>
 	 * Creates a new process or alter the configuration of the old one. 
@@ -235,8 +211,7 @@ public interface AperteWorkflowDataService {
 	 * @param cfg ProcessDefinitionConfig only bpmDefinitionKey is taken for consideration.
 	 * @return Version of configuration.
 	 *</pre>*/
-	Collection<ProcessDefinitionConfig> getConfigurationVersions(
-			ProcessDefinitionConfig cfg);
+	Collection<ProcessDefinitionConfig> getConfigurationVersions(ProcessDefinitionConfig cfg);
 
 	/**<pre>
 	 * Method creates or updates  ProcessQueueConfig 
@@ -270,17 +245,17 @@ public interface AperteWorkflowDataService {
 	 * @param filter user login or email which data base will be searched.
 	 * @return List of all available Logins.
 	 *</pre>*/
-	List<String> getAvailableLogins(final String filter);
+	List<String> getAvailableLogins(String filter);
 
 	/**<pre>
 	 * 
 	 * Method searches user, based one userLogin.
 	 * 
 	 * @param userLogin user login
-	 * @return User in form of UserData.
+	 * @return User in form of UserDataBean.
 	 * @throws AperteWsWrongArgumentException If user does not exists (including param null or empty values). 
 	 *</pre>*/
-	UserData findUser(String userLogin) throws AperteWsWrongArgumentException;
+	UserDataBean getUserByLogin(String userLogin) throws AperteWsWrongArgumentException;
 
 	/**<pre>
 	 * 
@@ -294,7 +269,7 @@ public interface AperteWorkflowDataService {
 	 * @throws AperteWsWrongArgumentException If user login is wrong and user does not exists (including param null or empty values). 
 	 *</pre>*/
 	Collection<ProcessInstance> getUserProcessesBetweenDatesByUserLogin(
-			String userLogin, Calendar minDate, Calendar maxDate)
+			String userLogin, Date minDate, Date maxDate)
 			throws AperteWsWrongArgumentException;
 
 	/**<pre>
@@ -331,8 +306,7 @@ public interface AperteWorkflowDataService {
 	 * @return Value of simple attribute.
 	 * @throws AperteWsWrongArgumentException If internalId is wrong and process Instance, does not exists (including param null or empty values).
 	 *</pre>*/
-	ProcessInstanceSimpleAttribute setSimpleAttribute(String key,
-			String newValue, String internalId) throws AperteWsWrongArgumentException;
+	void setSimpleAttribute(String key, String newValue, String internalId) throws AperteWsWrongArgumentException;
 
 	/**<pre> 
 	 * Method returns the attribute value of the process.
@@ -353,8 +327,7 @@ public interface AperteWorkflowDataService {
 	 * @return List of all simple attributes in process instance
 	 * @throws AperteWsWrongArgumentException If process Instance, does not exists (including param null or empty values).
 	 *</pre>*/
-	List<ProcessInstanceSimpleAttribute> getSimpleAttributesList(
-			String internalId) throws AperteWsWrongArgumentException;
+	HashMap<String, String> getSimpleAttributesList(String internalId) throws AperteWsWrongArgumentException;
 
 	/**<pre>
 	 * The system returns a list of process Instances based on internalId list.
@@ -379,16 +352,5 @@ public interface AperteWorkflowDataService {
 	
 	byte[] getProcessLatestDefinition(String bpmDefinitionKey,
 			String processName) throws AperteWsIllegalArgumentException;
-
-	/**<pre>
-	 * This method returns a list of all possible actions in the process. Based on definition.
-	 * 
-	 * @param definitionName  definition Name  eg "Complaint"
-	 * @return List of all action in the Definition.
-	 * @throws AperteWsWrongArgumentException If definitionName is wrong and Definition, does not exists (including param null or empty values).
-	 *</pre>*/
-	List<ProcessStateAction> getAllActionsListFromDefinition(String definitionName)
-			throws AperteWsWrongArgumentException;
-
 }
 

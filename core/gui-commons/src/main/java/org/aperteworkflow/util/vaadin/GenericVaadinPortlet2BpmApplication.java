@@ -1,35 +1,16 @@
 package org.aperteworkflow.util.vaadin;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.EventRequest;
-import javax.portlet.EventResponse;
-import javax.portlet.PortletSession;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
-
-import org.aperteworkflow.util.liferay.LiferayBridge;
-import org.aperteworkflow.util.liferay.PortalBridge;
-
-import pl.net.bluesoft.rnd.processtool.ProcessToolContext;
+import com.vaadin.Application;
+import com.vaadin.service.ApplicationContext;
+import com.vaadin.terminal.gwt.server.PortletApplicationContext2;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.Window;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import pl.net.bluesoft.rnd.processtool.bpm.ProcessToolBpmSession;
+import pl.net.bluesoft.rnd.processtool.di.ObjectFactory;
 import pl.net.bluesoft.rnd.processtool.model.UserData;
-import pl.net.bluesoft.rnd.processtool.ui.widgets.ProcessToolGuiCallback;
+import pl.net.bluesoft.rnd.processtool.usersource.IPortalUserSource;
 import pl.net.bluesoft.rnd.util.i18n.I18NSource;
 import pl.net.bluesoft.rnd.util.i18n.I18NSourceFactory;
 import pl.net.bluesoft.util.eventbus.EventListener;
@@ -37,17 +18,20 @@ import pl.net.bluesoft.util.eventbus.listenables.Listenable;
 import pl.net.bluesoft.util.eventbus.listenables.ListenableSupport;
 import pl.net.bluesoft.util.lang.Strings;
 
-import com.vaadin.Application;
-import com.vaadin.service.ApplicationContext;
-import com.vaadin.terminal.gwt.server.PortletApplicationContext2;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Window;
+import javax.portlet.*;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import static pl.net.bluesoft.rnd.processtool.plugins.ProcessToolRegistry.Util.getRegistry;
 
 /**
  * @author tlipski@bluesoft.net.pl
  */
 public abstract class GenericVaadinPortlet2BpmApplication extends Application implements
-        PortletApplicationContext2.PortletListener, TransactionProvider, I18NSource, VaadinExceptionHandler,
+        PortletApplicationContext2.PortletListener, I18NSource, VaadinExceptionHandler,
         Listenable<GenericVaadinPortlet2BpmApplication.RequestParameterListener> {
 
     private static Logger logger = Logger.getLogger(GenericVaadinPortlet2BpmApplication.class.getName());
@@ -61,10 +45,12 @@ public abstract class GenericVaadinPortlet2BpmApplication extends Application im
     protected ProcessToolBpmSession bpmSession;
     protected I18NSource i18NSource;
 
-    private List<UserData> users;
     private String showKeysString;
-    private boolean showExitWarning = false;
+    private boolean showExitWarning;
     private Locale lastLocale;
+    
+    @Autowired
+    protected IPortalUserSource portalUserSource;
     
     protected abstract void initializePortlet();
 
@@ -72,15 +58,19 @@ public abstract class GenericVaadinPortlet2BpmApplication extends Application im
 
     protected final ListenableSupport<RequestParameterListener> listenable = ListenableSupport.strongListenable();
 
-	
-
     @Override
-    public void init() {
+    public void init() 
+    {
         final Window mainWindow = new Window();
         setMainWindow(mainWindow);
         ApplicationContext applicationContext = getContext();
-        if (applicationContext instanceof PortletApplicationContext2) {
+        
+        
+        SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
+        if (applicationContext instanceof PortletApplicationContext2) 
+        {
             PortletApplicationContext2 portletCtx = (PortletApplicationContext2) applicationContext;
+            
             portletCtx.addPortletListener(this, this);
         } else {
             mainWindow.addComponent(new Label(getMessage("please.use.from.a.portlet")));
@@ -88,13 +78,9 @@ public abstract class GenericVaadinPortlet2BpmApplication extends Application im
     }
 
     @Override
-    public void withTransaction(final ProcessToolGuiCallback r) {
-        ProcessToolContext ctx = ProcessToolContext.Util.getThreadProcessToolContext();
-        r.callback(ctx, bpmSession);
-    }
-
-    public void handleRenderRequest(RenderRequest request, RenderResponse response, Window window) {
-        showKeysString = PortalBridge.getCurrentRequestParameter("showKeys");
+	public void handleRenderRequest(RenderRequest request, RenderResponse response, Window window)
+    {
+        showKeysString = request.getParameter("showKeys");
 
 		if (request.getLocale() != null) {
 			setLocale(request.getLocale());
@@ -108,9 +94,11 @@ public abstract class GenericVaadinPortlet2BpmApplication extends Application im
 		}
 		lastLocale = getLocale();
 		
-
-		user = PortalBridge.getLiferayUser(request);
-        userRoles = user != null ? user.getRoleNames() : Collections.<String>emptyList();
+    	/* init user source */
+		ObjectFactory.inject(this);
+		
+		user = portalUserSource.getUserByRequest(request);
+        userRoles = user != null ? user.getRoles() : Collections.<String>emptyList();
 
         if (user == null) {
             if (loginRequired) {
@@ -119,23 +107,21 @@ public abstract class GenericVaadinPortlet2BpmApplication extends Application im
                 return;
             }
         } else {
-            PortletSession session = ((PortletApplicationContext2) (getContext())).getPortletSession();
+            PortletSession session = ((PortletApplicationContext2)getContext()).getPortletSession();
             bpmSession = (ProcessToolBpmSession) session.getAttribute("bpmSession", PortletSession.APPLICATION_SCOPE);
+
             if (bpmSession == null) {
-                ProcessToolContext ctx = ProcessToolContext.Util.getThreadProcessToolContext();
                 session.setAttribute("bpmSession",
-                        bpmSession = ctx.getProcessToolSessionFactory().createSession(user, userRoles),
+                        bpmSession = getRegistry().getProcessToolSessionFactory().createSession(user.getLogin(), userRoles),
                         PortletSession.APPLICATION_SCOPE);
             }
-            setUser(user);
-            
         }
         if (!initialized) {
             initializePortlet();
         }
         initialized = true;
         renderPortlet();
-        handleRequestListeners();
+        handleRequestListeners(request);
     }
 
     public boolean showKeys() {
@@ -150,20 +136,9 @@ public abstract class GenericVaadinPortlet2BpmApplication extends Application im
         this.loginRequired = loginRequired;
     }
 
-    public UserData getUser() {
+    @Override
+	public UserData getUser() {
         return user;
-    }
-
-    public UserData getUser(String login) {
-        return LiferayBridge.getLiferayUser(login, user.getCompanyId());
-    }
-
-    public UserData getUserByEmail(String email) {
-        return LiferayBridge.getLiferayUserByEmail(email, user.getCompanyId());
-    }
-
-    public List<UserData> getAllUsers() {
-        return users == null ? (users = LiferayBridge.getAllUsersByCurrentUser(user)) : users;
     }
 
     public void setUser(UserData user) {
@@ -172,22 +147,12 @@ public abstract class GenericVaadinPortlet2BpmApplication extends Application im
 
     @Override
     public String getMessage(String key) {
-        return i18NSource.getMessage(key, key);
-    }
-
-    @Override
-    public String getMessage(String key, String defaultValue) {
-        return i18NSource.getMessage(key, defaultValue);
+        return i18NSource.getMessage(key);
     }
 
     @Override
     public String getMessage(String key, Object... params) {
         return i18NSource.getMessage(key, params);
-    }
-
-    @Override
-    public String getMessage(String key, String defaultValue, Object... params) {
-        return i18NSource.getMessage(key, defaultValue, params);
     }
 
 	@Override
@@ -197,21 +162,25 @@ public abstract class GenericVaadinPortlet2BpmApplication extends Application im
 		this.i18NSource = I18NSourceFactory.createI18NSource(locale);
 	}
 
+	@Override
 	public void handleActionRequest(ActionRequest request, ActionResponse response, Window window) {
         // nothing
     }
 
-    public void handleEventRequest(EventRequest request, EventResponse response, Window window) {
+    @Override
+	public void handleEventRequest(EventRequest request, EventResponse response, Window window) {
         // nothing
     }
 
-    public void handleResourceRequest(ResourceRequest request, ResourceResponse response, Window window) {
+    @Override
+	public void handleResourceRequest(ResourceRequest request, ResourceResponse response, Window window) {
         if (showExitWarning && Strings.hasText(request.getResourceID()) && request.getResourceID().equals("UIDL")) {
             VaadinUtility.registerClosingWarning(getMainWindow(), getMessage("page.reload"));
         }
     }
 
-    public void onThrowable(Throwable e) {
+    @Override
+	public void onThrowable(Throwable e) {
         logger.log(Level.SEVERE, e.getMessage(), e);
 		if (e instanceof TaskAlreadyCompletedException) {
 			VaadinUtility.errorNotification(this, i18NSource, i18NSource.getMessage("task.already.completed"));
@@ -237,7 +206,7 @@ public abstract class GenericVaadinPortlet2BpmApplication extends Application im
         this.showExitWarning = showExitWarning;
     }
 
-    public static abstract class RequestParameterListener implements EventListener<RequestParameterEvent> {
+    public abstract static class RequestParameterListener implements EventListener<RequestParameterEvent> {
         protected final Set<String> supportedParameters;
 
         public RequestParameterListener(final String... supportedParameters) {
@@ -280,7 +249,7 @@ public abstract class GenericVaadinPortlet2BpmApplication extends Application im
             this.parameterMap = parameterMap;
         }
 
-        public Map getParameterMap() {
+        public Map<String, String[]> getParameterMap() {
             return parameterMap;
         }
     }
@@ -295,9 +264,10 @@ public abstract class GenericVaadinPortlet2BpmApplication extends Application im
         listenable.addListener(listener);
     }
 
-    private void handleRequestListeners() {
-        if (listenable.hasListeners()) {
-            Map<String, String[]> parameterMap = PortalBridge.getCurrentRequestParameterMap();
+    private void handleRequestListeners(RenderRequest request) {
+        if (listenable.hasListeners()) 
+        {
+            Map<String, String[]> parameterMap = request.getParameterMap();
             listenable.fireEvent(new RequestParameterEvent(parameterMap));
         }
     }

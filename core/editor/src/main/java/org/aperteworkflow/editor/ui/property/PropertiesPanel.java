@@ -1,15 +1,22 @@
 package org.aperteworkflow.editor.ui.property;
 
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Panel;
-import com.vaadin.ui.VerticalLayout;
-import org.aperteworkflow.editor.stepeditor.user.Property;
-import org.aperteworkflow.editor.stepeditor.user.WidgetConfigFormFieldFactory;
-import pl.net.bluesoft.rnd.util.i18n.I18NSource;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.vaadin.ui.Field;
+import org.aperteworkflow.editor.stepeditor.user.Property;
+import org.aperteworkflow.editor.stepeditor.user.WidgetConfigFormFieldFactory;
+
+import pl.net.bluesoft.rnd.processtool.ProcessToolContext;
+import pl.net.bluesoft.rnd.processtool.ProcessToolContextCallback;
+import pl.net.bluesoft.rnd.util.i18n.I18NSource;
+
+import com.vaadin.ui.Label;
+import com.vaadin.ui.Panel;
+import com.vaadin.ui.VerticalLayout;
+
+import static pl.net.bluesoft.rnd.processtool.plugins.ProcessToolRegistry.Util.getRegistry;
 
 public class PropertiesPanel extends Panel {
 
@@ -54,13 +61,23 @@ public class PropertiesPanel extends Panel {
 		layout.addComponent(propertiesForm);
 	}
 	
-	public void refreshForm(boolean setCaption, List<Property<?>> properties) {
-		refreshForm(setCaption);
-		
-		for (Property<?> property : properties) {
-			final com.vaadin.ui.Field field = fieldFactory.createField(property, propertiesForm);
-			propertiesForm.addField(property, field);
-		}
+	public void refreshForm(final boolean setCaption, final List<Property<?>> properties) 
+	{
+		getRegistry().withProcessToolContext(new ProcessToolContextCallback() {
+
+			@Override
+			public void withContext(ProcessToolContext ctx) {
+				refreshForm(setCaption);
+
+				for (Property<?> property : properties) {
+					Field field = fieldFactory.createField(property, propertiesForm);
+					propertiesForm.addField(property, field);
+				}
+
+			}
+
+		});
+
 	}
 	
     public void refreshForm(boolean setCaption, Map<String,Object> valuesMap) { 
@@ -68,7 +85,7 @@ public class PropertiesPanel extends Panel {
 	    
     	List<Property<?>> properties = classInfo.getProperties();
 		for (Property<?> property : properties) {
-			final com.vaadin.ui.Field field = fieldFactory.createField(property, propertiesForm);
+			final Field field = fieldFactory.createField(property, propertiesForm);
 			propertiesForm.addField(property, field);
 			Object value = valuesMap.get(property.getPropertyId());
 			
@@ -97,7 +114,7 @@ public class PropertiesPanel extends Panel {
 		
 		for (Object propertyId : propertiesForm.getItemPropertyIds()) {
             Property prop = (Property)propertyId;
-			com.vaadin.ui.Field field = propertiesForm.getField(propertyId);
+			Field field = propertiesForm.getField(propertyId);
             Object obj = field.getValue();
             
         	if (obj == null) { // TODO this is at least strange and should be reconsidered

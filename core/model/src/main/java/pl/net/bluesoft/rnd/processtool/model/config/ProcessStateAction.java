@@ -18,8 +18,10 @@ import static pl.net.bluesoft.util.lang.FormatUtil.nvl;
 @Entity
 @Table(name = "pt_process_state_action")
 public class ProcessStateAction extends AbstractPersistentEntity {
-    final static public String PRIMARY_ACTION = "primary";
-    final static public String SECONDARY_ACTION = "secondary";
+    public static final String PRIMARY_ACTION = "primary";
+    public static final String SECONDARY_ACTION = "secondary";
+
+    public static final String ATTR_ICON_NAME = "iconName";
 
 	@Id
 	@GeneratedValue(generator = "idGenerator")
@@ -35,7 +37,6 @@ public class ProcessStateAction extends AbstractPersistentEntity {
 	@Column(name = "id")
 	protected Long id;
 
-//    @XmlTransient
     @ManyToOne
     @JoinColumn(name = "state_id")
     private ProcessStateConfiguration config;
@@ -51,19 +52,28 @@ public class ProcessStateAction extends AbstractPersistentEntity {
     
     private String notification;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "action_id")
-    private Set<ProcessStateActionPermission> permissions = new HashSet();
+    private Set<ProcessStateActionPermission> permissions = new HashSet<ProcessStateActionPermission>();
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "action_id")
-    private Set<ProcessStateActionAttribute> attributes = new HashSet();
+    private Set<ProcessStateActionAttribute> attributes = new HashSet<ProcessStateActionAttribute>();
 
     private String assignProcessStatus;
 
     private Boolean markProcessImportant = false;
 
     private Boolean skipSaving = false;
+
+    private Boolean changeOwner = false;
+
+    private String changeOwnerAttributeName = "";
+
+    private Boolean commentNeeded = false;
+    
+    /** Should action be hidden for external access (e-mail shourtcuts)? */
+    private Boolean hideForExternalAccess = false;
 
     private Boolean autohide = false;
 
@@ -76,6 +86,9 @@ public class ProcessStateAction extends AbstractPersistentEntity {
 			"label",
 			"actionType",
 			"skipSaving",
+            "commentNeeded",
+            "changeOwner",
+            "changeOwnerAttributeName",
 			"markProcessImportant",
 			"priority",
 			"url",
@@ -114,7 +127,6 @@ public class ProcessStateAction extends AbstractPersistentEntity {
         return config;
     }
 
-//    @XmlTransient
     public void setConfig(ProcessStateConfiguration config) {
         this.config = config;
     }
@@ -135,8 +147,18 @@ public class ProcessStateAction extends AbstractPersistentEntity {
         this.description = description;
     }
 
+    public Boolean getCommentNeeded() {
+        return nvl(commentNeeded, false);
+    }
+
+    public void setCommentNeeded(Boolean commentNeeded) {
+        this.commentNeeded = commentNeeded;
+    }
+
     public Set<ProcessStateActionPermission> getPermissions() {
-        if (permissions == null) permissions = new HashSet<ProcessStateActionPermission>();
+        if (permissions == null) 
+        	permissions = new HashSet<ProcessStateActionPermission>();
+        
         return permissions;
     }
 
@@ -161,7 +183,7 @@ public class ProcessStateAction extends AbstractPersistentEntity {
     }
 
     public Boolean getAutohide() {
-        return nvl(autohide, true);
+        return nvl(autohide, false);
     }
 
     public void setAutohide(Boolean autohide) {
@@ -171,6 +193,15 @@ public class ProcessStateAction extends AbstractPersistentEntity {
     public Set<ProcessStateActionAttribute> getAttributes() {
         if (attributes == null) attributes = new HashSet<ProcessStateActionAttribute>();
         return attributes;
+    }
+
+    public String getAttributeValue(String key)
+    {
+        for(ProcessStateActionAttribute attribute: getAttributes())
+            if(key.equals(attribute.getName()))
+                return attribute.getValue();
+
+        return null;
     }
 
     public void setAttributes(Set<ProcessStateActionAttribute> attributes) {
@@ -233,4 +264,28 @@ public class ProcessStateAction extends AbstractPersistentEntity {
 	public void setNotification(String notification) {
 		this.notification = notification;
 	}
+	
+	public Boolean getHideForExternalAccess() {
+		return hideForExternalAccess == null ? false : hideForExternalAccess;
+	}
+
+	public void setHideForExternalAccess(Boolean hideForExternalAccess) {
+		this.hideForExternalAccess = hideForExternalAccess;
+	}
+
+    public Boolean getChangeOwner() {
+        return changeOwner;
+    }
+
+    public void setChangeOwner(Boolean changeOwner) {
+        this.changeOwner = changeOwner;
+    }
+
+    public String getChangeOwnerAttributeName() {
+        return changeOwnerAttributeName;
+    }
+
+    public void setChangeOwnerAttributeName(String changeOwnerAttributeName) {
+        this.changeOwnerAttributeName = changeOwnerAttributeName;
+    }
 }

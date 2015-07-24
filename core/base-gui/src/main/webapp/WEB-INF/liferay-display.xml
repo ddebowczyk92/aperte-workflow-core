@@ -2,17 +2,15 @@
 
 <display>
 	<category name="Aperte Workflow">
-		<portlet id="ProcessTool Tasks"/>
-		<portlet id="ProcessTool Dictionaries"/>
-		<portlet id="ProcessTool Queues"/>
-		<portlet id="ProcessTool Activities"/>
-        <portlet id="Aperte Workflow User Portlet"/>
+		<portlet id="AperteWorkflow Activities Portlet"/>
+        <portlet id="AperteWorkflow Case Management Portlet"/>
+        <portlet id="AperteWorkflow Complaint Registry Portlet"/>
+		<portlet id="AperteWorkflow Interactive Reports"/>
+        <portlet id="AperteWorkflow Dictionary Editor Portlet"/>
+        <portlet id="Aperte Workflow Substitution Manager"/>
 	</category>
     <category name="category.hidden">
-        <portlet id="Aperte Workflow Plugin Manager"/>
         <portlet id="AperteWorkflow User Substitutions"/>
-        <portlet id="Aperte Workflow Process Definition Manager"/>
         <portlet id="Aperte Workflow Process Instance Manager"/>
-        <portlet id="Aperte Workflow Admin Portlet"/>
     </category>
 </display>

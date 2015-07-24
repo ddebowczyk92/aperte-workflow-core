@@ -36,6 +36,7 @@ public class JSONHandler {
 	public static final String CANDIDATE_GROUPS = "candidate_groups";
     public static final String DESCRIPTION = "description";
     public static final String COMMENTARY = "commentary";
+	public static final String STEP_INFO = "stepInfo";
 
 	public static class ParsingFailedException extends Exception {
 		public ParsingFailedException(Exception e) {
@@ -76,8 +77,11 @@ public class JSONHandler {
                 resultMap.put(DESCRIPTION, map.get(DESCRIPTION).toString());
             }
             if (map.get(COMMENTARY) != null) {
-                resultMap.put(COMMENTARY, decodeAndCreateString( map.get(COMMENTARY).toString()));
+                resultMap.put(COMMENTARY, decodeAndCreateString(map.get(COMMENTARY).toString()));
             }
+			if (map.get(STEP_INFO) != null) {
+				resultMap.put(STEP_INFO, map.get(STEP_INFO).toString());
+			}
             
             if (map.containsKey(STEP_PERMISSIONS)) {
                 Collection<Map> jsonPermissions = (Collection<Map>) map.get(STEP_PERMISSIONS);
@@ -104,7 +108,7 @@ public class JSONHandler {
 		return new String(Base64.decodeBase64(stringToDecode.getBytes()));
 	}
 
-	private static void analyzeChildren(Map<String, Object> map, HierarchicalContainer hc, WidgetItemInStep rootItem) throws WidgetNotFoundException {
+	public static void analyzeChildren(Map<String, Object> map, HierarchicalContainer hc, WidgetItemInStep rootItem) throws WidgetNotFoundException {
 		Collection<Map<String, Object>> children = (Collection<Map<String, Object>>) map.get(CHILDREN);
 		if (children != null) {
 			for (Map<String, Object> node : children) {
@@ -201,17 +205,17 @@ public class JSONHandler {
 		return map;
 	}
 
-	protected static String dumpTreeToJSON(Tree tree, WidgetItemInStep rootItem, Object assignee, 
+	public static String dumpTreeToJSON(Tree tree, WidgetItemInStep rootItem, Object assignee,
                                            Object candidateGroups, Object swimlane, String stepName,
-                                           Object description, Object commentary,
+                                           Object description, Object commentary, Object stepInfo,
                                            Collection<Permission> permissions) {
 		I18NSource messages = I18NSource.ThreadUtil.getThreadI18nSource();
 		TaskConfig tc = new TaskConfig();
 		tc.setTaskName(stepName);
-		
-		Map<String, Object> treeMap = collectNode(tree, rootItem, 1);
 
-        if (assignee != null) {
+		Map<String, Object> treeMap = treeToMap(tree, rootItem);
+
+		if (assignee != null) {
 		    treeMap.put(ASSIGNEE, assignee);
         }
         if (candidateGroups != null) {
@@ -227,9 +231,11 @@ public class JSONHandler {
             treeMap.put(DESCRIPTION,description);
         }
         if (commentary != null) {
-            
             treeMap.put(COMMENTARY, encodeString(commentary));
         }
+		if (stepInfo != null) {
+			treeMap.put(STEP_INFO, stepInfo);
+		}
 		
         tc.setParams(treeMap);
         
@@ -244,13 +250,13 @@ public class JSONHandler {
 		}
 		return messages.getMessage("dump.failed");
 	}
-	
-	
+
+	public static Map<String, Object> treeToMap(Tree tree, WidgetItemInStep rootItem) {
+		return collectNode(tree, rootItem, 1);
+	}
+
 	public static String encodeString(Object objectToConvert){
 		byte[] bytes = objectToConvert.toString().getBytes();
 		return Base64.encodeBase64URLSafeString(bytes);
-		
-		
 	}
-
 }

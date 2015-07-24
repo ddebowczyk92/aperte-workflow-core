@@ -1,8 +1,9 @@
 package pl.net.bluesoft.rnd.processtool.model.dict;
 
-import org.apache.commons.collections.CollectionUtils;
-import pl.net.bluesoft.rnd.processtool.model.config.ProcessDefinitionConfig;
+import pl.net.bluesoft.rnd.processtool.model.dict.db.ProcessDBDictionaryItem;
 import pl.net.bluesoft.rnd.pt.utils.lang.Lang2;
+import pl.net.bluesoft.util.lang.cquery.CQuery;
+import pl.net.bluesoft.util.lang.cquery.func.F;
 
 import java.util.*;
 
@@ -11,10 +12,10 @@ import java.util.*;
  * Date: 2012-09-12
  * Time: 22:31
  */
-public class MultiLevelDictionary implements ProcessDictionary<String, String> {
-	private ProcessDictionary<String, String>[] dictionaries;
+public class MultiLevelDictionary implements ProcessDictionary {
+	private ProcessDictionary[] dictionaries;
 	private Collection<String> allItemKeys;
-	private Collection<ProcessDictionaryItem<String, String>> allItems;
+	private Collection<ProcessDictionaryItem> allItems;
 
 	public MultiLevelDictionary(ProcessDictionary... dictionaries) {
 		this.dictionaries = Lang2.noCopy(dictionaries);
@@ -30,28 +31,23 @@ public class MultiLevelDictionary implements ProcessDictionary<String, String> {
 	}
 
 	@Override
-	public String getDictionaryName() {
-		return dictionaries[0].getDictionaryName();
+	public String getDefaultName() {
+		return dictionaries[0].getDefaultName();
 	}
 
 	@Override
-	public String getLanguageCode() {
-		return dictionaries[0].getLanguageCode();
+	public String getName(String languageCode) {
+		return dictionaries[0].getName(languageCode);
 	}
 
 	@Override
-	public Boolean isDefaultDictionary() {
-		return false;
+	public String getName(Locale locale) {
+		return getName(locale.toString());
 	}
 
 	@Override
-	public ProcessDefinitionConfig getProcessDefinition() {
-		return dictionaries[0].getProcessDefinition();
-	}
-
-	@Override
-	public ProcessDictionaryItem<String, String> lookup(String key) {
-		for (ProcessDictionary<String, String> dictionary : dictionaries) {
+	public ProcessDictionaryItem lookup(String key) {
+		for (ProcessDictionary dictionary : dictionaries) {
 			if (dictionary.containsKey(key)) {
 				return dictionary.lookup(key);
 			}
@@ -64,20 +60,20 @@ public class MultiLevelDictionary implements ProcessDictionary<String, String> {
 		if (allItemKeys == null) {
 			allItemKeys = new ArrayList<String>();
 
-			for (ProcessDictionary<String, String> dictionary : dictionaries) {
+			for (ProcessDictionary dictionary : dictionaries) {
 				allItemKeys.addAll(dictionary.itemKeys());
 			}
 		}
-		return allItemKeys;
+		return Collections.unmodifiableCollection(allItemKeys);
 	}
 
 	@Override
-	public Collection<ProcessDictionaryItem<String, String>> items() {
+	public Collection<ProcessDictionaryItem> items() {
 		if (allItems == null) {
-			allItems = new ArrayList<ProcessDictionaryItem<String, String>>();
+			allItems = new ArrayList<ProcessDictionaryItem>();
 			Set<String> addedKeys = new HashSet<String>();
 
-			for (ProcessDictionary<String, String> dictionary : dictionaries) {
+			for (ProcessDictionary dictionary : dictionaries) {
 				for (String key : dictionary.itemKeys()) {
 					if (!addedKeys.contains(key)) {
 						allItems.add(dictionary.lookup(key));
@@ -86,11 +82,21 @@ public class MultiLevelDictionary implements ProcessDictionary<String, String> {
 				}
 			}
 		}
-		return allItems;
+		return Collections.unmodifiableCollection(allItems);
 	}
 
 	@Override
 	public boolean containsKey(String key) {
 		return itemKeys().contains(key);
+	}
+
+	@Override
+	public List<ProcessDictionaryItem> sortedItems(final String languageCode) {
+		return (List)CQuery.from(items()).orderBy(new F<ProcessDictionaryItem, String>() {
+			@Override
+			public String invoke(ProcessDictionaryItem item) {
+				return item.getValueForCurrentDate().getValue(languageCode);
+			}
+		}).toList();
 	}
 }

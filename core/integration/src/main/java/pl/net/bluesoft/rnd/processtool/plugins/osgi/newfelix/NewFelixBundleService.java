@@ -2,7 +2,7 @@ package pl.net.bluesoft.rnd.processtool.plugins.osgi.newfelix;
 
 import org.apache.felix.framework.Felix;
 import org.apache.felix.framework.util.FelixConstants;
-import org.aperteworkflow.ui.view.ViewRegistry;
+import org.aperteworkflow.ui.view.IViewRegistry;
 import org.aperteworkflow.ui.view.impl.DefaultViewRegistryImpl;
 import org.osgi.framework.*;
 import pl.net.bluesoft.rnd.processtool.plugins.*;
@@ -38,10 +38,10 @@ public class NewFelixBundleService implements FelixBundleService {
 	}
 
 	@Override
-	public void initialize(String felixDir, ProcessToolRegistryImpl registry) throws BundleException {
+	public void initialize(String felixDir, ProcessToolRegistry registry) throws BundleException {
 		stopFelix();
 
-		setRegistry(registry);
+        this.registry = registry;
 
 		Map<String, Object> configMap = new HashMap<String, Object>();
 		putBasicConfig(configMap);
@@ -64,11 +64,6 @@ public class NewFelixBundleService implements FelixBundleService {
 	public void setPluginsDir(String pluginsDir) {
 		this.pluginsDir = pluginsDir;
 		bundleInfo.setPluginsDir(pluginsDir);
-	}
-
-	private void setRegistry(ProcessToolRegistry registry) {
-		this.registry = registry;
-		handler.setRegistry(registry);
 	}
 
 	/**
@@ -113,29 +108,29 @@ public class NewFelixBundleService implements FelixBundleService {
 	 * @param registry
 	 * @param configMap
 	 */
-	private void putActivatorConfig(final ProcessToolRegistryImpl registry, Map<String, Object> configMap) {
-		ArrayList<BundleActivator> activators = new ArrayList<BundleActivator>();
+	private void putActivatorConfig(final ProcessToolRegistry registry, Map<String, Object> configMap) {
+		List<BundleActivator> activators = new ArrayList<BundleActivator>();
 		activators.add(new BundleActivator() {
 			private ProcessToolServiceBridge serviceBridge;
 
 			@Override
 			public void start(BundleContext context) throws Exception {
 				if (registry != null) {
-					registry.setOsgiBundleContext(context);
+					((BundleRegistryImpl)registry.getBundleRegistry()).setOsgiBundleContext(context);
 					serviceBridge = new FelixServiceBridge(felix);
-					registry.addServiceLoader(serviceBridge);
+					registry.getBundleRegistry().addServiceLoader(serviceBridge);
 					registerDefaultServices(context);
 				}
 			}
 
 			@Override
 			public void stop(BundleContext context) throws Exception {
-				registry.removeServiceLoader(serviceBridge);
+				registry.getBundleRegistry().removeServiceLoader(serviceBridge);
 			}
 
 			private void registerDefaultServices(BundleContext context) {
 				context.registerService(ProcessToolRegistry.class.getName(), registry, new Hashtable<String, Object>());
-				context.registerService(ViewRegistry.class.getName(), new DefaultViewRegistryImpl(), new Hashtable<String, Object>());
+				context.registerService(IViewRegistry.class.getName(), new DefaultViewRegistryImpl(), new Hashtable<String, Object>());
 			}
 		});
 
@@ -329,7 +324,7 @@ public class NewFelixBundleService implements FelixBundleService {
 
 	@Override
 	public synchronized Collection<PluginMetadata> getRegisteredPlugins() {
-		List<ProcessToolServiceBridge> serviceLoaders = registry.getServiceLoaders();
+		List<ProcessToolServiceBridge> serviceLoaders = registry.getBundleRegistry().getServiceLoaders();
 		List<PluginMetadata> registeredPlugins = new ArrayList<PluginMetadata>();
 		for (ProcessToolServiceBridge serviceBridge : serviceLoaders) {
 			try {

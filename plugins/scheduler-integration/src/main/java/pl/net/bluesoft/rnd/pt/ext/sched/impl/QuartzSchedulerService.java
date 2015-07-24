@@ -1,12 +1,29 @@
 package pl.net.bluesoft.rnd.pt.ext.sched.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.hibernate.Session;
-import org.quartz.*;
+import org.quartz.Job;
+import org.quartz.JobDetail;
+import org.quartz.JobKey;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.quartz.Trigger;
+import org.quartz.TriggerKey;
 import org.quartz.impl.StdSchedulerFactory;
 import org.quartz.impl.calendar.HolidayCalendar;
 import org.quartz.impl.matchers.EverythingMatcher;
 import org.quartz.impl.matchers.GroupMatcher;
 import org.quartz.utils.Key;
+
 import pl.net.bluesoft.rnd.processtool.ProcessToolContext;
 import pl.net.bluesoft.rnd.processtool.ReturningProcessToolContextCallback;
 import pl.net.bluesoft.rnd.processtool.plugins.ProcessToolRegistry;
@@ -18,10 +35,6 @@ import pl.net.bluesoft.util.eventbus.EventListener;
 import pl.net.bluesoft.util.lang.Formats;
 import pl.net.bluesoft.util.lang.Predicate;
 import pl.net.bluesoft.util.lang.Strings;
-
-import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * @author: amichalak@bluesoft.net.pl
@@ -113,7 +126,7 @@ public class QuartzSchedulerService implements ProcessToolSchedulerService, Even
         }};
         logger.info("Scheduling job on: " + sb + " of type: " + jobDetail.getJobClass().getName());
         try {
-            scheduler.scheduleJobs(jobMap, true);
+            scheduler.scheduleJobs(jobMap, false);
         }
         catch (SchedulerException e) {
             logger.log(Level.SEVERE, "Error while scheduling job: " + e.getMessage(), e);
@@ -159,10 +172,19 @@ public class QuartzSchedulerService implements ProcessToolSchedulerService, Even
                     List<? extends Trigger> triggers = scheduler.getTriggersOfJob(jobKey);
                     for (Trigger trigger : triggers) {
                         cancelledTriggerKeys.add(trigger.getKey());
+                        try {
+                            scheduler.interrupt(trigger.getJobKey());
+                        }
+                        catch(Throwable ex)
+                        {
+                            logger.log(Level.SEVERE, "Problem during job interruption - " + trigger.getKey(), ex);
+                        }
+
                     }
                 }
             }
             logger.warning("Cancelling " + cancelledTriggerKeys.size() + " jobs for job group: " + jobGroupName);
+
             scheduler.unscheduleJobs(cancelledTriggerKeys);
         }
         catch (SchedulerException e) {

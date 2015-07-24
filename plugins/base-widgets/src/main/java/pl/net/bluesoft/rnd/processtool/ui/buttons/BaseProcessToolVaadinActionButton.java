@@ -1,11 +1,14 @@
 package pl.net.bluesoft.rnd.processtool.ui.buttons;
 
 import static org.aperteworkflow.util.vaadin.VaadinExceptionHandler.Util.withErrorHandling;
+import static pl.net.bluesoft.rnd.processtool.plugins.ProcessToolRegistry.Util.getRegistry;
 
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 
 import pl.net.bluesoft.rnd.processtool.ProcessToolContext;
+import pl.net.bluesoft.rnd.processtool.ProcessToolContextCallback;
+import pl.net.bluesoft.rnd.processtool.bpm.ProcessToolBpmSessionHelper;
 import pl.net.bluesoft.rnd.processtool.model.BpmTask;
 
 import org.apache.commons.lang3.StringUtils;
@@ -15,6 +18,8 @@ import pl.net.bluesoft.rnd.processtool.ui.widgets.ProcessToolVaadinRenderable;
 import pl.net.bluesoft.rnd.processtool.ui.widgets.impl.BaseProcessToolActionButton;
 import org.aperteworkflow.util.vaadin.VaadinExceptionHandler;
 import org.aperteworkflow.util.vaadin.VaadinUtility;
+
+import java.util.List;
 
 /**
  * @author: amichalak@bluesoft.net.pl
@@ -37,10 +42,17 @@ public abstract class BaseProcessToolVaadinActionButton extends BaseProcessToolA
 				                	  }
 				                  }, new Runnable() {
 				                	  @Override
-				                	  public void run() {
-				                		  WidgetContextSupport support = callback.getWidgetContextSupport();
-				                		  task = support.refreshTask(bpmSession, task);
-				                		  performAction(callback.getWidgetContextSupport());
+				                	  public void run() 
+				                	  {
+										  getRegistry().withProcessToolContext(new ProcessToolContextCallback() {
+											  @Override
+											  public void withContext(ProcessToolContext ctx) {
+												  WidgetContextSupport support = callback.getWidgetContextSupport();
+												  task = support.refreshTask(bpmSession, task);
+												  performAction(callback.getWidgetContextSupport());
+											  }
+										  });
+
 				                	  }
 				                  }
 						);
@@ -58,11 +70,16 @@ public abstract class BaseProcessToolVaadinActionButton extends BaseProcessToolA
 
 	protected void invokeBpmTransition() {
 		ProcessToolContext ctx = getCurrentContext();
-		task = bpmSession.performAction(definition, task, ctx);
-		if (task == null || task.isFinished()) {
+		List<BpmTask> tasks = ProcessToolBpmSessionHelper.performAction(bpmSession, ctx, definition, task);
+
+		if (tasks == null || tasks.isEmpty()) {
 			showTransitionNotification();
+			task = null;
 		}
-		if (task == null) {
+		else {
+			task = tasks.get(0);
+		}
+		if (tasks == null) {
 			throw new TaskAlreadyCompletedException(); 
 		}
 		callback.getWidgetContextSupport().updateTask(task);

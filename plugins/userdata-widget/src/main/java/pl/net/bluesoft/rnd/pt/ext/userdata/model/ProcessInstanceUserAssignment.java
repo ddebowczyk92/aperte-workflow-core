@@ -1,7 +1,6 @@
 package pl.net.bluesoft.rnd.pt.ext.userdata.model;
 
-import pl.net.bluesoft.rnd.processtool.model.BpmVariable;
-import pl.net.bluesoft.rnd.processtool.model.ProcessInstanceAttribute;
+import pl.net.bluesoft.rnd.processtool.model.processdata.ProcessInstanceAttribute;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -13,7 +12,7 @@ import static pl.net.bluesoft.util.lang.FormatUtil.nvl;
  */
 @Entity
 @Table(name="pt_ext_process_instance_usr_as")
-public class ProcessInstanceUserAssignment extends ProcessInstanceAttribute implements BpmVariable {
+public class ProcessInstanceUserAssignment extends ProcessInstanceAttribute {
 
 	private String userLogin;
 	private String bpmLogin;
@@ -42,16 +41,6 @@ public class ProcessInstanceUserAssignment extends ProcessInstanceAttribute impl
 
 	public void setRole(String role) {
 		this.role = role;
-	}
-
-	@Override
-	public String getBpmVariableName() {
-		return role;
-	}
-
-	@Override
-	public Object getBpmVariableValue() {
-		return bpmLogin;
 	}
 
 	public String getBpmLogin() {

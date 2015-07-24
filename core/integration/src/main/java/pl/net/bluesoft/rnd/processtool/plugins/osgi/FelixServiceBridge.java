@@ -16,8 +16,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.*;
 
-import static pl.net.bluesoft.rnd.processtool.plugins.osgi.BundleInstallationHandler.*;
-import static pl.net.bluesoft.rnd.processtool.plugins.osgi.OSGiBundleHelper.getBundleResourceStream;
+import static pl.net.bluesoft.rnd.processtool.plugins.osgi.OSGiBundleHelper.*;
 import static pl.net.bluesoft.util.lang.StringUtil.hasText;
 
 public class FelixServiceBridge implements ProcessToolServiceBridge {
@@ -70,7 +69,7 @@ public class FelixServiceBridge implements ProcessToolServiceBridge {
     public InputStream loadResource(String bundleSymbolicName, String resourcePath) throws IOException {
         for (Bundle bundle : felix.getBundleContext().getBundles()) {
             if (!hasText(bundleSymbolicName) || !hasText(bundle.getSymbolicName()) || bundle.getSymbolicName().equals(bundleSymbolicName)) {
-                InputStream is = OSGiBundleHelper.getBundleResourceStream(bundle, resourcePath);
+                InputStream is = getBundleResourceStream(bundle, resourcePath);
                 if (is != null) {
                     return is;
                 }
@@ -79,7 +78,8 @@ public class FelixServiceBridge implements ProcessToolServiceBridge {
         return null;
     }
     
-    public synchronized List<PluginMetadata> getInstalledPlugins() throws ClassNotFoundException {
+    @Override
+	public synchronized List<PluginMetadata> getInstalledPlugins() throws ClassNotFoundException {
 		Bundle[] bundles = felix.getBundleContext().getBundles();
 		List<PluginMetadata> metadata = new ArrayList<PluginMetadata>();
 		for (final Bundle bundle : bundles) {

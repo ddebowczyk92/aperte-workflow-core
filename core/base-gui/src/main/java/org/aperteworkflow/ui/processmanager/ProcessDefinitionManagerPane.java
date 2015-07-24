@@ -3,29 +3,27 @@ package org.aperteworkflow.ui.processmanager;
 import com.vaadin.Application;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.Reindeer;
-import pl.net.bluesoft.rnd.processtool.ProcessToolContext;
 import pl.net.bluesoft.rnd.processtool.dao.ProcessDefinitionDAO;
 import pl.net.bluesoft.rnd.processtool.model.config.ProcessDefinitionConfig;
-import pl.net.bluesoft.rnd.processtool.plugins.ProcessToolRegistry;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import static org.aperteworkflow.util.vaadin.VaadinUtility.*;
+import static pl.net.bluesoft.rnd.processtool.ProcessToolContext.Util.getThreadProcessToolContext;
 import static pl.net.bluesoft.util.lang.FormatUtil.formatFullDate;
+import static pl.net.bluesoft.util.lang.Formats.nvl;
 
 /**
  * @author tlipski@bluesoft.net.pl
  */
 public class ProcessDefinitionManagerPane extends VerticalLayout {
-
-    VerticalLayout definitionList = new VerticalLayout();
+    private VerticalLayout definitionList = new VerticalLayout();
 
     public ProcessDefinitionManagerPane(Application application) {
         setWidth("100%");
         setSpacing(true);
-
 
         definitionList.setSpacing(true);
 
@@ -47,25 +45,21 @@ public class ProcessDefinitionManagerPane extends VerticalLayout {
 
     private void displayDefinitionList() {
         definitionList.removeAllComponents();
-        ProcessToolContext ctx = ProcessToolContext.Util.getThreadProcessToolContext();
-        ProcessToolRegistry registry = ctx.getRegistry();
-        ProcessDefinitionDAO dao = registry.getProcessDefinitionDAO(ctx.getHibernateSession());
-        List<ProcessDefinitionConfig> latestConfigurations = new ArrayList(dao.getActiveConfigurations());
+		ProcessDefinitionDAO dao = getThreadProcessToolContext().getProcessDefinitionDAO();
+        List<ProcessDefinitionConfig> latestConfigurations = new ArrayList<ProcessDefinitionConfig>(dao.getActiveConfigurations());
         Collections.sort(latestConfigurations, ProcessDefinitionConfig.DEFAULT_COMPARATOR);
 
         for (final ProcessDefinitionConfig cfg : latestConfigurations) {
             HorizontalLayout buttonLayout = new HorizontalLayout();
             buttonLayout.setSpacing(true);
 
-            buttonLayout.addComponent(linkButton(getLocalizedMessage(!cfg.getEnabled() ? "processdefinitions.console.enable" : "processdefinitions.console.disable"),
+            buttonLayout.addComponent(linkButton(getLocalizedMessage(!cfg.isEnabled() ? "processdefinitions.console.enable" : "processdefinitions.console.disable"),
                     new Runnable() {
                         @Override
                         public void run() {
-                            ProcessToolContext ctx = ProcessToolContext.Util.getThreadProcessToolContext();
-                            final ProcessToolRegistry registry = ctx.getRegistry();
-                            final ProcessDefinitionDAO dao = registry.getProcessDefinitionDAO(ctx.getHibernateSession());
-                            dao.setConfigurationEnabled(cfg, !cfg.getEnabled());
-                            String msg = getLocalizedMessage(!cfg.getEnabled() ? "processdefinitions.console.enable.success" : "processdefinitions.console.disable.success");
+							ProcessDefinitionDAO dao = getThreadProcessToolContext().getProcessDefinitionDAO();
+                            dao.setConfigurationEnabled(cfg, !cfg.isEnabled());
+                            String msg = getLocalizedMessage(!cfg.isEnabled() ? "processdefinitions.console.enable.success" : "processdefinitions.console.disable.success");
                             Window.Notification n = new Window.Notification(msg);
                             n.setDelayMsec(-1);
                             getApplication().getMainWindow().showNotification(n);
@@ -73,17 +67,21 @@ public class ProcessDefinitionManagerPane extends VerticalLayout {
                         }
                     }));
 
-            final Panel historyPanel = new Panel(getLocalizedMessage("processdefinitions.console.history.title"));
+            Panel historyPanel = new Panel(getLocalizedMessage("processdefinitions.console.history.title"));
             historyPanel.setHeight("100px");
             historyPanel.setWidth("100%");
             historyPanel.setStyleName(Reindeer.PANEL_LIGHT);
             historyPanel.setVisible(false);
 
-            final VerticalLayout entry = verticalLayout(styled(new Label(cfg.getId() + ": " + cfg.getDescription() +
-                    " (" + cfg.getBpmDefinitionKey() + ")"), "h2"));
-            entry.addComponent(new Label(cfg.getComment(), Label.CONTENT_XHTML));
+            VerticalLayout entry = verticalLayout(styled(new Label(
+					String.format("%s: %s (%s)",
+							cfg.getId(),
+							getLocalizedMessage(cfg.getDescription()),
+							cfg.getBpmDefinitionKey())),
+					"h2"));
+            entry.addComponent(new Label(getLocalizedMessage(cfg.getComment()), Label.CONTENT_XHTML));
 
-            final HorizontalLayout history = new HorizontalLayout();
+            HorizontalLayout history = new HorizontalLayout();
             history.setWidth("100%");
             history.setSpacing(true);
 
@@ -93,7 +91,6 @@ public class ProcessDefinitionManagerPane extends VerticalLayout {
             history.addComponent(b);
             history.setComponentAlignment(b, Alignment.TOP_RIGHT);
             history.setExpandRatio(lbl, 1.0f);
-
 
             entry.addComponent(history);
             entry.addComponent(buttonLayout);
@@ -121,7 +118,6 @@ public class ProcessDefinitionManagerPane extends VerticalLayout {
                             history.removeComponent(lbl);
                             history.addComponent(historyPanel, 0);
                             history.setExpandRatio(historyPanel, 1.0f);
-
                         }
                     }
                 });
@@ -129,16 +125,16 @@ public class ProcessDefinitionManagerPane extends VerticalLayout {
 
     private Label getVersionLabel(ProcessDefinitionConfig cfg) {
         return new Label(
-                getLocalizedMessage("processdefinitions.console.version") + " "
-                        + cfg.getId() + " " +
-                        getLocalizedMessage("processdefinitions.console.uploadedby") + " " + (cfg.getCreator() != null ? cfg.getCreator().getLogin() : "unknown") + " "
-                        + getLocalizedMessage("processdefinitions.console.uploadedon") + " " + formatFullDate(cfg.getCreateDate()));
+                getLocalizedMessage("processdefinitions.console.version") + ' '
+                        + cfg.getBpmDefinitionVersion() + ' ' +
+                        getLocalizedMessage("processdefinitions.console.uploadedby") + ' ' +
+						nvl(cfg.getCreatorLogin(), "unknown") + ' '
+                        + getLocalizedMessage("processdefinitions.console.uploadedon") + ' ' +
+						formatFullDate(cfg.getCreateDate()));
     }
 
     private VerticalLayout getHistoryPanel(ProcessDefinitionConfig cfg) {
-        ProcessToolContext ctx = ProcessToolContext.Util.getThreadProcessToolContext();
-        final ProcessToolRegistry registry = ctx.getRegistry();
-        final ProcessDefinitionDAO dao = registry.getProcessDefinitionDAO(ctx.getHibernateSession());
+		ProcessDefinitionDAO dao = getThreadProcessToolContext().getProcessDefinitionDAO();
         List<ProcessDefinitionConfig> configurationVersions = new ArrayList<ProcessDefinitionConfig>(dao.getConfigurationVersions(cfg));
         Collections.sort(configurationVersions, ProcessDefinitionConfig.DEFAULT_COMPARATOR);
 

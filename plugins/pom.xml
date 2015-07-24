@@ -4,7 +4,7 @@
     <parent>
         <artifactId>aperteworkflow-core</artifactId>
         <groupId>org.aperteworkflow</groupId>
-        <version>2.1-SNAPSHOT</version>
+        <version>3.1</version>
     </parent>
 
     <name>Aperte Workflow OSGi Plugins</name>
@@ -20,20 +20,21 @@
         <module>drools-step</module>
         <module>context-help-provider</module>
         <module>email-capture</module>
+        <module>files-repository</module>
         <module>files-capture</module>
-        <module>history-view</module>
         <module>mule-esb-plugin</module>
-        <module>log-step</module>
         <module>process-deadlines</module>
-        <module>report-step</module>
-        <module>user-substitution-process</module>
-        <module>user-substitution-step</module>
         <module>userdata-widget</module>
         <module>userdata-service</module>
         <module>scripting</module>
         <module>scheduler-integration</module>
         <module>global-dictionaries</module>
-    	<!--<module>plugins-test</module>-->
+        <module>external-plugins</module>
+
+		<!-- Plugins for Aperte Reports, uncomment if you are using it. -->
+		<!-- <module>report-step</module> -->
+		<!--<module>aperte-reports-integration</module>-->
+		
 	</modules>
 
     <dependencies>

@@ -4,7 +4,7 @@
     <parent>
         <artifactId>plugins</artifactId>
         <groupId>org.aperteworkflow</groupId>
-        <version>2.1-SNAPSHOT</version>
+        <version>3.1</version>
     </parent>
 
     <artifactId>drools-step</artifactId>
@@ -16,7 +16,7 @@
         <dependency>
             <groupId>org.aperteworkflow</groupId>
             <artifactId>integration-interface</artifactId>
-            <version>2.1-SNAPSHOT</version>
+            <version>3.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -27,19 +27,34 @@
         </dependency>
         <dependency>
             <groupId>org.drools</groupId>
-            <artifactId>drools-api</artifactId>
-            <version>5.2.0.M1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.drools</groupId>
             <artifactId>drools-compiler</artifactId>
-            <version>5.2.0.M1</version>
+            <version>5.5.0.Final</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.antlr</groupId>
+                    <artifactId>antlr</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.antlr</groupId>
+                    <artifactId>antlr-runtime</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.antlr</groupId>
+                    <artifactId>stringtemplate</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.drools</groupId>
             <artifactId>drools-core</artifactId>
-            <version>5.2.0.M1</version>
+            <version>5.5.0.Final</version>
         </dependency>
+        <dependency>
+			<groupId>antlr</groupId>
+			<artifactId>antlr</artifactId>
+			<version>2.7.6</version>
+			<scope>provided</scope>
+		</dependency>
     </dependencies>
 
     <build>
@@ -56,11 +71,21 @@
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
                 <extensions>true</extensions>
-                <version>2.1.0</version>
+                <version>${maven.bundle.plugin}</version>
                 <configuration>
                     <instructions>
                         <Import-Package>
-                            *;resolution:=optional
+                            com.bea.xml.stream;resolution:=optional,
+                            org.kxml2.io;resolution:=optional,
+                            com.google.protobuf;resolution:=optional,
+                            com.sun.codemodel;resolution:=optional,
+                            com.sun.tools.xjc.*;resolution:=optional,
+                            org.apache.tools.ant.taskdefs.compilers;resolution:=optional,
+                            org.codehaus.janino.*;resolution:=optional,
+                            org.slf4j.impl;resolution:=optional,
+                            org.antlr.runtime;resolution:=optional,
+                            org.antlr.runtime.tree;resolution:=optional,
+                            *
                         </Import-Package>
                         <Embed-Dependency>*;scope=compile|runtime;inline=false</Embed-Dependency>
                         <Bundle-Version>0.1</Bundle-Version>
@@ -73,5 +98,45 @@
 
         </plugins>
     </build>
-
+    <!-- Profil dev do automatycznego kopiowania jarow do osgi -->
+    <profiles>
+    
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+	            <plugins>
+		            <plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-dependency-plugin</artifactId>
+						<version>2.4</version>
+						<executions>
+							<execution>
+								 <id>copy-installed</id>
+								<phase>install</phase>
+								<goals>
+								  <goal>copy</goal>
+								</goals>
+								<configuration>
+									<artifactItems>
+										<artifactItem>
+											<groupId>${project.groupId}</groupId>
+											<artifactId>${project.artifactId}</artifactId>
+											<type>jar</type>
+											<version>${project.version}</version>
+											<overWrite>true</overWrite>
+											<outputDirectory>${osgi.dir}</outputDirectory>
+											<destFileName>${project.artifactId}-${project.version}.jar</destFileName>
+										</artifactItem>
+									</artifactItems>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

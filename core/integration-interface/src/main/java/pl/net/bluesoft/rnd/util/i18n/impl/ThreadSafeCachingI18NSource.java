@@ -26,6 +26,7 @@ public class ThreadSafeCachingI18NSource implements I18NSource {
 		}
 	}
 
+	@Override
 	public String getMessage(String key) {
 		if (key == null) {
 			return null;
@@ -33,33 +34,19 @@ public class ThreadSafeCachingI18NSource implements I18NSource {
 		return getCachedMessage(propertyCaches[getIdx(key)], key);
 	}
 
-	public String getMessage(String key, String defaultValue) {
-		if (key == null) {
-			return defaultValue;
-		}
-		return getCachedMessage(propertyCaches[getIdx(key)], key, defaultValue);
-	}
-
 	private int getIdx(String key) {
-		return (int)(Math.abs((long)key.hashCode()) % propertyCaches.length);
+		return Math.abs(key.hashCode()) % propertyCaches.length;
 	}
 
-	private synchronized String getCachedMessage(Map<String, String> cachedProperties, String key) {
-		String p = cachedProperties.get(key);
-		if (p == null) {
-			p = i18NSource.getMessage(key);
-			handleSearchResult(cachedProperties, key, p);
+	private String getCachedMessage(Map<String, String> cachedProperties, String key) {
+		synchronized (cachedProperties) {
+			String p = cachedProperties.get(key);
+			if (p == null) {
+				p = i18NSource.getMessage(key);
+				handleSearchResult(cachedProperties, key, p);
+			}
+			return p;
 		}
-		return p;
-	}
-
-	private synchronized String getCachedMessage(Map<String, String> cachedProperties, String key, String defaultValue) {
-		String p = cachedProperties.get(key);
-		if (p == null) {
-			p = i18NSource.getMessage(key, defaultValue);
-			handleSearchResult(cachedProperties, key, p);
-		}
-		return p;
 	}
 
 	private void handleSearchResult(Map<String, String> cachedProperties, String key, String p) {
@@ -73,20 +60,12 @@ public class ThreadSafeCachingI18NSource implements I18NSource {
 
 	@Override
 	public String getMessage(String key, Object... params) {
-		return getMessage(key, key, params);
-	}
-
-	@Override
-	public String getMessage(String key, String defaultValue, Object... params) {
-		String message = getMessage(key, defaultValue);
+		String message = getMessage(key);
 		return MessageFormat.format(message, params);
 	}
 
+	@Override
 	public Locale getLocale() {
 		return i18NSource.getLocale();
-	}
-
-	public void setLocale(Locale locale) {
-		throw new UnsupportedOperationException();
 	}
 }

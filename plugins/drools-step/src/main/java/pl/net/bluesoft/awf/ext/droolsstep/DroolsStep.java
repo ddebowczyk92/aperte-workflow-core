@@ -1,7 +1,11 @@
 package pl.net.bluesoft.awf.ext.droolsstep;
 
+import pl.net.bluesoft.awf.ext.droolsstep.settings.DroolsStepSettingsProvider;
 import pl.net.bluesoft.rnd.processtool.ProcessToolContext;
-import pl.net.bluesoft.rnd.processtool.model.*;
+import pl.net.bluesoft.rnd.processtool.model.BpmStep;
+import pl.net.bluesoft.rnd.processtool.model.ProcessInstance;
+import pl.net.bluesoft.rnd.processtool.model.ProcessInstanceLog;
+import pl.net.bluesoft.rnd.processtool.model.processdata.ProcessInstanceSimpleAttribute;
 import pl.net.bluesoft.rnd.processtool.steps.ProcessToolProcessStep;
 import pl.net.bluesoft.rnd.processtool.ui.widgets.annotations.AliasName;
 import pl.net.bluesoft.rnd.processtool.ui.widgets.annotations.AutoWiredProperty;
@@ -9,6 +13,8 @@ import pl.net.bluesoft.util.lang.Strings;
 
 import java.io.InputStream;
 import java.util.*;
+
+import static pl.net.bluesoft.rnd.processtool.plugins.ProcessToolRegistry.Util.getRegistry;
 
 /**
  * @author tlipski@bluesoft.net.pl
@@ -26,34 +32,32 @@ public class DroolsStep implements ProcessToolProcessStep {
         ProcessToolContext ctx = ProcessToolContext.Util.getThreadProcessToolContext();
         DroolsUtils.DroolsResource resource;
         if (Strings.hasText(bundleResource)) {
-            InputStream ruleStream = ctx.getRegistry().loadResource(bundleResource, ruleUrl);
+            InputStream ruleStream = getRegistry().getBundleRegistry().loadResource(bundleResource, ruleUrl);
             String fullRuleUrl = bundleResource.replace(".", "/") + "/" + ruleUrl;
             resource = new DroolsUtils.DroolsResource(fullRuleUrl, ruleStream);
         }
         else {
             if (ruleUrl.startsWith("/")) {
-                ruleUrl = ctx.getSetting("drools.rules.baseurl") + ruleUrl;
+                ruleUrl = DroolsStepSettingsProvider.getRulesBaseURL() + ruleUrl;
             }
             resource = new DroolsUtils.DroolsResource(ruleUrl);
         }
         ProcessInstance processInstance = step.getProcessInstance();
 
-        List facts = new ArrayList();
+        List<Object> facts = new ArrayList<Object>();
         facts.add(processInstance);
-		for (ProcessInstanceAttribute attr : processInstance.getProcessAttributes()) {
-			if (attr instanceof ProcessInstanceSimpleAttribute) {
-                facts.add(attr);
-            }
+		for (ProcessInstanceSimpleAttribute attr : processInstance.getProcessSimpleAttributes()) {
+			facts.add(attr);
 		}
 
         Map<String, Object> globals = new HashMap<String, Object>();
-        HashMap resultMap = new HashMap();
+        Map<String, Object> resultMap = new HashMap<String, Object>();
         globals.put("result", resultMap);
         DroolsUtils.processRules(facts, globals, resource);
 		String logEntryVal = (String) resultMap.get("logEntry");
 		if (logEntryVal != null) {
 			ProcessInstanceLog logEntry = new ProcessInstanceLog();
-			logEntry.setEntryDate(Calendar.getInstance());
+			logEntry.setEntryDate(new Date());
             logEntry.setLogType(ProcessInstanceLog.LOG_TYPE_INFO);
 			//logEntry.setLogType(LogType.INFO);
             //TODO - process can be in a various states in that moment

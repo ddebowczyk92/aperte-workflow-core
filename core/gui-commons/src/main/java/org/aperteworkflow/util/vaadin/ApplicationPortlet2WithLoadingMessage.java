@@ -2,9 +2,6 @@ package org.aperteworkflow.util.vaadin;
 
 import com.vaadin.Application;
 import com.vaadin.terminal.gwt.server.ApplicationPortlet2;
-import com.vaadin.ui.Window;
-import pl.net.bluesoft.rnd.util.i18n.I18NSource;
-import pl.net.bluesoft.rnd.util.i18n.I18NSourceFactory;
 
 import javax.portlet.*;
 import java.io.BufferedWriter;
@@ -25,11 +22,11 @@ public class ApplicationPortlet2WithLoadingMessage extends ApplicationPortlet2
 		response.createResourceURL().setParameter("img", "loader");
 
 		this.application = application;
-		
-		I18NSource i18NSource = I18NSourceFactory.createI18NSource(request.getLocale());
-		writer.write(String.format("<div name='%s'>%s</div>",
-				getLoaderTagId(request.getWindowID(), getPortletConfig()),
-				i18NSource.getMessage("loader.message")));
+//
+//		I18NSource i18NSource = I18NSourceFactory.createI18NSource(request.getLocale());
+//		writer.write(String.format("<div name='%s'>%s</div>",
+//				getLoaderTagId(request.getWindowID(), getPortletConfig()),
+//				i18NSource.getMessage("loader.message")));
 		
 		super.writeAjaxPageHtmlVaadinScripts(request, response,	writer,	application, themeName);
 	}	
@@ -37,20 +34,23 @@ public class ApplicationPortlet2WithLoadingMessage extends ApplicationPortlet2
 	protected void handleRequest(PortletRequest request, PortletResponse response) throws PortletException, IOException
 	{
 		super.handleRequest(request,response);
-
-		if (application != null) {
-			for(Window window: application.getWindows()) {
-				window.executeJavaScript("hideLoadingMessage('"+getLoaderTagId(request.getWindowID(), getPortletConfig())+"');");
-			}
-		}
+		
+//		if(application != null)
+//		{
+//			for(Window window: application.getWindows())
+//			{
+//				window.executeJavaScript("hideLoadingMessage('"+getLoaderTagId(request.getWindowID(), getPortletConfig())+"');");
+//			}
+//		}
 	}
+		
 
 	protected Application getApplication() {
 		return application;
 	}
 
-	private static String getLoaderTagId(String portletId, PortletConfig config) {
-		return ("vaadinLoader_" + config.getPortletName() + "_" + config.getPortletContext().getPortletContextName() + "_" + portletId.replace("-",""))
-				.replaceAll("[^\\w-]","_");
-	}
+//	private static String getLoaderTagId(String portletId, PortletConfig config) {
+//		return ("vaadinLoader_" + config.getPortletName() + "_" + config.getPortletContext().getPortletContextName() + "_" + portletId.replace("-",""))
+//				.replaceAll("[^\\w-]","_");
+//	}
 }

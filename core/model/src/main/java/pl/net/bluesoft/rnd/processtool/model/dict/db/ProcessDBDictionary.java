@@ -1,31 +1,29 @@
 package pl.net.bluesoft.rnd.processtool.model.dict.db;
 
-//import org.hibernate.annotations.OnDelete;
-//import org.hibernate.annotations.OnDeleteAction;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.CascadeType;
+import pl.net.bluesoft.rnd.processtool.model.AbstractPersistentEntity;
+import pl.net.bluesoft.rnd.processtool.model.dict.ProcessDictionary;
+import pl.net.bluesoft.rnd.processtool.model.dict.ProcessDictionaryItem;
+import pl.net.bluesoft.util.lang.cquery.CQuery;
+import pl.net.bluesoft.util.lang.cquery.func.F;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.MapKey;
-import javax.persistence.Parameter;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.*;
-
-import org.hibernate.annotations.CascadeType;
-import pl.net.bluesoft.rnd.processtool.model.AbstractPersistentEntity;
-import pl.net.bluesoft.rnd.processtool.model.PersistentEntity;
-import pl.net.bluesoft.rnd.processtool.model.config.ProcessDefinitionConfig;
-import pl.net.bluesoft.rnd.processtool.model.dict.ProcessDictionary;
-import pl.net.bluesoft.rnd.processtool.model.dict.ProcessDictionaryItem;
+import java.util.*;
 
 @Entity
 @Table(name = "pt_dictionary")
-public class ProcessDBDictionary extends AbstractPersistentEntity implements ProcessDictionary<String, String> {
+public class ProcessDBDictionary extends AbstractPersistentEntity implements ProcessDictionary {
+	public static final String _DICTIONARY_ID = "dictionaryId";
+	public static final String _DEFAULT_NAME = "defaultName";
+	public static final String _LOCALIZED_NAMES = "localizedNames";
+	public static final String _PERMISSIONS = "permissions";
+	public static final String _ITEMS = "items";
+
 	@Id
 	@GeneratedValue(generator = "idGenerator")
 	@GenericGenerator(
@@ -38,97 +36,132 @@ public class ProcessDBDictionary extends AbstractPersistentEntity implements Pro
 			}
 	)
 	@Column(name = "id")
+    @Index(name="idx_p_dict_id")
 	protected Long id;
-
+    @Index(name="idx_p_dict_dict_id")
     private String dictionaryId;
-    private String dictionaryName;
-    private String languageCode;
-    @Column(length = 2048, name="description_")
-    private String description;
+    private String defaultName;
 
-    private Boolean defaultDictionary = Boolean.FALSE;
+	@OneToMany(orphanRemoval = true)
+	@Cascade(value = CascadeType.ALL)
+	@JoinColumn(name = "dictionary_id", nullable = true)
+	@Fetch(value = FetchMode.SELECT)
+	private List<ProcessDBDictionaryI18N> localizedNames = new ArrayList<ProcessDBDictionaryI18N>();
 
-    @OneToMany(mappedBy = "dictionary", fetch = FetchType.EAGER, orphanRemoval = true)
+	private String description;
+
+    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
     @Cascade(value = CascadeType.ALL)
+	@JoinColumn(name = "dictionary_id", nullable = true)
     private Set<ProcessDBDictionaryPermission> permissions = new HashSet<ProcessDBDictionaryPermission>();
 
-    @OneToMany(mappedBy = "dictionary", fetch = FetchType.EAGER, orphanRemoval = true)
-    @MapKey(name = "key")
+    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
     @Cascade(value = CascadeType.ALL)
+	@JoinColumn(name = "dictionary_id", nullable = true)
+	@MapKey(name = "key")
+	@OrderBy
     private Map<String, ProcessDBDictionaryItem> items = new HashMap<String, ProcessDBDictionaryItem>();
 
-    @ManyToOne(optional = true)
-    @JoinColumn(name = "definition_id")
-    @Cascade(value = CascadeType.REFRESH)
-    private ProcessDefinitionConfig processDefinition;
+	@OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
+	@Cascade(value = CascadeType.ALL)
+	@JoinColumn(name = "dictionary_id", nullable = true)
+	@MapKey(name = "name")
+	@OrderBy
+	private Map<String, ProcessDBDictionaryDefaultItemExtension> defaultExtensions = new LinkedHashMap<String, ProcessDBDictionaryDefaultItemExtension>();
 
+	@Override
 	public Long getId() {
 		return id;
 	}
 
+	@Override
 	public void setId(Long id) {
 		this.id = id;
 	}
 
+	@Override
+	public String getDictionaryId() {
+		return dictionaryId;
+	}
+
+	public void setDictionaryId(String dictionaryId) {
+		this.dictionaryId = dictionaryId;
+	}
+
+	@Override
+	public String getDefaultName() {
+		return defaultName;
+	}
+
+	public void setDefaultName(String defaultName) {
+		this.defaultName = defaultName;
+	}
+
+	public List<ProcessDBDictionaryI18N> getLocalizedNames() {
+		return localizedNames;
+	}
+
+	public void setLocalizedNames(List<ProcessDBDictionaryI18N> localizedNames) {
+		this.localizedNames = localizedNames;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	public Set<ProcessDBDictionaryPermission> getPermissions() {
-        return permissions;
-    }
+		return permissions;
+	}
 
-    public void setPermissions(Set<ProcessDBDictionaryPermission> permissions) {
-        this.permissions = permissions;
-    }
+	public void setPermissions(Set<ProcessDBDictionaryPermission> permissions) {
+		this.permissions = permissions;
+	}
 
-    public Boolean isDefaultDictionary() {
-        return defaultDictionary;
-    }
+	public Map<String, ProcessDBDictionaryItem> getItems() {
+		return items;
+	}
 
-    public void setDefaultDictionary(Boolean defaultDictionary) {
-        this.defaultDictionary = defaultDictionary;
-    }
+	public List<ProcessDictionaryItem> sortedItems(final String languageCode) {
+		return (List)CQuery.from(items.values()).orderBy(new F<ProcessDBDictionaryItem, String>() {
+			@Override
+			public String invoke(ProcessDBDictionaryItem item) {
+                ProcessDBDictionaryItemValue value = item.getValueForCurrentDate();
+                if (value != null)
+				    return value.getValue(languageCode);
+                return null;
+			}
+		}).toList();
+	}
+	
+	
+	public void setItems(Map<String, ProcessDBDictionaryItem> items) {
+		this.items = items;
+	}
 
-    public ProcessDefinitionConfig getProcessDefinition() {
-        return processDefinition;
-    }
+	@Override
+	public String getName(String languageCode) {
+		return ProcessDBDictionaryI18N.getLocalizedText(localizedNames, languageCode, defaultName);
+	}
 
-    public void setProcessDefinition(ProcessDefinitionConfig processDefinition) {
-        this.processDefinition = processDefinition;
-    }
+	@Override
+	public String getName(Locale locale) {
+		return getName(locale.toString());
+	}
 
-    @Override
-    public String getDictionaryId() {
-        return dictionaryId;
-    }
+	public void setName(String languageCode, String name) {
+		if (languageCode == null) {
+			this.defaultName = name;
+			return;
+		}
+		ProcessDBDictionaryI18N.setLocalizedText(localizedNames, languageCode, name);
+	}
 
-    public void setDictionaryId(String dictionaryId) {
-        this.dictionaryId = dictionaryId;
-    }
-
-    public String getLanguageCode() {
-        return languageCode;
-    }
-
-    public void setLanguageCode(String languageCode) {
-        this.languageCode = languageCode;
-    }
-
-    public String getDictionaryName() {
-        return dictionaryName;
-    }
-
-    public void setDictionaryName(String dictionaryName) {
-        this.dictionaryName = dictionaryName;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    @Override
-    public ProcessDictionaryItem<String, String> lookup(String key) {
+	@Override
+    public ProcessDictionaryItem lookup(String key) {
         return items.get(key);
     }
 
@@ -150,33 +183,79 @@ public class ProcessDBDictionary extends AbstractPersistentEntity implements Pro
         }
     }
 
-    @Override
-    public Collection<ProcessDictionaryItem<String, String>> items() {
-        Set<ProcessDictionaryItem<String, String>> dictItems = new HashSet<ProcessDictionaryItem<String, String>>();
+    public void removeItemById(Long itemId) {
         for (ProcessDBDictionaryItem item : items.values()) {
-            dictItems.add(item);
+            if (item.getId() != null && item.getId().equals(itemId)) {
+                item.setDictionary(null);
+                items.remove(item.getKey());
+                break;
+            }
         }
-        return dictItems;
+    }
+
+    @Override
+    public Collection<ProcessDictionaryItem> items() {
+        return Collections.unmodifiableCollection((Set)items.values());
     }
 
     public void addItem(ProcessDBDictionaryItem item) {
-        item.setDictionary(this);
         if (items.containsKey(item.getKey())) {
             throw new IllegalArgumentException("Dictionary already contains an entry for key: " + item.getKey());
         }
+		item.setDictionary(this);
         items.put(item.getKey(), item);
     }
 
     public void addPermission(ProcessDBDictionaryPermission permission) {
-        permission.setDictionary(this);
         permissions.add(permission);
     }
 
-    public Map<String, ProcessDBDictionaryItem> getItems() {
-        return items;
+	public Map<String, ProcessDBDictionaryDefaultItemExtension> getDefaultExtensions() {
+		return defaultExtensions;
+	}
+
+	public void setDefaultExtensions(Map<String, ProcessDBDictionaryDefaultItemExtension> defaultExtensions) {
+		this.defaultExtensions = defaultExtensions;
+	}
+
+	public void addDefaultExtension(ProcessDBDictionaryDefaultItemExtension extension) {
+		defaultExtensions.put(extension.getName(), extension);
+	}
+
+	public void initValueExtensions(ProcessDBDictionaryItemValue value) {
+		for (ProcessDBDictionaryDefaultItemExtension defaultExt : defaultExtensions.values()) {
+			value.addExtension(defaultExt);
+		}
+	}
+
+	public boolean isDefaultExtenstion(String extensionName)
+	{
+		for(ProcessDBDictionaryDefaultItemExtension defaultItemExtension: this.defaultExtensions.values())
+			if(defaultItemExtension.getName().equals(extensionName))
+				return true;
+
+		return false;
+	}
+    
+    @Override
+    public String toString() {
+    	return defaultName;
     }
 
-    public void setItems(Map<String, ProcessDBDictionaryItem> items) {
-        this.items = items;
-    }
+	public Set<String> getUsedLanguageCodes() {
+		Set<String> result = new HashSet<String>();
+
+		for (ProcessDBDictionaryI18N localizedName : localizedNames) {
+			result.add(localizedName.getLanguageCode());
+		}
+
+		for (ProcessDBDictionaryItem item : items.values()) {
+			for (ProcessDBDictionaryItemValue value : item.getValues()) {
+				for (ProcessDBDictionaryI18N localizedValue : value.getLocalizedValues()) {
+					result.add(localizedValue.getLanguageCode());
+				}
+			}
+		}
+		return result;
+	}
 }

@@ -4,11 +4,8 @@ import org.apache.commons.io.IOUtils;
 import org.osgi.framework.*;
 import pl.net.bluesoft.rnd.awf.mule.step.MuleStep;
 import pl.net.bluesoft.rnd.processtool.plugins.ProcessToolRegistry;
-import pl.net.bluesoft.rnd.processtool.steps.ProcessToolProcessStep;
-import pl.net.bluesoft.rnd.util.func.Func;
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -27,34 +24,24 @@ import static pl.net.bluesoft.util.lang.StringUtil.hasText;
  * @author tlipski@bluesoft.net.pl
  */
 public class MulePluginActivator implements BundleActivator {
-    
     private static final Logger logger = Logger.getLogger(MulePluginActivator.class.getName());
     
-    private MulePluginManager mulePluginManager;
-
     @Override
     public void start(BundleContext bundleContext) throws Exception {
         try {
-            mulePluginManager = new MulePluginManager();
 //            mulePluginManager.initialize();
             bundleContext.registerService(MulePluginManager.class.getName(),
-                    mulePluginManager,
+                    MulePluginManager.instance(),
                     new Hashtable());
-            getRegistry(bundleContext).registerStep("MuleStep", new Func<ProcessToolProcessStep>() {
-                @Override
-                public ProcessToolProcessStep invoke() {
-                    return new MuleStep(mulePluginManager);
-                }
-            });
+
+            getRegistry(bundleContext).getGuiRegistry().registerStep(MuleStep.class);
             bundleContext.addBundleListener(new BundleListener() {
                 @Override
                 public void bundleChanged(BundleEvent bundleEvent) {
-                    processBundleExtensions(bundleEvent.getBundle(),
-                            bundleEvent.getType(),
-                            mulePluginManager);
+                    processBundleExtensions(bundleEvent.getBundle(), bundleEvent.getType());
                 }
 
-                private void processBundleExtensions(final Bundle bundle, int state, MulePluginManager mulePluginManager) {
+                private void processBundleExtensions(final Bundle bundle, int state) {
                     String muleCfgs = (String) bundle.getHeaders().get("Mule-Config-Files");
                     if (hasText(muleCfgs)) {
                         String[] names = muleCfgs.split(",");
@@ -64,7 +51,7 @@ public class MulePluginActivator implements BundleActivator {
                                 try {
                                     InputStream is = bundle.getResource(name).openStream();
 
-                                    mulePluginManager.registerEntry(name, new ByteArrayInputStream(IOUtils.toByteArray(is)),
+									MulePluginManager.instance().registerEntry(name, new ByteArrayInputStream(IOUtils.toByteArray(is)),
                                             new ClassLoader() {
                                                 @Override
                                                 public URL getResource(String s) {
@@ -111,22 +98,20 @@ public class MulePluginActivator implements BundleActivator {
                                                         if (aClass != null) return aClass;
                                                     } catch (Exception e) {
                                                         //ignore
-//                                                        e.printStackTrace();
                                                     }
                                                     try {
                                                         return MulePluginActivator.class.getClassLoader().loadClass(s);
                                                     } catch (Exception e) {
                                                         //ignore
-//                                                        e.printStackTrace();
                                                     }
-                                                    return super.loadClass(s);    //To change body of overridden methods use File | Settings | File Templates.
+                                                    return super.loadClass(s);
                                                 }
                                             });
                                 } catch (IOException e) {
                                     logger.log(Level.SEVERE, "Error registering entry in mule plugin manager", e);
                                 }
                             } else if (state == BundleEvent.STOPPED) {
-                                mulePluginManager.unregisterEntry(name);
+								MulePluginManager.instance().unregisterEntry(name);
                             }
                         }
                     }
@@ -140,12 +125,12 @@ public class MulePluginActivator implements BundleActivator {
     @Override
     public void stop(BundleContext bundleContext) throws Exception {
         try {
-            mulePluginManager.shutdown();
+			MulePluginManager.instance().shutdown();
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Error shutting down mule plugin manager", e);
         }
 
-        getRegistry(bundleContext).unregisterStep("MuleStep");
+        getRegistry(bundleContext).getGuiRegistry().unregisterStep(MuleStep.class);
     }
 
     private ProcessToolRegistry getRegistry(BundleContext context) {

@@ -9,16 +9,15 @@ import com.vaadin.ui.*;
 import org.aperteworkflow.editor.stepeditor.auto.AutoStepEditorWindow;
 import org.aperteworkflow.editor.stepeditor.user.UserStepEditorWindow;
 import org.aperteworkflow.editor.vaadin.GenericEditorApplication;
-import pl.net.bluesoft.rnd.processtool.plugins.ProcessToolRegistry;
-import pl.net.bluesoft.rnd.processtool.steps.ProcessToolProcessStep;
-import pl.net.bluesoft.rnd.processtool.ui.widgets.annotations.AliasName;
 import pl.net.bluesoft.rnd.util.i18n.I18NSource;
-import pl.net.bluesoft.util.lang.Classes;
 
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+
+import static pl.net.bluesoft.rnd.processtool.plugins.ProcessToolRegistry.Util.getRegistry;
+import static pl.net.bluesoft.rnd.util.AnnotationUtil.getAliasName;
 
 public class StepEditorApplication extends GenericEditorApplication implements ParameterHandler {
 
@@ -29,9 +28,8 @@ public class StepEditorApplication extends GenericEditorApplication implements P
 	private JavaScriptHelper		jsHelper;
     private String					url;
     private String                  stepName;
-    
-    
 
+	@Override
 	public Window getMainWindow() {
 		return mainWindow;
 	}
@@ -42,7 +40,7 @@ public class StepEditorApplication extends GenericEditorApplication implements P
 
 	@Override
 	public void handleParameters(Map<String, String[]> parameters) {
-        if (parameters == null || parameters.size() == 0) {
+        if (parameters == null || parameters.isEmpty()) {
             // No parameters to handle, we are not interested in such a request
             // it may be a request for static resource e.g. <servlet>/APP/323/root.gif
             return;
@@ -151,11 +149,9 @@ public class StepEditorApplication extends GenericEditorApplication implements P
         items.add(new Item("User","User"));
        
         // other tasks
-        Map<String,ProcessToolProcessStep> availableSteps = getRegistry().getAvailableSteps();
-        for (ProcessToolProcessStep stepInstance : availableSteps.values()) {
-            Class stepClass = stepInstance.getClass();
-            AliasName a = Classes.getClassAnnotation(stepClass, AliasName.class);
-            items.add(new Item(a.name(),a.name()));
+        for (Class stepClass : getRegistry().getGuiRegistry().getAvailableSteps().values()) {
+			String aliasName = getAliasName(stepClass);
+            items.add(new Item(aliasName, aliasName));
         }
         
         Collections.sort(items);

@@ -1,8 +1,9 @@
 package pl.net.bluesoft.rnd.pt.dict.global;
 
+import pl.net.bluesoft.rnd.processtool.dict.DictionaryLoader;
+import pl.net.bluesoft.rnd.processtool.dict.xml.Dictionary;
+import pl.net.bluesoft.rnd.processtool.dict.xml.ProcessDictionaries;
 import pl.net.bluesoft.rnd.pt.dict.global.i18n.GlobalDictionaryI18NProvider;
-import pl.net.bluesoft.rnd.pt.dict.global.xml.Dictionary;
-import pl.net.bluesoft.rnd.pt.dict.global.xml.ProcessDictionaries;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -27,20 +28,20 @@ public class GlobalDictionariesActivator extends AbstractPluginActivator {
         Properties properties = loadProperties("plugin.properties");
         ProcessDictionaries dictionaries = (ProcessDictionaries) DictionaryLoader.getInstance().unmarshall(is);
         for (Dictionary dictionary : dictionaries.getDictionaries()) {
-            String dictionaryId = dictionary.getDictionaryId();
+            String dictionaryId = dictionary.getId();
             dictionaryNames.add(dictionaryId);
-            registry.registerI18NProvider(new GlobalDictionaryI18NProvider(dictionaryId, registry, properties), getDictionaryProviderId(dictionaryId));
+            registry.getBundleRegistry().registerI18NProvider(new GlobalDictionaryI18NProvider(dictionaryId, registry, properties), getDictionaryProviderId(dictionaryId));
         }
     }
 
     @Override
     protected void destroy() throws Exception {
         for (String name : dictionaryNames) {
-            registry.unregisterI18NProvider(getDictionaryProviderId(name));
+            registry.getBundleRegistry().unregisterI18NProvider(getDictionaryProviderId(name));
         }
     }
 
     private String getDictionaryProviderId(String dictionaryId) {
-        return PROVIDER_ID + "_" + dictionaryId;
+        return PROVIDER_ID + '_' + dictionaryId;
     }
 }

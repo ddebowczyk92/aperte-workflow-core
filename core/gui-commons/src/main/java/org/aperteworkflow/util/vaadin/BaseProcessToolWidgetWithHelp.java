@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static pl.net.bluesoft.rnd.processtool.plugins.ProcessToolRegistry.Util.getRegistry;
+
 /**
  * @author tlipski@bluesoft.net.pl
  */
@@ -30,9 +32,7 @@ public abstract class BaseProcessToolWidgetWithHelp extends BaseProcessToolWidge
 
     private void initHelpProvider() {
         if (helpProvider == null) {
-			HelpProviderFactory helpProviderFactory = (HelpProviderFactory)ProcessToolContext.Util
-					.getThreadProcessToolContext()
-					.getRegistry()
+			HelpProviderFactory helpProviderFactory = getRegistry()
 					.lookupService(HelpProviderFactory.class.getName());
 			helpProvider = helpProviderFactory
 					.getInstance(getApplication(), getProcessDefinitions(), !cannotEdit(), helpDictionaryName);
@@ -90,12 +90,10 @@ public abstract class BaseProcessToolWidgetWithHelp extends BaseProcessToolWidge
 
             @Override
             public void makeTableHelpEnabled(Table t) {
-                //To change body of implemented methods use File | Settings | File Templates.
             }
 
             @Override
             public void addHelpForColumn(Table t, Object propertyId, String key) {
-                //To change body of implemented methods use File | Settings | File Templates.
             }
 
             @Override
@@ -162,12 +160,6 @@ public abstract class BaseProcessToolWidgetWithHelp extends BaseProcessToolWidge
         return helpDictionaryName;
     }
 
-    /**
-     * @deprecated contextHelpIsAttachedToMainWindow
-     */
-    @Deprecated
-    protected void attachContextHelpToLayout(){};
-
     protected abstract ProcessDefinitionConfig getProcessDefinition();
 
 	protected List<ProcessDefinitionConfig> getProcessDefinitions() {
@@ -183,18 +175,4 @@ public abstract class BaseProcessToolWidgetWithHelp extends BaseProcessToolWidge
 		}
 		return definitions;
 	}
-
-    public UserData getUserByLogin(String login) {
-        if (login != null && getApplication() instanceof GenericVaadinPortlet2BpmApplication) {
-            return ((GenericVaadinPortlet2BpmApplication)getApplication()).getUser(login);
-        }
-        return null;
-    }
-
-    public UserData getUserByEmail(String email) {
-        if (email != null && getApplication() instanceof GenericVaadinPortlet2BpmApplication) {
-            return ((GenericVaadinPortlet2BpmApplication)getApplication()).getUserByEmail(email);
-        }
-        return null;
-    }
 }

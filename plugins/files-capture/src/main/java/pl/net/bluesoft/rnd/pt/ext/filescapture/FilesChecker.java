@@ -1,24 +1,30 @@
 package pl.net.bluesoft.rnd.pt.ext.filescapture;
 
+import org.apache.chemistry.opencmis.client.api.Folder;
+import org.aperteworkflow.cmis.widget.CmisAtomSessionFacade;
 import pl.net.bluesoft.rnd.processtool.ProcessToolContext;
 import pl.net.bluesoft.rnd.processtool.bpm.ProcessToolBpmSession;
-import pl.net.bluesoft.rnd.processtool.model.*;
+import pl.net.bluesoft.rnd.processtool.bpm.ProcessToolBpmSessionHelper;
+import pl.net.bluesoft.rnd.processtool.model.BpmTask;
+import pl.net.bluesoft.rnd.processtool.model.ProcessInstance;
 import pl.net.bluesoft.rnd.processtool.model.config.ProcessStateAction;
+import pl.net.bluesoft.rnd.processtool.model.processdata.ProcessInstanceSimpleAttribute;
 import pl.net.bluesoft.rnd.pt.ext.filescapture.model.FilesCheckerConfiguration;
 import pl.net.bluesoft.rnd.pt.ext.filescapture.model.FilesCheckerRuleConfiguration;
-import pl.net.bluesoft.rnd.pt.utils.cmis.CmisAtomSessionFacade;
-import pl.net.bluesoft.util.lang.StringUtil;
 
 import javax.activation.MimetypesFileTypeMap;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 
+import static pl.net.bluesoft.rnd.processtool.plugins.ProcessToolRegistry.Util.getRegistry;
 import static pl.net.bluesoft.util.lang.FormatUtil.nvl;
 import static pl.net.bluesoft.util.lang.StringUtil.hasText;
 
@@ -47,10 +53,7 @@ public class FilesChecker {
     }
 
     private void execute(FilesCheckerConfiguration cfg) throws Exception {
-        ProcessToolBpmSession toolBpmSession = context.getProcessToolSessionFactory().createSession(
-                new UserData(cfg.getAutomaticUser(), cfg.getAutomaticUser(), cfg.getAutomaticUser()),
-                new HashSet());
-
+        ProcessToolBpmSession toolBpmSession = getRegistry().getProcessToolSessionFactory().createSession(cfg.getAutomaticUser());
 
         File file = new File(cfg.getFilesProperties());
 
@@ -93,13 +96,13 @@ public class FilesChecker {
                 }
             }
             if (existingPi != null && hasText(rule.getRunningProcessActionName())) {
-                Collection<BpmTask> taskList = toolBpmSession.findProcessTasks(existingPi, context);
+                Collection<BpmTask> taskList = ProcessToolBpmSessionHelper.findProcessTasks(toolBpmSession, context, existingPi);
                 for (BpmTask t : taskList) {
                     if (!hasText(rule.getProcessTaskName()) || rule.getProcessTaskName().equalsIgnoreCase(t.getTaskName())) {
-                        Set<ProcessStateAction> actions = context.getProcessDefinitionDAO().getProcessStateConfiguration(t).getActions();
+                        Set<ProcessStateAction> actions = t.getCurrentProcessStateConfiguration().getActions();
                         for (ProcessStateAction a : actions) {
                             if (rule.getRunningProcessActionName().equals(a.getBpmName())) {
-                                toolBpmSession.performAction(a, t, context);
+								ProcessToolBpmSessionHelper.performAction(toolBpmSession, context, a, t);
                                 logger.info("Performed action " + rule.getId() + " on matched process id: " + existingPi.getInternalId());
                                 break;
                             }
@@ -109,28 +112,21 @@ public class FilesChecker {
 
             }
             if (existingPi != null && hasText(rule.getRepositoryAtomUrl())) {
-                CmisAtomSessionFacade sessionFacade = new CmisAtomSessionFacade(rule.getRepositoryUser(),
-                        rule.getRepositoryPassword(),
-                        rule.getRepositoryAtomUrl(),
-                        rule.getRepositoryId());
+                CmisAtomSessionFacade sessionFacade = new CmisAtomSessionFacade();
                 String folderId = null;
 
-                for (ProcessInstanceAttribute at : existingPi.getProcessAttributes()) {
-                    if (at instanceof ProcessInstanceSimpleAttribute) {
-                        ProcessInstanceSimpleAttribute pisa = (ProcessInstanceSimpleAttribute) at;
-                        if (pisa.getKey().equals(rule.getFolderAttributeName())) {
-                            folderId = pisa.getValue();
-                            break;
-                        }
-                    }
+                for (ProcessInstanceSimpleAttribute at : existingPi.getProcessSimpleAttributes()) {
+					if (at.getKey().equals(rule.getFolderAttributeName())) {
+						folderId = at.getValue();
+						break;
+					}
                 }
-                org.apache.chemistry.opencmis.client.api.Folder mainFolder;
+                Folder mainFolder;
                 if (folderId == null) {
                     mainFolder = sessionFacade.createFolderIfNecessary(nvl(rule.getNewFolderPrefix(), "") +
                             existingPi.getInternalId(), rule.getRootFolderPath());
-                    if (StringUtil.hasText(rule.getSubFolder()))
+                    if (hasText(rule.getSubFolder()))
                         mainFolder = sessionFacade.createFolderIfNecessary(rule.getSubFolder(), mainFolder.getPath());
-//                    folderId = mainFolder.getId();
                 } else {
                     mainFolder = sessionFacade.getFolderById(folderId);
                 }

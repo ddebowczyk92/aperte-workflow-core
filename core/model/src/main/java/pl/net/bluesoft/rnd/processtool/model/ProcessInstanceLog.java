@@ -2,12 +2,14 @@ package pl.net.bluesoft.rnd.processtool.model;
 
 import static pl.net.bluesoft.util.lang.FormatUtil.nvl;
 
-import java.util.Calendar;
+import java.text.SimpleDateFormat;
 import java.util.Comparator;
+import java.util.Date;
+import java.util.TimeZone;
+import java.util.logging.SimpleFormatter;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
-import javax.persistence.Parameter;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -20,15 +22,31 @@ import pl.net.bluesoft.rnd.processtool.model.config.ProcessStateConfiguration;
  */
 @Entity
 @Table(name = "pt_process_instance_log")
+@org.hibernate.annotations.Table(
+        appliesTo="pt_process_instance_log",
+        indexes = {
+                @Index(name = "idx_pt_log_pk",
+                        columnNames = {"id"}
+                )
+        })
 public class ProcessInstanceLog extends AbstractPersistentEntity {
-    public enum LogType {
-        START, CLAIM, ACTION, INFO
-    }
+	public static final String _ENTRY_DATE = "entryDate";
+	public static final String _EVENT_I18N_KEY = "eventI18NKey";
+	public static final String _ADDITIONAL_INFO = "additionalInfo";
+	public static final String _LOG_VALUE = "logValue";
+	public static final String _LOG_TYPE = "logType";
+	public static final String _EXECUTION_ID = "executionId";
+	public static final String _STATE = "state";
+	public static final String _OWN_PROCESS_INSTANCE = "ownProcessInstance";
+	public static final String _PROCESS_INSTANCE = "processInstance";
+	public static final String _USER_LOGIN = "userLogin";
+	public static final String _USER_SUBSTITUTE_LOGIN = "userSubstituteLogin";
 
 	public static final String LOG_TYPE_START_PROCESS = "START_PROCESS";
 	public static final String LOG_TYPE_CLAIM_PROCESS = "CLAIM_PROCESS";
 	public static final String LOG_TYPE_PERFORM_ACTION = "PERFORM_ACTION";
 	public static final String LOG_TYPE_INFO = "INFO";
+    public static final String LOG_TYPE_PROCESS_CHANGE = "PROCESS_CHANGE";
 
 	@Id
 	@GeneratedValue(generator = "idGenerator")
@@ -46,7 +64,7 @@ public class ProcessInstanceLog extends AbstractPersistentEntity {
 
 //	@Field
 //	@CalendarBridge(resolution = Resolution.MINUTE)
-	private Calendar entryDate;
+	private Date entryDate;
 
 	private String eventI18NKey;
 
@@ -56,8 +74,14 @@ public class ProcessInstanceLog extends AbstractPersistentEntity {
     @Column(length = Integer.MAX_VALUE)
 	private String additionalInfo;
 
+    @Lob
+    @Type(type = "org.hibernate.type.StringClobType")
+    @Column(length = Integer.MAX_VALUE)
 	private String logValue;
+
 	private String logType;
+
+    @Index(name="idx_pt_log_executionid")
 	private String executionId;
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -73,32 +97,33 @@ public class ProcessInstanceLog extends AbstractPersistentEntity {
 	@JoinColumn(name="process_instance_id")
 	private ProcessInstance processInstance;
 
+    @Index(name="idx_pt_log_login")
+	private String userLogin;
+	private String userSubstituteLogin;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="user_id")
-	private UserData user;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="user_substitute_id")
-	private UserData userSubstitute;
-    
-
-	public ProcessInstanceLog() {
-	}
-
+	@Override
 	public Long getId() {
 		return id;
 	}
 
+	@Override
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public Calendar getEntryDate() {
+	public Date getEntryDate() {
 		return entryDate;
 	}
 
-	public void setEntryDate(Calendar entryDate) {
+    public String getFormattedDate(String format)
+    {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
+        //TODO user timezone
+        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Europe/Warsaw"));
+        return simpleDateFormat.format(getEntryDate());
+    }
+
+	public void setEntryDate(Date entryDate) {
 		this.entryDate = entryDate;
 	}
 
@@ -135,23 +160,23 @@ public class ProcessInstanceLog extends AbstractPersistentEntity {
 		this.processInstance = processInstance;
 	}
 
-	public void setUser(UserData user) {
-		this.user = user;
+	public String getUserLogin() {
+		return userLogin;
 	}
 
-	public UserData getUser() {
-		return user;
+	public void setUserLogin(String userLogin) {
+		this.userLogin = userLogin;
 	}
 
-    public UserData getUserSubstitute() {
-        return userSubstitute;
-    }
+	public String getUserSubstituteLogin() {
+		return userSubstituteLogin;
+	}
 
-    public void setUserSubstitute(UserData userSubstitute) {
-        this.userSubstitute = userSubstitute;
-    }
+	public void setUserSubstituteLogin(String userSubstituteLogin) {
+		this.userSubstituteLogin = userSubstituteLogin;
+	}
 
-    public String getLogValue() {
+	public String getLogValue() {
 		return logValue;
 	}
 
@@ -170,7 +195,8 @@ public class ProcessInstanceLog extends AbstractPersistentEntity {
 	public static final Comparator<ProcessInstanceLog> DEFAULT_COMPARATOR = new Comparator<ProcessInstanceLog>() {
 		@Override
 		public int compare(ProcessInstanceLog o1, ProcessInstanceLog o2) {
-			return nvl(o2.getEntryDate(), Calendar.getInstance()).compareTo(nvl(o1.getEntryDate(), Calendar.getInstance()));
+			Date now = new Date();
+			return nvl(o2.getEntryDate(), now).compareTo(nvl(o1.getEntryDate(), now));
 		}
 	};
 

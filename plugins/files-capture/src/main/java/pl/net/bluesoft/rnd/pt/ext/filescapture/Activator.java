@@ -2,7 +2,8 @@ package pl.net.bluesoft.rnd.pt.ext.filescapture;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import pl.net.bluesoft.rnd.processtool.ProcessToolContext;
 import pl.net.bluesoft.rnd.processtool.ProcessToolContextCallback;
 import pl.net.bluesoft.rnd.processtool.plugins.ProcessToolRegistry;
@@ -15,20 +16,25 @@ import java.util.logging.Logger;
 /**
  * Created by Agata Taraszkiewicz
  */
-public class Activator implements BundleActivator {
+public class Activator implements BundleActivator 
+{
+	@Autowired
+	private ProcessToolRegistry processToolRegistry;
+	
     boolean run = true;
 
     private final Logger logger = Logger.getLogger(Activator.class.getName());
 
     @Override
-    public void start(BundleContext bundleContext) throws Exception {
-        final ProcessToolRegistry toolRegistry = getRegistry(bundleContext);
-        toolRegistry.registerModelExtension(FilesCheckerConfiguration.class);
-        toolRegistry.registerModelExtension(FilesCheckerRuleConfiguration.class);
+    public void start(BundleContext bundleContext) throws Exception 
+    {
+    	SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
+    	
+    	
+    	processToolRegistry.getDataRegistry().registerModelExtension(FilesCheckerConfiguration.class);
+    	processToolRegistry.getDataRegistry().registerModelExtension(FilesCheckerRuleConfiguration.class);
+    	processToolRegistry.getDataRegistry().commitModelExtensions();
 
-		toolRegistry.commitModelExtensions();
-//
-//        toolRegistry.commitModelExtensions();
         new Thread(new Runnable() {
 
             @Override
@@ -38,15 +44,11 @@ public class Activator implements BundleActivator {
                     try {
                         Thread.sleep(10000);
                         try {
-                            toolRegistry.withProcessToolContext(new ProcessToolContextCallback() {
+                        	processToolRegistry.withProcessToolContext(new ProcessToolContextCallback() {
                                 @Override
-                                public void withContext(ProcessToolContext ctx) {
-                                    ProcessToolContext.Util.setThreadProcessToolContext(ctx);
-                                    try {
-                                        new FilesChecker(ctx).run();
-                                    } finally {
-                                        ProcessToolContext.Util.removeThreadProcessToolContext();
-                                    }
+                                public void withContext(ProcessToolContext ctx) 
+                                {
+                                   new FilesChecker(ctx).run();
                                 }
                             });
                         } catch (Exception e) {
@@ -65,9 +67,4 @@ public class Activator implements BundleActivator {
     public void stop(BundleContext bundleContext) throws Exception {
         run = false;
     }
-
-    private ProcessToolRegistry getRegistry(BundleContext context) {
-		ServiceReference ref = context.getServiceReference(ProcessToolRegistry.class.getName());
-		return (ProcessToolRegistry) context.getService(ref);
-	}
 }
