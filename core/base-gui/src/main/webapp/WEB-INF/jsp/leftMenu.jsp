@@ -20,18 +20,12 @@
 			  </a>
 			<div id="mobile-collapse-inner" class="collapse navbar-collapse left-menu btn-group-vertical">
 
-				<c:if test="${aperteUser.hasRole('REGISTER_COMPLAINT') || aperteUser.hasRole('REGISTER_COMPLAINT_MIN')}">
-					<c:set var="newCaseButtonFunction" scope="session" value="showNoEditRoleError()"/>
-					<c:if test="${aperteUser.hasRole('EDIT_COMPLAINT_P') || aperteUser.hasRole('EDIT_COMPLAINT_B')}">
-						<c:set var="newCaseButtonFunction" scope="session" value="startProcess('complaint_registration')"/>
-					</c:if>
-					<button  type="button" class="btn btn-success" id="process-start-button" onclick="${newCaseButtonFunction}">
-						<i class="icon-briefcase icon-white" ></i><spring:message code="complaint.new.button" />
-					</button >
-				</c:if>
-				<button  type="button" class="btn btn-default" id="process-start-button" onclick="startProcess('user_substitution') ">
-                    <i class="icon-briefcase icon-white" ></i><spring:message code="admin.substitution.action.add" />
-                </button >
+				<button  type="button" class="btn btn-success" id="process-start-button" onClick="windowManager.showNewProcessPanel();">
+					<i class="icon-briefcase icon-white" ></i><spring:message code="processes.start.new.process" />
+				</button >
+				<button  type="button" class="btn btn-default" id="show-search-view-button" onClick="windowManager.showSearchProcessPanel();">
+					<i class="icon-search icon-white" ></i><spring:message code="processes.search.process" />
+				</button >
 				<button type="button" class="btn btn-default"  id="show-configuration-view-button" onClick="windowManager.showConfiguration();">
 					<i class="icon-wrench icon-white" ></i><spring:message code="processes.show.configuration" />
 				</button>
