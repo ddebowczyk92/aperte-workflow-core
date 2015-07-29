@@ -1,0 +1,141 @@
+.aperte-navigation a
+{
+	font-size: 18px;
+	color: #ffffff;
+	background-color: rgb(97, 158, 248);
+		-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	border:1px;
+	margin-right: 8px;
+}
+
+.aperte-navigation a span 
+{
+	padding: 5px;
+}
+
+.form-search input,
+.aui .form-search textarea,
+.aui .form-search select,
+.aui .form-search .help-inline,
+.aui .form-search .uneditable-input,
+.aui .form-search .input-prepend,
+.aui .form-search .input-append,
+.aui .form-inline input, .aui .form-inline textarea,
+.aui .form-inline select, .aui .form-inline .help-inline,
+.aui .form-inline .uneditable-input, .aui .form-inline .input-prepend,
+.aui .form-inline .input-append, .aui .form-horizontal input,
+.aui .form-horizontal textarea, .aui .form-horizontal select,
+.aui .form-horizontal .help-inline, .aui .form-horizontal .uneditable-input,
+.aui .form-horizontal .input-prepend, .aui .form-horizontal .input-append
+{
+	display: table;
+}
+
+.aui input[disabled], .aui select[disabled], .aui textarea[disabled], .aui input[readonly], .aui select[readonly], .aui textarea[readonly]
+{
+    background-color: #f4f4f4 !important;
+}
+
+.aperte-navigation-signin
+{
+	font-size: 18px;
+	color: #ffffff;
+	background-color: rgb(51, 206, 76);
+		-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	border:1px;
+	margin-left: 8px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	margin-top: 2px;
+	float: right;
+}
+
+.portlet-topper
+{
+	z-index: 100;
+}
+
+.dockbar
+{
+	background: none !important;
+	position: relative !important;
+	float: right !important;
+}
+
+.portlet-content, .portlet-minimized .portlet-content-container
+{
+	padding: 0px !important;
+}
+
+input[type="text"], input[type="password"], input[type="file"], input[type="submit"], input[type="button"], input[type="reset"], select, select[multiple], select[size], textarea, .textarea
+{
+	background: white !important;
+	background-color: white !important;
+	padding-left: 5px !important;
+	font-size: 16px;
+}
+
+input[disabled], 
+select[disabled], 
+textarea[disabled], 
+input[readonly], 
+select[readonly], 
+textarea[readonly],
+input[disabled]:focus, 
+select[disabled]:focus, 
+textarea[disabled]:focus, 
+input[readonly]:focus, 
+select[readonly]:focus, 
+textarea[readonly]:focus
+{
+    background-color: rgb(224, 224, 224) !important;
+	color: rgb(48, 47, 47);
+	  -webkit-box-shadow: none;
+     -moz-box-shadow: none;
+          box-shadow: none;
+	border-color: none;
+	font-size: 16px;
+	
+
+}
+
+@media (max-width: 961px) 
+{
+	.dockbar
+	{
+		display: none;
+	}
+	
+	#heading
+	{
+		display: none;
+	}
+}
+
+
+@media (min-width: 962px) 
+{
+	
+	body
+	{
+
+		margin: 4px !important;
+
+		<!--[if IE]>
+		margin: 4px 16px 4px 4px !important;
+		<![endif]-->
+
+	}
+	*::-ms-backdrop, body
+	{
+		margin: 4px 22px 4px 4px !important;
+
+	}/* IE11 */
+	
+}

@@ -1,0 +1,14 @@
+pl\net\bluesoft\rnd\pt\utils\jdbc\exception\TableNameNotFoundException.class
+pl\net\bluesoft\rnd\pt\utils\jdbc\builder\AbstractQueryBuilder.class
+pl\net\bluesoft\rnd\pt\utils\jdbc\helper\Classes.class
+pl\net\bluesoft\rnd\pt\utils\jdbc\builder\SelectBuilder.class
+pl\net\bluesoft\rnd\pt\utils\jdbc\SimpleQueryJdbcConnector.class
+pl\net\bluesoft\rnd\pt\utils\jdbc\convert\ConvertingBeanProcessor.class
+pl\net\bluesoft\rnd\pt\utils\jdbc\builder\SelectBuilder$SelectQueryMetadata.class
+pl\net\bluesoft\rnd\pt\utils\jdbc\convert\ConvertingBeanProcessor$CharacterResultValueConverter.class
+pl\net\bluesoft\rnd\pt\utils\jdbc\convert\ResultSetValueConverter.class
+pl\net\bluesoft\rnd\pt\utils\jdbc\convert\ColumnNameConverter.class
+pl\net\bluesoft\rnd\pt\utils\jdbc\JdbcUtils.class
+pl\net\bluesoft\rnd\pt\utils\jdbc\JdbcConnector.class
+pl\net\bluesoft\rnd\pt\utils\jdbc\convert\ConvertingBeanProcessor$SimpleColumnNameConverter.class
+pl\net\bluesoft\rnd\pt\utils\jdbc\exception\DataSourceDiscoveryFailedException.class

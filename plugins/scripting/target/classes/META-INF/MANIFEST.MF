@@ -1,0 +1,32 @@
+Manifest-Version: 1.0
+Export-Package: org.aperteworkflow.scripting;uses:="pl.net.bluesoft.rn
+ d.util.func,org.osgi.framework"
+Embed-Directory: lib
+Bundle-ClassPath: .,lib/commons-beanutils-1.8.3.jar,lib/commons-io-2.4
+ .jar,lib/commons-collections4-4.0.jar,lib/commons-logging-1.1.1.jar,l
+ ib/commons-lang3-3.1.jar,lib/commons-collections-3.2.1.jar,lib/util-2
+ .0.jar
+Built-By: Dominik Dbowczyk
+Tool: Bnd-0.0.357
+Bundle-Name: scripting
+Created-By: Apache Maven Bundle Plugin
+Build-Jdk: 1.7.0_60
+Bundle-Version: 0.1
+Bnd-LastModified: 1438157209926
+Embed-Transitive: true
+Bundle-Activator: org.aperteworkflow.scripting.ScriptingActivator
+Bundle-ManifestVersion: 2
+Bundle-Description: Aperte Workflow is a compilation of well-known, st
+ able and mature frameworks into a        complete BPM solution develo
+ ped by BlueSoft sp. z o.o. - Polish independent software vendor.     
+    Project home page is available at http://www.aperteworkflow.org/
+Bundle-License: http://www.gnu.org/licenses/lgpl-2.1.txt
+Embed-Dependency: *;scope=compile|runtime;inline=false
+Import-Package: javax.servlet;resolution:=optional,org.apache.avalon.f
+ ramework.logger;resolution:=optional,org.apache.commons.collections.c
+ omparators,org.apache.log;resolution:=optional,org.apache.log4j;resol
+ ution:=optional,org.aperteworkflow.scripting;resolution:=optional,org
+ .osgi.framework;resolution:=optional;version="1.5",org.w3c.dom,pl.net
+ .bluesoft.rnd.util.func;resolution:=optional
+Bundle-SymbolicName: org.aperteworkflow.scripting
+

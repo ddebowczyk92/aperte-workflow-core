@@ -1,0 +1,6 @@
+org\aperteworkflow\editor\json\ProcessConfigJSONHandler.class
+org\aperteworkflow\editor\domain\QueueRolePermission.class
+org\aperteworkflow\editor\domain\Queue.class
+org\aperteworkflow\editor\domain\Permission.class
+org\aperteworkflow\editor\domain\Language.class
+org\aperteworkflow\editor\domain\ProcessConfig.class

@@ -1,0 +1,3 @@
+org\aperteworkflow\integration\liferay\utils\LiferayWebAPI.class
+pl\net\bluesoft\rnd\processtool\roles\impl\LiferayUserRolesManager.class
+pl\net\bluesoft\rnd\processtool\authorization\impl\LiferayAuthorizationService.class

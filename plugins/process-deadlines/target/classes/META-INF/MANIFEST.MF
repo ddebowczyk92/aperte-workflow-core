@@ -1,0 +1,63 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1438157330962
+Build-Jdk: 1.7.0_60
+Built-By: Dominik Dębowczyk
+Bundle-Activator: pl.net.bluesoft.rnd.pt.ext.deadline.DeadlineActivator
+Bundle-ClassPath: .,lib/util-2.0.jar,lib/commons-beanutils-1.8.3.jar,lib
+ /commons-logging-1.1.1.jar,lib/commons-lang3-3.1.jar,lib/commons-collec
+ tions-3.2.1.jar,lib/commons-collections4-4.0.jar,lib/commons-io-2.4.jar
+Bundle-Description: Aperte Workflow is a compilation of well-known, stab
+ le and mature frameworks into a        complete BPM solution developed 
+ by BlueSoft sp. z o.o. - Polish independent software vendor.        Pro
+ ject home page is available at http://www.aperteworkflow.org/
+Bundle-License: http://www.gnu.org/licenses/lgpl-2.1.txt
+Bundle-ManifestVersion: 2
+Bundle-Name: process-deadlines
+Bundle-SymbolicName: pl.net.bluesoft.rnd.pt.ext.deadline
+Bundle-Version: 0.1
+Created-By: Apache Maven Bundle Plugin
+Embed-Dependency: *;scope=compile|runtime;inline=false
+Embed-Directory: lib
+Embed-Transitive: true
+Embedded-Artifacts: lib/util-2.0.jar;g="pl.net.bluesoft";a="util";v="2.0
+ ",lib/commons-beanutils-1.8.3.jar;g="commons-beanutils";a="commons-bean
+ utils";v="1.8.3",lib/commons-logging-1.1.1.jar;g="commons-logging";a="c
+ ommons-logging";v="1.1.1",lib/commons-lang3-3.1.jar;g="org.apache.commo
+ ns";a="commons-lang3";v="3.1",lib/commons-collections-3.2.1.jar;g="comm
+ ons-collections";a="commons-collections";v="3.2.1",lib/commons-collecti
+ ons4-4.0.jar;g="org.apache.commons";a="commons-collections4";v="4.0",li
+ b/commons-io-2.4.jar;g="commons-io";a="commons-io";v="2.4"
+Export-Package: pl.net.bluesoft.rnd.pt.ext.deadline.model;uses:="org.hib
+ ernate.annotations,pl.net.bluesoft.rnd.processtool.template,javax.persi
+ stence,pl.net.bluesoft.rnd.processtool.model";version="0.1",pl.net.blue
+ soft.rnd.pt.ext.deadline.step;uses:="pl.net.bluesoft.rnd.processtool.mo
+ del,pl.net.bluesoft.rnd.processtool.model.processdata,pl.net.bluesoft.r
+ nd.processtool.steps,pl.net.bluesoft.rnd.processtool.ui.widgets.annotat
+ ions,pl.net.bluesoft.rnd.processtool.dao,pl.net.bluesoft.rnd.processtoo
+ l.bpm.exception,pl.net.bluesoft.rnd.processtool";version="0.1"
+Import-Package: javax.persistence;resolution:=optional,javax.servlet;res
+ olution:=optional;version="[2.5,3)",org.apache.avalon.framework.logger;
+ resolution:=optional,org.apache.log;resolution:=optional,org.apache.log
+ 4j;resolution:=optional,org.hibernate;resolution:=optional,org.hibernat
+ e.annotations;resolution:=optional,org.hibernate.criterion;resolution:=
+ optional,org.hibernate.transform;resolution:=optional,org.osgi.framewor
+ k;resolution:=optional;version="[1.7,2)",org.quartz,org.springframework
+ .beans.factory.annotation;resolution:=optional;version="[3.0,4)",org.sp
+ ringframework.web.context.support;resolution:=optional;version="[3.0,4)
+ ",org.w3c.dom;resolution:=optional,pl.net.bluesoft.rnd.processtool;reso
+ lution:=optional,pl.net.bluesoft.rnd.processtool.bpm;resolution:=option
+ al,pl.net.bluesoft.rnd.processtool.bpm.exception;resolution:=optional,p
+ l.net.bluesoft.rnd.processtool.dao;resolution:=optional,pl.net.bluesoft
+ .rnd.processtool.model,pl.net.bluesoft.rnd.processtool.model.processdat
+ a;resolution:=optional,pl.net.bluesoft.rnd.processtool.plugins;resoluti
+ on:=optional,pl.net.bluesoft.rnd.processtool.roles;resolution:=optional
+ ,pl.net.bluesoft.rnd.processtool.steps;resolution:=optional,pl.net.blue
+ soft.rnd.processtool.template;resolution:=optional,pl.net.bluesoft.rnd.
+ processtool.ui.widgets.annotations;resolution:=optional,pl.net.bluesoft
+ .rnd.processtool.usersource;resolution:=optional,pl.net.bluesoft.rnd.pt
+ .ext.bpmnotifications.service;version="[0.1,1)",pl.net.bluesoft.rnd.pt.
+ ext.sched.service,pl.net.bluesoft.rnd.util.i18n;resolution:=optional,pl
+ .net.bluesoft.util.eventbus
+ProcessTool-Step-Enhancement: pl.net.bluesoft.rnd.pt.ext.deadline.step.S
+ etupDeadlineStep
+Tool: Bnd-1.50.0

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             version="2.0"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd">
+
+    <portlet>
+        <portlet-name>AperteWorkflow Dictionary Editor Portlet</portlet-name>
+        <display-name>Aperte Workflow Dictionary Editor</display-name>
+        <portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+        <init-param>
+            <name>contextConfigLocation</name>
+            <value>/WEB-INF/spring/aperte-dictionary-editor-portlet.xml</value>
+        </init-param>
+        <supports>
+            <mime-type>text/html</mime-type>
+        </supports>
+        <portlet-info>
+            <title>Aperte Workflow Dictionary Editor</title>
+            <short-title>Dictionary Editor</short-title>
+        </portlet-info>
+    </portlet>
+
+    <portlet>
+        <portlet-name>AperteWorkflow Case Management Portlet</portlet-name>
+        <display-name>Aperte Workflow Case Management</display-name>
+        <portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+        <init-param>
+            <name>contextConfigLocation</name>
+            <value>/WEB-INF/spring/aperte-case-management-portlet.xml</value>
+        </init-param>
+        <supports>
+            <mime-type>text/html</mime-type>
+        </supports>
+        <portlet-info>
+            <title>Aperte Workflow Case Management</title>
+            <short-title>Case Management</short-title>
+        </portlet-info>
+    </portlet>
+
+	<portlet>
+		<portlet-name>AperteWorkflow Interactive Reports</portlet-name>
+		<display-name>AperteWorkflow Interactive Reports</display-name>
+		<portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+		<init-param>
+			<name>contextConfigLocation</name>
+			<value>/WEB-INF/spring/aperte-interactive-reports-portlet.xml</value>
+		</init-param>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<portlet-info>
+			<title>AperteWorkflow Interactive Reports</title>
+			<short-title>Interactive Reports</short-title>
+		</portlet-info>
+	</portlet>
+
+    <portlet>
+        <portlet-name>Aperte Workflow Substitution Manager</portlet-name>
+        <display-name>Aperte Workflow Substitution Manager</display-name>
+        <portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+        <init-param>
+            <name>contextConfigLocation</name>
+            <value>/WEB-INF/spring/adminViewRendererContext.xml</value>
+        </init-param>
+        <init-param>
+            <name>view-jsp</name>
+            <value>substitutions/substitutionsmanager</value>
+        </init-param>
+        <supports>
+            <mime-type>text/html</mime-type>
+        </supports>
+        <portlet-info>
+            <title>Aperte Workflow Substitution Manager</title>
+            <short-title>AperteSubstitution</short-title>
+        </portlet-info>
+    </portlet>
+
+	<portlet>
+		<portlet-name>AperteWorkflow Activities Portlet</portlet-name>
+		<display-name>Aperte Workflow Activities Simple</display-name>
+        <portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+		<init-param>
+		  <name>contextConfigLocation</name>
+		  <value>/WEB-INF/spring/portletViewRendererContext.xml</value>
+		</init-param>
+		<init-param>
+			<name>view-jsp</name>
+			<value>main</value>
+		</init-param>
+
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<portlet-info>
+			<title>Aperte Workflow JSP Activities</title>
+			<short-title>Activities 2</short-title>
+		</portlet-info>
+	</portlet>
+
+    <portlet>
+        <portlet-name>Aperte Workflow Process Instance Manager</portlet-name>
+        <display-name>Aperte Workflow Process Instance Manager</display-name>
+        <portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+        <init-param>
+            <name>contextConfigLocation</name>
+            <value>/WEB-INF/spring/adminViewRendererContext.xml</value>
+        </init-param>
+        <init-param>
+            <name>view-jsp</name>
+            <value>admin/processInstance/processinstance</value>
+        </init-param>
+        <supports>
+            <mime-type>text/html</mime-type>
+        </supports>
+        <portlet-info>
+            <title>Aperte Workflow Process Instance Manager</title>
+            <short-title>ProcessInstances</short-title>
+        </portlet-info>
+    </portlet>
+
+    <portlet>
+        <portlet-name>Aperte Workflow Admin Portlet</portlet-name>
+        <display-name>Aperte Workflow Admin Portlet</display-name>
+		<portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+		<init-param>
+			<name>contextConfigLocation</name>
+			<value>/WEB-INF/spring/adminViewRendererContext.xml</value>
+		</init-param>
+		<init-param>
+			<name>view-jsp</name>
+			<value>admin/adminportlet/adminportlet</value>
+		</init-param>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+        <portlet-info>
+            <title>Aperte Workflow Admin Portlet</title>
+            <short-title>Aperte Workflow Admin Portlet</short-title>
+        </portlet-info>
+    </portlet>
+
+</portlet-app>

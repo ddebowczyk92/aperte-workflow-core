@@ -1,0 +1,14 @@
+pl\net\bluesoft\rnd\pt\ext\user\service\AperteDirectoryServiceProperties.class
+pl\net\bluesoft\rnd\pt\ext\user\service\AperteUserSource.class
+pl\net\bluesoft\rnd\pt\ext\user\model\PersistentUserData.class
+pl\net\bluesoft\rnd\pt\ext\user\service\AperteDirectoryService.class
+pl\net\bluesoft\rnd\pt\ext\user\dao\UserDataDAO.class
+pl\net\bluesoft\rnd\pt\ext\user\dao\UserRoleDAO.class
+pl\net\bluesoft\rnd\pt\ext\user\model\PersistentUserRole.class
+pl\net\bluesoft\rnd\pt\ext\user\dao\UserRoleDAOImpl.class
+pl\net\bluesoft\rnd\pt\ext\user\UserServiceActivator.class
+pl\net\bluesoft\rnd\pt\ext\user\FelixServiceBridge.class
+pl\net\bluesoft\rnd\pt\ext\user\AbstractPluginActivator.class
+pl\net\bluesoft\rnd\pt\ext\user\service\AperteUserRolesManager.class
+pl\net\bluesoft\rnd\pt\ext\user\dao\UserDataDAOImpl.class
+pl\net\bluesoft\rnd\pt\ext\user\dao\UserDataDAOImpl$1.class

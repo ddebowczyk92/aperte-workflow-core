@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/samples/activiti-sample-process/activiti-sample-process.iml" filepath="$PROJECT_DIR$/samples/activiti-sample-process/activiti-sample-process.iml" />
+      <module fileurl="file://$PROJECT_DIR$/utils/aperte-slim-utils/aperte-slim-utils.iml" filepath="$PROJECT_DIR$/utils/aperte-slim-utils/aperte-slim-utils.iml" />
+      <module fileurl="file://$PROJECT_DIR$/utils/aperte-utils/aperte-utils.iml" filepath="$PROJECT_DIR$/utils/aperte-utils/aperte-utils.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aperteworkflow-core.iml" filepath="$PROJECT_DIR$/aperteworkflow-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/base-gui/base-gui.iml" filepath="$PROJECT_DIR$/core/base-gui/base-gui.iml" />
+      <module fileurl="file://$PROJECT_DIR$/plugins/base-widgets/base-widgets.iml" filepath="$PROJECT_DIR$/plugins/base-widgets/base-widgets.iml" />
+      <module fileurl="file://$PROJECT_DIR$/plugins/bpm-notifications/bpm-notifications.iml" filepath="$PROJECT_DIR$/plugins/bpm-notifications/bpm-notifications.iml" />
+      <module fileurl="file://$PROJECT_DIR$/plugins/case-management/case-management.iml" filepath="$PROJECT_DIR$/plugins/case-management/case-management.iml" />
+      <module fileurl="file://$PROJECT_DIR$/plugins/cmis-widget/cmis-widget.iml" filepath="$PROJECT_DIR$/plugins/cmis-widget/cmis-widget.iml" />
+      <module fileurl="file://$PROJECT_DIR$/plugins/context-help-provider/context-help-provider.iml" filepath="$PROJECT_DIR$/plugins/context-help-provider/context-help-provider.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/core.iml" filepath="$PROJECT_DIR$/core/core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/plugins/doclist-widget/doclist-widget.iml" filepath="$PROJECT_DIR$/plugins/doclist-widget/doclist-widget.iml" />
+      <module fileurl="file://$PROJECT_DIR$/plugins/drools-step/drools-step.iml" filepath="$PROJECT_DIR$/plugins/drools-step/drools-step.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/editor/editor.iml" filepath="$PROJECT_DIR$/core/editor/editor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/editor-interface/editor-interface.iml" filepath="$PROJECT_DIR$/core/editor-interface/editor-interface.iml" />
+      <module fileurl="file://$PROJECT_DIR$/plugins/email-capture/email-capture.iml" filepath="$PROJECT_DIR$/plugins/email-capture/email-capture.iml" />
+      <module fileurl="file://$PROJECT_DIR$/plugins/external-plugins/external-plugins.iml" filepath="$PROJECT_DIR$/plugins/external-plugins/external-plugins.iml" />
+      <module fileurl="file://$PROJECT_DIR$/plugins/files-capture/files-capture.iml" filepath="$PROJECT_DIR$/plugins/files-capture/files-capture.iml" />
+      <module fileurl="file://$PROJECT_DIR$/plugins/files-repository/files-repository.iml" filepath="$PROJECT_DIR$/plugins/files-repository/files-repository.iml" />
+      <module fileurl="file://$PROJECT_DIR$/plugins/global-dictionaries/global-dictionaries.iml" filepath="$PROJECT_DIR$/plugins/global-dictionaries/global-dictionaries.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/gui-commons/gui-commons.iml" filepath="$PROJECT_DIR$/core/gui-commons/gui-commons.iml" />
+      <module fileurl="file://$PROJECT_DIR$/samples/incident-ws/incident-ws.iml" filepath="$PROJECT_DIR$/samples/incident-ws/incident-ws.iml" />
+      <module fileurl="file://$PROJECT_DIR$/samples/incident-ws-schema/incident-ws-schema.iml" filepath="$PROJECT_DIR$/samples/incident-ws-schema/incident-ws-schema.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/integration/integration.iml" filepath="$PROJECT_DIR$/core/integration/integration.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/integration-interface/integration-interface.iml" filepath="$PROJECT_DIR$/core/integration-interface/integration-interface.iml" />
+      <module fileurl="file://$PROJECT_DIR$/plugins/interactive-reports/interactive-reports.iml" filepath="$PROJECT_DIR$/plugins/interactive-reports/interactive-reports.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/jbpm-context/jbpm-context.iml" filepath="$PROJECT_DIR$/core/jbpm-context/jbpm-context.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/jbpm-gui/jbpm-gui.iml" filepath="$PROJECT_DIR$/core/jbpm-gui/jbpm-gui.iml" />
+      <module fileurl="file://$PROJECT_DIR$/utils/jdbc-connector/jdbc-connector.iml" filepath="$PROJECT_DIR$/utils/jdbc-connector/jdbc-connector.iml" />
+      <module fileurl="file://$PROJECT_DIR$/samples/liferay-poc-process/liferay-poc-process.iml" filepath="$PROJECT_DIR$/samples/liferay-poc-process/liferay-poc-process.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/model/model.iml" filepath="$PROJECT_DIR$/core/model/model.iml" />
+      <module fileurl="file://$PROJECT_DIR$/samples/mule-attachment-sample/mule-attachment-sample.iml" filepath="$PROJECT_DIR$/samples/mule-attachment-sample/mule-attachment-sample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/plugins/mule-esb-plugin/mule-esb-plugin.iml" filepath="$PROJECT_DIR$/plugins/mule-esb-plugin/mule-esb-plugin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/samples/mule-flightsearch-sample/mule-flightsearch-sample.iml" filepath="$PROJECT_DIR$/samples/mule-flightsearch-sample/mule-flightsearch-sample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/plugins/plugins.iml" filepath="$PROJECT_DIR$/plugins/plugins.iml" />
+      <module fileurl="file://$PROJECT_DIR$/plugins/process-deadlines/process-deadlines.iml" filepath="$PROJECT_DIR$/plugins/process-deadlines/process-deadlines.iml" />
+      <module fileurl="file://$PROJECT_DIR$/samples/sample-mule-step/sample-mule-step.iml" filepath="$PROJECT_DIR$/samples/sample-mule-step/sample-mule-step.iml" />
+      <module fileurl="file://$PROJECT_DIR$/samples/samples.iml" filepath="$PROJECT_DIR$/samples/samples.iml" />
+      <module fileurl="file://$PROJECT_DIR$/plugins/scheduler-integration/scheduler-integration.iml" filepath="$PROJECT_DIR$/plugins/scheduler-integration/scheduler-integration.iml" />
+      <module fileurl="file://$PROJECT_DIR$/plugins/scripting/scripting.iml" filepath="$PROJECT_DIR$/plugins/scripting/scripting.iml" />
+      <module fileurl="file://$PROJECT_DIR$/server-libs/server-libs.iml" filepath="$PROJECT_DIR$/server-libs/server-libs.iml" />
+      <module fileurl="file://$PROJECT_DIR$/plugins/userdata-service/userdata-service.iml" filepath="$PROJECT_DIR$/plugins/userdata-service/userdata-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/plugins/userdata-widget/userdata-widget.iml" filepath="$PROJECT_DIR$/plugins/userdata-widget/userdata-widget.iml" />
+      <module fileurl="file://$PROJECT_DIR$/utils/utils.iml" filepath="$PROJECT_DIR$/utils/utils.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/webapi/webapi.iml" filepath="$PROJECT_DIR$/core/webapi/webapi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/utils/xml-utils/xml-utils.iml" filepath="$PROJECT_DIR$/utils/xml-utils/xml-utils.iml" />
+    </modules>
+  </component>
+</project>

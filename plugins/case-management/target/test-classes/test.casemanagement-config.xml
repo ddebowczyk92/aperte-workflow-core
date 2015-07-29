@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config.CaseDefinition name="Complaint" initialState="State1">
+    <possibleStates>
+        <config.CaseStateDefinition name="NEW">
+            <widgets>
+                <config.CaseStateWidget className="TabSheet" priority="0">
+                    <children>
+                        <config.CaseStateWidget className="VerticalLayout" priority="1" name="Case Data">
+                            <children>
+                                <config.CaseStateWidget className="ComplaintPerson" priority="1" name="Case Data">
+                                    <children/>
+                                </config.CaseStateWidget>
+                                <config.CaseStateWidget className="ComplaintDetails" priority="2" name="Case Data">
+                                    <children/>
+                                </config.CaseStateWidget>
+                                <config.CaseStateWidget className="ComplaintFlightList" priority="3" name="Case Data">
+                                    <children/>
+                                    <attributes>
+                                        <config.CaseStateWidgetAttribute key="simpleView" value="false"/>
+                                    </attributes>
+                                </config.CaseStateWidget>
+                                <config.CaseStateWidget className="ComplaintBasicInfo" priority="4" name="Case Data">
+                                    <children/>
+                                </config.CaseStateWidget>
+                                <config.CaseStateWidget className="ComplaintApplicantDetails" priority="5" name="Case Data">
+                                    <children/>
+                                    <attributes>
+                                        <config.CaseStateWidgetAttribute key="attribute1" value="value1"/>
+                                    </attributes>
+                                </config.CaseStateWidget>
+                                <config.CaseStateWidget className="CaseComments" priority="6" name="Case Comments">
+                                    <children/>
+                                    <attributes/>
+                                </config.CaseStateWidget>
+                                <config.CaseStateWidget className="FileRepositoryWidget" priority="7" name="Attachments">
+                                    <children/>
+                                    <attributes/>
+                                </config.CaseStateWidget>
+                            </children>
+                            <attributes>
+                                <config.CaseStateWidgetAttribute key="caption" value="case.main.data.tab.title"/>
+                            </attributes>
+                        </config.CaseStateWidget>
+
+                    </children>
+                    <attributes/>
+                </config.CaseStateWidget>
+            </widgets>
+            <roles>
+                <config.CaseStateRole roleName=".*" privilegeName = "EDIT" />
+            </roles>
+            <processes>
+                <config.CaseStateProcess bpmDefinitionKey="complaint_new_stage" />
+            </processes>
+        </config.CaseStateDefinition>
+        <config.CaseStateDefinition name="CLOSED">
+            <widgets>
+                <config.CaseStateWidget className="TabSheet" priority="0">
+                    <children>
+                        <config.CaseStateWidget className="VerticalLayout" priority="1" name="Case Data">
+                            <children>
+                                <config.CaseStateWidget className="ComplaintPerson" priority="1" name="Case Data">
+                                    <children/>
+                                </config.CaseStateWidget>
+                                <config.CaseStateWidget className="ComplaintDetails" priority="2" name="Case Data">
+                                    <children/>
+                                </config.CaseStateWidget>
+                                <config.CaseStateWidget className="ComplaintFlightList" priority="3" name="Case Data">
+                                    <children/>
+                                    <attributes>
+                                        <config.CaseStateWidgetAttribute key="simpleView" value="false"/>
+                                    </attributes>
+                                </config.CaseStateWidget>
+                                <config.CaseStateWidget className="ComplaintBasicInfo" priority="4" name="Case Data">
+                                    <children/>
+                                </config.CaseStateWidget>
+                                <config.CaseStateWidget className="ComplaintApplicantDetails" priority="5" name="Case Data">
+                                    <children/>
+                                    <attributes>
+                                        <config.CaseStateWidgetAttribute key="attribute1" value="value1"/>
+                                    </attributes>
+                                </config.CaseStateWidget>
+                                <config.CaseStateWidget className="CaseComments" priority="6" name="Case Comments">
+                                    <children/>
+                                    <attributes/>
+                                </config.CaseStateWidget>
+                                <config.CaseStateWidget className="FileRepositoryWidget" priority="7" name="Attachments">
+                                    <children/>
+                                    <attributes/>
+                                </config.CaseStateWidget>
+                            </children>
+                            <attributes>
+                                <config.CaseStateWidgetAttribute key="caption" value="case.main.data.tab.title"/>
+                            </attributes>
+                        </config.CaseStateWidget>
+
+                    </children>
+                    <attributes/>
+                </config.CaseStateWidget>
+            </widgets>
+            <roles>
+                <config.CaseStateRole roleName=".*" privilegeName = "EDIT" />
+            </roles>
+            <processes>
+                <config.CaseStateProcess bpmDefinitionKey="complaint_new_stage" />
+            </processes>
+        </config.CaseStateDefinition>
+        <config.CaseStateDefinition name="OPEN">
+            <widgets>
+                <config.CaseStateWidget className="TabSheet" priority="0">
+                    <children>
+                        <config.CaseStateWidget className="VerticalLayout" priority="1" name="Case Data">
+                            <children>
+                                <config.CaseStateWidget className="ComplaintPerson" priority="1" name="Case Data">
+                                    <children/>
+                                </config.CaseStateWidget>
+                                <config.CaseStateWidget className="ComplaintDetails" priority="2" name="Case Data">
+                                    <children/>
+                                </config.CaseStateWidget>
+                                <config.CaseStateWidget className="ComplaintFlightList" priority="3" name="Case Data">
+                                    <children/>
+                                    <attributes>
+                                        <config.CaseStateWidgetAttribute key="simpleView" value="false"/>
+                                    </attributes>
+                                </config.CaseStateWidget>
+                                <config.CaseStateWidget className="ComplaintBasicInfo" priority="4" name="Case Data">
+                                    <children/>
+                                </config.CaseStateWidget>
+                                <config.CaseStateWidget className="ComplaintApplicantDetails" priority="5" name="Case Data">
+                                    <children/>
+                                    <attributes>
+                                        <config.CaseStateWidgetAttribute key="attribute1" value="value1"/>
+                                    </attributes>
+                                </config.CaseStateWidget>
+                                <config.CaseStateWidget className="CaseComments" priority="6" name="Case Comments">
+                                    <children/>
+                                    <attributes/>
+                                </config.CaseStateWidget>
+                                <config.CaseStateWidget className="FileRepositoryWidget" priority="7" name="Attachments">
+                                    <children/>
+                                    <attributes/>
+                                </config.CaseStateWidget>
+                            </children>
+                            <attributes>
+                                <config.CaseStateWidgetAttribute key="caption" value="case.main.data.tab.title"/>
+                            </attributes>
+                        </config.CaseStateWidget>
+
+                    </children>
+                    <attributes/>
+                </config.CaseStateWidget>
+            </widgets>
+            <roles>
+                <config.CaseStateRole roleName=".*" privilegeName = "EDIT" />
+            </roles>
+            <processes>
+                <config.CaseStateProcess bpmDefinitionKey="complaint_new_stage" />
+            </processes>
+        </config.CaseStateDefinition>
+        <config.CaseStateDefinition name="CLOSED_NUMBER">
+            <widgets>
+                <config.CaseStateWidget className="TabSheet" priority="0">
+                    <children>
+                        <config.CaseStateWidget className="VerticalLayout" priority="1" name="Case Data">
+                            <children>
+                                <config.CaseStateWidget className="ComplaintPerson" priority="1" name="Case Data">
+                                    <children/>
+                                </config.CaseStateWidget>
+                                <config.CaseStateWidget className="ComplaintDetails" priority="2" name="Case Data">
+                                    <children/>
+                                </config.CaseStateWidget>
+                                <config.CaseStateWidget className="ComplaintFlightList" priority="3" name="Case Data">
+                                    <children/>
+                                    <attributes>
+                                        <config.CaseStateWidgetAttribute key="simpleView" value="false"/>
+                                    </attributes>
+                                </config.CaseStateWidget>
+                                <config.CaseStateWidget className="ComplaintBasicInfo" priority="4" name="Case Data">
+                                    <children/>
+                                </config.CaseStateWidget>
+                                <config.CaseStateWidget className="ComplaintApplicantDetails" priority="5" name="Case Data">
+                                    <children/>
+                                    <attributes>
+                                        <config.CaseStateWidgetAttribute key="attribute1" value="value1"/>
+                                    </attributes>
+                                </config.CaseStateWidget>
+                                <config.CaseStateWidget className="CaseComments" priority="6" name="Case Comments">
+                                    <children/>
+                                    <attributes/>
+                                </config.CaseStateWidget>
+                                <config.CaseStateWidget className="FileRepositoryWidget" priority="7" name="Attachments">
+                                    <children/>
+                                    <attributes/>
+                                </config.CaseStateWidget>
+                            </children>
+                            <attributes>
+                                <config.CaseStateWidgetAttribute key="caption" value="case.main.data.tab.title"/>
+                            </attributes>
+                        </config.CaseStateWidget>
+
+                    </children>
+                    <attributes/>
+                </config.CaseStateWidget>
+            </widgets>
+            <roles>
+                <config.CaseStateRole roleName=".*" privilegeName = "EDIT" />
+            </roles>
+            <processes>
+                <config.CaseStateProcess bpmDefinitionKey="complaint_new_stage" />
+            </processes>
+        </config.CaseStateDefinition>
+        <config.CaseStateDefinition name="REJECTED">
+            <widgets>
+                <config.CaseStateWidget className="TabSheet" priority="0">
+                    <children>
+                        <config.CaseStateWidget className="VerticalLayout" priority="1" name="Case Data">
+                            <children>
+                                <config.CaseStateWidget className="ComplaintPerson" priority="1" name="Case Data">
+                                    <children/>
+                                </config.CaseStateWidget>
+                                <config.CaseStateWidget className="ComplaintDetails" priority="2" name="Case Data">
+                                    <children/>
+                                </config.CaseStateWidget>
+                                <config.CaseStateWidget className="ComplaintFlightList" priority="3" name="Case Data">
+                                    <children/>
+                                    <attributes>
+                                        <config.CaseStateWidgetAttribute key="simpleView" value="false"/>
+                                    </attributes>
+                                </config.CaseStateWidget>
+                                <config.CaseStateWidget className="ComplaintBasicInfo" priority="4" name="Case Data">
+                                    <children/>
+                                </config.CaseStateWidget>
+                                <config.CaseStateWidget className="ComplaintApplicantDetails" priority="5" name="Case Data">
+                                    <children/>
+                                    <attributes>
+                                        <config.CaseStateWidgetAttribute key="attribute1" value="value1"/>
+                                    </attributes>
+                                </config.CaseStateWidget>
+                                <config.CaseStateWidget className="CaseComments" priority="6" name="Case Comments">
+                                    <children/>
+                                    <attributes/>
+                                </config.CaseStateWidget>
+                                <config.CaseStateWidget className="FileRepositoryWidget" priority="7" name="Attachments">
+                                    <children/>
+                                    <attributes/>
+                                </config.CaseStateWidget>
+                            </children>
+                            <attributes>
+                                <config.CaseStateWidgetAttribute key="caption" value="case.main.data.tab.title"/>
+                            </attributes>
+                        </config.CaseStateWidget>
+
+                    </children>
+                    <attributes/>
+                </config.CaseStateWidget>
+            </widgets>
+            <roles>
+                <config.CaseStateRole roleName=".*" privilegeName = "EDIT" />
+            </roles>
+            <processes>
+                <config.CaseStateProcess bpmDefinitionKey="complaint_new_stage" />
+            </processes>
+        </config.CaseStateDefinition>
+    </possibleStates>
+    <initialState reference="../possibleStates/config.CaseStateDefinition[2]"/>
+</config.CaseDefinition>

@@ -1,0 +1,53 @@
+Manifest-Version: 1.0
+Export-Package: pl.net.bluesoft.rnd.pt.ext.sched.model;uses:="javax.pe
+ rsistence,pl.net.bluesoft.rnd.processtool.model",pl.net.bluesoft.rnd.
+ pt.ext.sched.event;uses:="org.quartz,pl.net.bluesoft.util.eventbus",p
+ l.net.bluesoft.rnd.pt.ext.sched.service;uses:="org.quartz,pl.net.blue
+ soft.rnd.processtool.plugins",org.quartz
+Embed-Directory: lib
+Bundle-ClassPath: .,lib/commons-beanutils-1.8.3.jar,lib/commons-collec
+ tions4-4.0.jar,lib/commons-logging-1.1.1.jar,lib/quartz-2.1.6.jar,lib
+ /commons-collections-3.2.1.jar,lib/slf4j-api-1.6.1.jar,lib/commons-io
+ -2.4.jar,lib/commons-lang3-3.1.jar,lib/util-2.0.jar,lib/c3p0-0.9.1.1.
+ jar
+Built-By: Dominik Dbowczyk
+Tool: Bnd-0.0.357
+Bundle-Name: scheduler-integration
+Created-By: Apache Maven Bundle Plugin
+ProcessTool-Model-Enhancement: pl.net.bluesoft.rnd.pt.ext.sched.model.
+ SchedulerProperty
+Build-Jdk: 1.7.0_60
+Bundle-Version: 0.1
+Bnd-LastModified: 1438157237829
+Embed-Transitive: true
+Bundle-Activator: pl.net.bluesoft.rnd.pt.ext.sched.SchedulerActivator
+Bundle-ManifestVersion: 2
+Bundle-Description: Aperte Workflow is a compilation of well-known, st
+ able and mature frameworks into a        complete BPM solution develo
+ ped by BlueSoft sp. z o.o. - Polish independent software vendor.     
+    Project home page is available at http://www.aperteworkflow.org/
+Bundle-License: http://www.gnu.org/licenses/lgpl-2.1.txt
+Embed-Dependency: *;scope=compile|runtime;inline=false
+Import-Package: javax.ejb;resolution:=optional,javax.jms;resolution:=o
+ ptional,javax.mail;resolution:=optional,javax.mail.internet;resolutio
+ n:=optional,javax.management;resolution:=optional,javax.management.op
+ enmbean;resolution:=optional,javax.naming;resolution:=optional,javax.
+ naming.spi;resolution:=optional,javax.persistence;resolution:=optiona
+ l,javax.rmi;resolution:=optional,javax.servlet;resolution:=optional,j
+ avax.servlet.http;resolution:=optional,javax.sql;resolution:=optional
+ ,javax.transaction;resolution:=optional,javax.xml.bind;resolution:=op
+ tional,javax.xml.namespace;resolution:=optional,javax.xml.parsers;res
+ olution:=optional,javax.xml.xpath;resolution:=optional,org.apache.ava
+ lon.framework.logger;resolution:=optional,org.apache.log;resolution:=
+ optional,org.apache.log4j;resolution:=optional,org.hibernate;resoluti
+ on:=optional,org.osgi.framework;resolution:=optional;version="1.5",or
+ g.quartz;resolution:=optional,org.slf4j,org.slf4j.impl;resolution:=op
+ tional,org.w3c.dom;resolution:=optional,org.xml.sax;resolution:=optio
+ nal,pl.net.bluesoft.rnd.processtool;resolution:=optional,pl.net.blues
+ oft.rnd.processtool.model;resolution:=optional,pl.net.bluesoft.rnd.pr
+ ocesstool.plugins;resolution:=optional,pl.net.bluesoft.rnd.pt.ext.sch
+ ed.event;resolution:=optional,pl.net.bluesoft.rnd.pt.ext.sched.model;
+ resolution:=optional,pl.net.bluesoft.rnd.pt.ext.sched.service;resolut
+ ion:=optional,pl.net.bluesoft.util.eventbus
+Bundle-SymbolicName: pl.net.bluesoft.rnd.pt.ext.sched
+

@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Built-By: Dominik Dbowczyk
+Tool: Bnd-0.0.357
+Mule-Config-Files: /mule-attachment-sample.xml
+Bundle-Name: org.aperteworkflow.sample.mulestep.attachment
+Created-By: Apache Maven Bundle Plugin
+Build-Jdk: 1.7.0_60
+Bundle-Version: 1
+Bnd-LastModified: 1438157361160
+Bundle-ManifestVersion: 2
+Bundle-License: http://www.gnu.org/licenses/lgpl-2.1.txt
+Bundle-Description: org.aperteworkflow.sample.mulestep.attachment
+Bundle-SymbolicName: org.aperteworkflow.sample.mulestep.attachment
+

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/core" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/core/base-gui" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/core/base-gui/src/main/webapp/WEB-INF/jsp/utils/apertedatatable.jsp" charset="windows-1250" />
+    <file url="file://$PROJECT_DIR$/core/base-gui/src/main/webapp/js/colReorderWithResize.js" charset="windows-1250" />
+    <file url="file://$PROJECT_DIR$/core/editor" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/core/editor-interface" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/core/gui-commons" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/core/integration" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/core/integration-interface" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/core/jbpm-context" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/core/jbpm-gui" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/core/model" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/core/webapi" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/plugins" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/plugins/base-widgets" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/plugins/bpm-notifications" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/plugins/case-management" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/plugins/case-management/pom.xml" charset="windows-1250" />
+    <file url="file://$PROJECT_DIR$/plugins/case-management/src" charset="windows-1250" />
+    <file url="file://$PROJECT_DIR$/plugins/cmis-widget" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/plugins/context-help-provider" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/plugins/doclist-widget" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/plugins/drools-step" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/plugins/email-capture" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/plugins/external-plugins" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/plugins/files-capture" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/plugins/files-repository" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/plugins/global-dictionaries" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/plugins/interactive-reports" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/plugins/interactive-reports/pom.xml" charset="windows-1250" />
+    <file url="file://$PROJECT_DIR$/plugins/interactive-reports/src" charset="windows-1250" />
+    <file url="file://$PROJECT_DIR$/plugins/mule-esb-plugin" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/plugins/process-deadlines" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/plugins/scheduler-integration" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/plugins/scripting" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/plugins/userdata-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/plugins/userdata-widget" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/samples" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/samples/activiti-sample-process" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/samples/incident-ws" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/samples/incident-ws-schema" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/samples/liferay-poc-process" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/samples/mule-attachment-sample" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/samples/mule-flightsearch-sample" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/samples/sample-mule-step" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/server-libs" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/utils" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/utils/aperte-slim-utils" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/utils/aperte-utils" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/utils/jdbc-connector" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/utils/xml-utils" charset="UTF-8" />
+  </component>
+</project>

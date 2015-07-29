@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process-dictionaries>
+    <dict id="global#help" name="Help">
+		<i18n-name lang="pl" value="Pomoc"/>
+    </dict>
+    <dict id="global#queues" name="User Queues">
+		<i18n-name lang="pl" value="Kolejki użytkownika"/>
+    </dict>
+</process-dictionaries>

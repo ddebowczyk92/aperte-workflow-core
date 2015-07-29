@@ -1,0 +1,6 @@
+org\aperteworkflow\scripting\ScriptingActivator$1$1.class
+org\aperteworkflow\scripting\ScriptValidationException.class
+org\aperteworkflow\scripting\ScriptingActivator$1.class
+org\aperteworkflow\scripting\ScriptProcessorRegistry.class
+org\aperteworkflow\scripting\ScriptingActivator.class
+org\aperteworkflow\scripting\ScriptProcessor.class

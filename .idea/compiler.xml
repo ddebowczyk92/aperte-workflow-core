@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <option name="DEFAULT_COMPILER" value="Javac" />
+    <resourceExtensions />
+    <wildcardResourcePatterns>
+      <entry name="!?*.java" />
+      <entry name="!?*.form" />
+      <entry name="!?*.class" />
+      <entry name="!?*.groovy" />
+      <entry name="!?*.scala" />
+      <entry name="!?*.flex" />
+      <entry name="!?*.kt" />
+      <entry name="!?*.clj" />
+      <entry name="!?*.aj" />
+    </wildcardResourcePatterns>
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="false">
+        <processorPath useClasspath="true" />
+      </profile>
+      <profile default="false" name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="activiti-sample-process" />
+        <module name="aperte-slim-utils" />
+        <module name="aperte-utils" />
+        <module name="base-gui" />
+        <module name="base-widgets" />
+        <module name="bpm-notifications" />
+        <module name="case-management" />
+        <module name="cmis-widget" />
+        <module name="context-help-provider" />
+        <module name="doclist-widget" />
+        <module name="drools-step" />
+        <module name="editor" />
+        <module name="editor-interface" />
+        <module name="email-capture" />
+        <module name="files-capture" />
+        <module name="files-repository" />
+        <module name="global-dictionaries" />
+        <module name="gui-commons" />
+        <module name="incident-ws" />
+        <module name="incident-ws-schema" />
+        <module name="integration" />
+        <module name="integration-interface" />
+        <module name="interactive-reports" />
+        <module name="jbpm-context" />
+        <module name="jbpm-gui" />
+        <module name="jdbc-connector" />
+        <module name="liferay-poc-process" />
+        <module name="model" />
+        <module name="mule-attachment-sample" />
+        <module name="mule-esb-plugin" />
+        <module name="mule-flightsearch-sample" />
+        <module name="process-deadlines" />
+        <module name="sample-mule-step" />
+        <module name="scheduler-integration" />
+        <module name="scripting" />
+        <module name="userdata-service" />
+        <module name="userdata-widget" />
+        <module name="webapi" />
+        <module name="xml-utils" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="activiti-sample-process" target="1.6" />
+      <module name="aperte-slim-utils" target="1.6" />
+      <module name="aperte-utils" target="1.6" />
+      <module name="aperteworkflow-core" target="1.5" />
+      <module name="base-gui" target="1.6" />
+      <module name="base-widgets" target="1.6" />
+      <module name="bpm-notifications" target="1.6" />
+      <module name="case-management" target="1.6" />
+      <module name="cmis-widget" target="1.6" />
+      <module name="context-help-provider" target="1.6" />
+      <module name="core" target="1.5" />
+      <module name="doclist-widget" target="1.6" />
+      <module name="drools-step" target="1.6" />
+      <module name="editor" target="1.6" />
+      <module name="editor-interface" target="1.6" />
+      <module name="email-capture" target="1.6" />
+      <module name="external-plugins" target="1.5" />
+      <module name="files-capture" target="1.6" />
+      <module name="files-repository" target="1.6" />
+      <module name="global-dictionaries" target="1.6" />
+      <module name="gui-commons" target="1.6" />
+      <module name="incident-ws" target="1.6" />
+      <module name="incident-ws-schema" target="1.6" />
+      <module name="integration" target="1.6" />
+      <module name="integration-interface" target="1.6" />
+      <module name="interactive-reports" target="1.6" />
+      <module name="jbpm-context" target="1.6" />
+      <module name="jbpm-gui" target="1.6" />
+      <module name="jdbc-connector" target="1.6" />
+      <module name="liferay-poc-process" target="1.6" />
+      <module name="model" target="1.6" />
+      <module name="mule-attachment-sample" target="1.6" />
+      <module name="mule-esb-plugin" target="1.6" />
+      <module name="mule-flightsearch-sample" target="1.6" />
+      <module name="plugins" target="1.5" />
+      <module name="process-deadlines" target="1.6" />
+      <module name="sample-mule-step" target="1.6" />
+      <module name="samples" target="1.5" />
+      <module name="scheduler-integration" target="1.6" />
+      <module name="scripting" target="1.6" />
+      <module name="server-libs" target="1.5" />
+      <module name="userdata-service" target="1.6" />
+      <module name="userdata-widget" target="1.6" />
+      <module name="utils" target="1.5" />
+      <module name="webapi" target="1.6" />
+      <module name="xml-utils" target="1.6" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

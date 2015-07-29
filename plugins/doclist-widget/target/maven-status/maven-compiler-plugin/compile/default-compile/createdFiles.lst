@@ -1,0 +1,4 @@
+org\aperteworkflow\widgets\doclist\DocumentException.class
+org\aperteworkflow\widgets\doclist\DocumentEntry.class
+org\aperteworkflow\widgets\doclist\DocumentRepository.class
+org\aperteworkflow\widgets\doclist\DocumentListWidget.class

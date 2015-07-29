@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.example.org/incident/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="incident" targetNamespace="http://www.example.org/incident/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.example.org/incident/">
+
+
+      <xsd:complexType name="RegisterIncidentRequestType">
+      	<xsd:sequence>
+      		<xsd:element name="name" type="xsd:string"></xsd:element>
+      		<xsd:element name="surname" type="xsd:string"></xsd:element>
+      		<xsd:element name="incident-description" type="xsd:string"></xsd:element>
+      	</xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="RegisterIncidentResponseType">
+      	<xsd:sequence>
+      		<xsd:element name="processId" type="xsd:string"></xsd:element>
+      		<xsd:element name="status" type="xsd:string"></xsd:element>
+      	</xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="RegisterIncidentRequest">
+    <wsdl:part name="name" type="tns:RegisterIncidentRequestType"/>
+  </wsdl:message>
+  <wsdl:message name="RegisterIncidentResponse">
+        <wsdl:part name="NewPart" type="tns:RegisterIncidentResponseType"></wsdl:part>
+  </wsdl:message>
+  
+  <wsdl:portType name="IncidentService">
+    <wsdl:operation name="RegisterIncident">
+      <wsdl:input message="tns:RegisterIncidentRequest"/>
+      <wsdl:output message="tns:RegisterIncidentResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="incidentSOAP" type="tns:IncidentService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="RegisterIncident">
+      <soap:operation soapAction="http://www.example.org/incident/RegisterIncident"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="IncidentService">
+    <wsdl:port binding="tns:incidentSOAP" name="incidentSOAP">
+      <soap:address location="http://www.example.org/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

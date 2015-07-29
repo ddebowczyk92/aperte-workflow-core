@@ -1,0 +1,10 @@
+pl\net\bluesoft\rnd\processtool\usersource\impl\LdapUsersSource.class
+org\aperteworkflow\util\ldap\LdapBridge.class
+org\aperteworkflow\integration\liferay\settings\LiferaySettingsProvider.class
+pl\net\bluesoft\rnd\processtool\usersource\impl\LiferayUserSource$1.class
+org\aperteworkflow\integration\liferay\utils\LiferayUserConverter.class
+pl\net\bluesoft\rnd\processtool\usersource\impl\LiferayUserSource.class
+pl\net\bluesoft\rnd\processtool\usersource\impl\LiferayUserSource$2.class
+org\aperteworkflow\integration\liferay\settings\LiferaySettings.class
+org\aperteworkflow\util\ldap\LdapBridge$1.class
+org\aperteworkflow\integration\liferay\utils\LiferaySessionUtil.class

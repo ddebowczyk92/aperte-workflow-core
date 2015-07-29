@@ -1,0 +1,54 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1438157334427
+Build-Jdk: 1.7.0_60
+Built-By: Dominik Dￄﾙbowczyk
+Bundle-ClassPath: .,lib/jldap-4.3.jar,lib/commons-httpclient-2.0.2.jar,l
+ ib/commons-logging-1.0.3.jar,lib/openspml-0.5.jar,lib/util-2.0.jar,lib/
+ commons-beanutils-1.8.3.jar,lib/commons-lang3-3.1.jar,lib/commons-colle
+ ctions-3.2.1.jar,lib/commons-collections4-4.0.jar,lib/commons-io-2.4.ja
+ r
+Bundle-Description: Aperte Workflow is a compilation of well-known, stab
+ le and mature frameworks into a        complete BPM solution developed 
+ by BlueSoft sp. z o.o. - Polish independent software vendor.        Pro
+ ject home page is available at http://www.aperteworkflow.org/
+Bundle-License: http://www.gnu.org/licenses/lgpl-2.1.txt
+Bundle-ManifestVersion: 2
+Bundle-Name: userdata-widget
+Bundle-SymbolicName: pl.net.bluesoft.rnd.pt.ext.userdata
+Bundle-Version: 0.1
+Created-By: Apache Maven Bundle Plugin
+Embed-Dependency: *;scope=compile|runtime;inline=false
+Embed-Directory: lib
+Embed-Transitive: true
+Embedded-Artifacts: lib/jldap-4.3.jar;g="com.novell.ldap";a="jldap";v="4
+ .3",lib/commons-httpclient-2.0.2.jar;g="commons-httpclient";a="commons-
+ httpclient";v="2.0.2",lib/commons-logging-1.0.3.jar;g="commons-logging"
+ ;a="commons-logging";v="1.0.3",lib/openspml-0.5.jar;g="org.openspml";a=
+ "openspml";v="0.5",lib/util-2.0.jar;g="pl.net.bluesoft";a="util";v="2.0
+ ",lib/commons-beanutils-1.8.3.jar;g="commons-beanutils";a="commons-bean
+ utils";v="1.8.3",lib/commons-lang3-3.1.jar;g="org.apache.commons";a="co
+ mmons-lang3";v="3.1",lib/commons-collections-3.2.1.jar;g="commons-colle
+ ctions";a="commons-collections";v="3.2.1",lib/commons-collections4-4.0.
+ jar;g="org.apache.commons";a="commons-collections4";v="4.0",lib/commons
+ -io-2.4.jar;g="commons-io";a="commons-io";v="2.4"
+Export-Package: pl.net.bluesoft.rnd.pt.ext.userdata.model;uses:="javax.p
+ ersistence,pl.net.bluesoft.rnd.processtool.model.processdata";version="
+ 0.1",pl.net.bluesoft.rnd.pt.ext.userdata.widget;uses:="com.vaadin.data,
+ com.vaadin.ui,pl.net.bluesoft.rnd.processtool.model,pl.net.bluesoft.rnd
+ .processtool.ui.widgets,pl.net.bluesoft.rnd.processtool.ui.widgets.impl
+ ";version="0.1"
+Import-Package: pl.net.bluesoft.rnd.util.i18n,pl.net.bluesoft.rnd.proces
+ stool.model,pl.net.bluesoft.rnd.processtool.model.processdata,javax.per
+ sistence,pl.net.bluesoft.rnd.processtool.ui.widgets,com.vaadin.data;ver
+ sion="[6.8,7)",com.vaadin.ui;version="[6.8,7)",pl.net.bluesoft.rnd.proc
+ esstool.ui.widgets.impl,org.hibernate.proxy,com.vaadin;version="[6.8,7)
+ ",pl.net.bluesoft.rnd.processtool.plugins,javassist.util.proxy,pl.net.b
+ luesoft.rnd.processtool.plugins.osgi,org.osgi.framework;version="[1.5,2
+ )",javax.portlet
+ProcessTool-I18N-Property: userdata-messages
+ProcessTool-Model-Enhancement: pl.net.bluesoft.rnd.pt.ext.userdata.model
+ .ProcessInstanceUserAssignment
+ProcessTool-Widget-Enhancement: pl.net.bluesoft.rnd.pt.ext.userdata.widg
+ et.LdapUserDataWidget,pl.net.bluesoft.rnd.pt.ext.userdata.widget.Lifera
+ yUserDataWidget
+Tool: Bnd-2.1.0.20130426-122213
