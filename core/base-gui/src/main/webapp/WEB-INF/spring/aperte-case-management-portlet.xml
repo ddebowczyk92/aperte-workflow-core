@@ -26,7 +26,7 @@
     <bean class="org.aperteworkflow.webapi.casemanagement.CaseManagementPortletController" />
 
     <bean id="customTemplateLoader" class="org.aperteworkflow.webapi.FreemarkerOsgiTemplateLoader">
-        <property name="path" value="/pl/net/bluesoft/lot/casemanagement/ui/" />
+        <property name="path" value="/pl/net/bluesoft/casemanagement/ui/" />
         <property name="controllerName" value="casemanagementcontroller" />
     </bean>
 

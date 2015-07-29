@@ -1,5 +1,5 @@
 import com.thoughtworks.xstream.XStream;
-import pl.net.bluesoft.lot.casemanagement.model.*;
+import pl.net.bluesoft.casemanagement.model.*;
 import pl.net.bluesoft.rnd.processtool.model.config.ProcessDefinitionConfig;
 
 import java.util.regex.Matcher;

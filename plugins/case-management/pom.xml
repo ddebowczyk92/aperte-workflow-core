@@ -22,13 +22,13 @@
         <dependency>
             <groupId>org.aperteworkflow</groupId>
             <artifactId>webapi</artifactId>
-            <version>3.1-LOT-SNAPSHOT</version>
+            <version>3.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.aperteworkflow</groupId>
             <artifactId>integration-interface</artifactId>
-            <version>3.1-LOT-SNAPSHOT</version>
+            <version>3.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -58,13 +58,13 @@
         <dependency>
             <groupId>org.aperteworkflow</groupId>
             <artifactId>integration</artifactId>
-            <version>3.1-LOT-SNAPSHOT</version>
+            <version>3.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.aperteworkflow</groupId>
             <artifactId>webapi</artifactId>
-            <version>3.1-LOT-SNAPSHOT</version>
+            <version>3.1</version>
         </dependency>
         <dependency>
             <!-- jsoup HTML parser library @ http://jsoup.org/ -->
@@ -122,18 +122,18 @@
                 <configuration>
                     <instructions>
                         <Export-Package>
-                            pl.net.bluesoft.lot.casemanagement,
-                            pl.net.bluesoft.lot.casemanagement.ui,
-							pl.net.bluesoft.lot.casemanagement.dao,
-                            pl.net.bluesoft.lot.casemanagement.model,
-                            pl.net.bluesoft.lot.casemanagement.model.query,
-							pl.net.bluesoft.lot.casemanagement.model.util,
-                            pl.net.bluesoft.lot.casemanagement.controller,
-                            pl.net.bluesoft.lot.casemanagement.controller.bean,
-							pl.net.bluesoft.lot.casemanagement.exception,
-							pl.net.bluesoft.lot.casemanagement.processor,
-							pl.net.bluesoft.lot.casemanagement.step.util,
-							pl.net.bluesoft.lot.casemanagement.util
+                            pl.net.bluesoft.casemanagement,
+                            pl.net.bluesoft.casemanagement.ui,
+							pl.net.bluesoft.casemanagement.dao,
+                            pl.net.bluesoft.casemanagement.model,
+                            pl.net.bluesoft.casemanagement.model.query,
+							pl.net.bluesoft.casemanagement.model.util,
+                            pl.net.bluesoft.casemanagement.controller,
+                            pl.net.bluesoft.casemanagement.controller.bean,
+							pl.net.bluesoft.casemanagement.exception,
+							pl.net.bluesoft.casemanagement.processor,
+							pl.net.bluesoft.casemanagement.step.util,
+							pl.net.bluesoft.casemanagement.util
                         </Export-Package>
                         <Import-Package>
                             org.aperteworkflow.files,
@@ -156,8 +156,8 @@
                             *;resolution:=optional
                         </Import-Package>
                         <Embed-Dependency>*;scope=compile|runtime;inline=false</Embed-Dependency>
-                        <Bundle-Activator>pl.net.bluesoft.lot.casemanagement.Activator</Bundle-Activator>
-                        <Bundle-SymbolicName>pl.net.bluesoft.lot.casemanagement</Bundle-SymbolicName>
+                        <Bundle-Activator>pl.net.bluesoft.casemanagement.Activator</Bundle-Activator>
+                        <Bundle-SymbolicName>pl.net.bluesoft.casemanagement</Bundle-SymbolicName>
                         <Bundle-Version>0.1</Bundle-Version>
                         <Embed-Directory>lib</Embed-Directory>
                         <Embed-Transitive>true</Embed-Transitive>
@@ -165,48 +165,48 @@
                             casemanagement-messages
                         </ProcessTool-I18N-Property>
                         <ProcessTool-Widget-View>
-                            pl.net.bluesoft.lot.casemanagement.ui.widget.CaseDataWidget,
-                            pl.net.bluesoft.lot.casemanagement.ui.widget.CaseCommentsWidget
+                            pl.net.bluesoft.casemanagement.ui.widget.CaseDataWidget,
+                            pl.net.bluesoft.casemanagement.ui.widget.CaseCommentsWidget
                         </ProcessTool-Widget-View>
                         <ProcessTool-Controller>
-                            pl.net.bluesoft.lot.casemanagement.controller.CaseManagementController,
-                            pl.net.bluesoft.lot.casemanagement.controller.CaseManagementFilesController
+                            pl.net.bluesoft.casemanagement.controller.CaseManagementController,
+                            pl.net.bluesoft.casemanagement.controller.CaseManagementFilesController
                         </ProcessTool-Controller>
                         <ProcessTool-Model-Enhancement>
-                            pl.net.bluesoft.lot.casemanagement.model.Case,
-                            pl.net.bluesoft.lot.casemanagement.model.CaseDefinition,
-                            pl.net.bluesoft.lot.casemanagement.model.CaseStateDefinition,
-                            pl.net.bluesoft.lot.casemanagement.model.CaseStateRole,
-                            pl.net.bluesoft.lot.casemanagement.model.CaseSimpleAttribute,
-                            pl.net.bluesoft.lot.casemanagement.model.CaseSimpleLargeAttribute,
-                            pl.net.bluesoft.lot.casemanagement.model.CaseAttribute,
-                            pl.net.bluesoft.lot.casemanagement.model.CaseStage,
-							pl.net.bluesoft.lot.casemanagement.model.CaseStageAttribute,
-                            pl.net.bluesoft.lot.casemanagement.model.CaseStateWidget,
-                            pl.net.bluesoft.lot.casemanagement.model.CaseStageSimpleAttribute,
-							pl.net.bluesoft.lot.casemanagement.model.CaseStageSimpleLargeAttribute,
-                            pl.net.bluesoft.lot.casemanagement.model.CaseStateWidgetAttribute,
-                            pl.net.bluesoft.lot.casemanagement.model.CaseStateWidgetPermission,
-                            pl.net.bluesoft.lot.casemanagement.model.CaseStateProcess,
-                            pl.net.bluesoft.lot.casemanagement.model.CaseComment,
-                            pl.net.bluesoft.lot.casemanagement.model.CaseLog,
-                            pl.net.bluesoft.lot.casemanagement.model.CaseCommentsAttribute,
+                            pl.net.bluesoft.casemanagement.model.Case,
+                            pl.net.bluesoft.casemanagement.model.CaseDefinition,
+                            pl.net.bluesoft.casemanagement.model.CaseStateDefinition,
+                            pl.net.bluesoft.casemanagement.model.CaseStateRole,
+                            pl.net.bluesoft.casemanagement.model.CaseSimpleAttribute,
+                            pl.net.bluesoft.casemanagement.model.CaseSimpleLargeAttribute,
+                            pl.net.bluesoft.casemanagement.model.CaseAttribute,
+                            pl.net.bluesoft.casemanagement.model.CaseStage,
+                            pl.net.bluesoft.casemanagement.model.CaseStageAttribute,
+                            pl.net.bluesoft.casemanagement.model.CaseStateWidget,
+                            pl.net.bluesoft.casemanagement.model.CaseStageSimpleAttribute,
+                            pl.net.bluesoft.casemanagement.model.CaseStageSimpleLargeAttribute,
+                            pl.net.bluesoft.casemanagement.model.CaseStateWidgetAttribute,
+                            pl.net.bluesoft.casemanagement.model.CaseStateWidgetPermission,
+                            pl.net.bluesoft.casemanagement.model.CaseStateProcess,
+                            pl.net.bluesoft.casemanagement.model.CaseComment,
+                            pl.net.bluesoft.casemanagement.model.CaseLog,
+                            pl.net.bluesoft.casemanagement.model.CaseCommentsAttribute,
                             org.aperteworkflow.files.model.FilesRepositoryItem,
                             org.aperteworkflow.files.model.IFilesRepositoryAttribute,
                             org.aperteworkflow.files.model.FilesRepositoryProcessAttribute,
-                            pl.net.bluesoft.lot.casemanagement.model.FilesRepositoryCaseAttribute
+                            pl.net.bluesoft.casemanagement.model.FilesRepositoryCaseAttribute
                         </ProcessTool-Model-Enhancement>
                         <ProcessTool-Spring-Beans>
-                            pl.net.bluesoft.lot.casemanagement.CaseManagementFacadeImpl
+                            pl.net.bluesoft.casemanagement.CaseManagementFacadeImpl
                         </ProcessTool-Spring-Beans>
                         <ProcessTool-Step-Enhancement>
-							pl.net.bluesoft.lot.casemanagement.step.CreateCaseStep,
-							pl.net.bluesoft.lot.casemanagement.step.AddCaseStageStep,
-							pl.net.bluesoft.lot.casemanagement.step.AddVariablesToCaseStageStep,
-							pl.net.bluesoft.lot.casemanagement.step.AddCaseVariablesToProcessStep
-						</ProcessTool-Step-Enhancement>
+                            pl.net.bluesoft.casemanagement.step.CreateCaseStep,
+                            pl.net.bluesoft.casemanagement.step.AddCaseStageStep,
+                            pl.net.bluesoft.casemanagement.step.AddVariablesToCaseStageStep,
+                            pl.net.bluesoft.casemanagement.step.AddCaseVariablesToProcessStep
+                        </ProcessTool-Step-Enhancement>
                         <ProcessTool-Mappers>
-                            pl.net.bluesoft.lot.casemanagement.processor.ProcessInstanceMapper
+                            pl.net.bluesoft.casemanagement.processor.ProcessInstanceMapper
                         </ProcessTool-Mappers>
                     </instructions>
                 </configuration>
