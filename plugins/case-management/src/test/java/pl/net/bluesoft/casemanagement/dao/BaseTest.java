@@ -1,4 +1,4 @@
-package pl.net.bluesoft.lot.casemanagement.dao;
+package pl.net.bluesoft.casemanagement.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -7,9 +7,9 @@ import org.hibernate.cfg.Configuration;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import pl.net.bluesoft.lot.casemanagement.model.CaseDefinition;
-import pl.net.bluesoft.lot.casemanagement.model.CaseStateDefinition;
-import pl.net.bluesoft.lot.casemanagement.model.CaseStateWidget;
+import pl.net.bluesoft.casemanagement.model.CaseDefinition;
+import pl.net.bluesoft.casemanagement.model.CaseStateDefinition;
+import pl.net.bluesoft.casemanagement.model.CaseStateWidget;
 
 import javax.naming.NamingException;
 

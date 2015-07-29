@@ -1,8 +1,7 @@
-package pl.net.bluesoft.lot.casemanagement.dao;
+package pl.net.bluesoft.casemanagement.dao;
 
 import org.junit.Test;
-import pl.net.bluesoft.lot.casemanagement.model.Case;
-import pl.net.bluesoft.lot.casemanagement.model.CaseSimpleAttribute;
+import pl.net.bluesoft.casemanagement.model.Case;
 
 import java.util.*;
 import java.util.logging.Logger;

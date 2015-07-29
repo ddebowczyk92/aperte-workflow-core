@@ -1,4 +1,4 @@
-package pl.net.bluesoft.lot.casemanagement.deployment;
+package pl.net.bluesoft.casemanagement.deployment;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -8,9 +8,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import pl.net.bluesoft.lot.casemanagement.dao.CaseDefinitionDAO;
-import pl.net.bluesoft.lot.casemanagement.dao.CaseDefinitionDAOImpl;
-import pl.net.bluesoft.lot.casemanagement.model.*;
+import pl.net.bluesoft.casemanagement.dao.CaseDefinitionDAO;
+import pl.net.bluesoft.casemanagement.dao.CaseDefinitionDAOImpl;
+import pl.net.bluesoft.casemanagement.model.*;
 import pl.net.bluesoft.rnd.processtool.plugins.ProcessToolRegistry;
 import pl.net.bluesoft.rnd.processtool.plugins.ProcessToolRegistryImpl;
 

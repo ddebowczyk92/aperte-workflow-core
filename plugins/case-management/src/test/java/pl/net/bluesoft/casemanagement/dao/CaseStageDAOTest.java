@@ -1,12 +1,8 @@
-package pl.net.bluesoft.lot.casemanagement.dao;
+package pl.net.bluesoft.casemanagement.dao;
 
-import org.junit.Before;
 import org.junit.Test;
-import pl.net.bluesoft.lot.casemanagement.dao.*;
-import pl.net.bluesoft.lot.casemanagement.model.Case;
-import pl.net.bluesoft.lot.casemanagement.model.CaseStage;
-
-import javax.naming.NamingException;
+import pl.net.bluesoft.casemanagement.model.Case;
+import pl.net.bluesoft.casemanagement.model.CaseStage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
