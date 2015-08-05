@@ -8,15 +8,15 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-import static pl.net.bluesoft.casemanagement.model.Constants.COMPLAINTS_SCHEMA;
+import static pl.net.bluesoft.casemanagement.model.Constants.CASES_SCHEMA;
 
 /**
  * Created by pkuciapski on 2014-05-13.
  */
 @Entity
-@Table(name = "pt_case_files_attr", schema = COMPLAINTS_SCHEMA)
+@Table(name = "pt_case_files_attr", schema = CASES_SCHEMA)
 public class FilesRepositoryCaseAttribute extends CaseAttribute implements IFilesRepositoryAttribute {
-    public static final String TABLE = COMPLAINTS_SCHEMA + "." + FilesRepositoryCaseAttribute.class.getAnnotation(Table.class).name();
+    public static final String TABLE = CASES_SCHEMA + "." + FilesRepositoryCaseAttribute.class.getAnnotation(Table.class).name();
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "case_file_id")
     @Index(name = "idx_pt_files_case_file_id")

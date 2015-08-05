@@ -45,7 +45,7 @@ public class IMAPPropertiesSessionProvider implements IIMAPMailSessionProvider
             String accountsString = props.getProperty("exchange.accounts");
             Collection<String> accounts = Arrays.asList(StringUtils.split(accountsString, ","));
 
-            logger.info("[IMAP] Properties loaded for accounts");
+            logger.finest("[IMAP] Properties loaded for accounts");
 
             for (String accountName : accounts) {
 
@@ -62,6 +62,7 @@ public class IMAPPropertiesSessionProvider implements IIMAPMailSessionProvider
                 accountProperties.setMailUser(getPrefixedProperty("exchange.accounts.user", accountName, props));
                 accountProperties.setMailPass(getPrefixedProperty("exchange.accounts.password", accountName, props));
                 accountProperties.setMailProtocol(getPrefixedProperty("exchange.accounts.store.protocol", accountName, props));
+                accountProperties.setTimeout(getPrefixedProperty("exchange.accounts.timeout", accountName, props));
                 accountProperties.setMailPort(getPrefixedProperty("exchange.accounts.store.port", accountName, props));
                 accountProperties.setMailSocketFactoryClass(getPrefixedProperty("exchange.accounts.store.socketFactory.class", accountName, props));
                 accountProperties.setMailAuthMechanism(getPrefixedProperty("exchange.accounts.auth.mechanisms", accountName, props));
@@ -107,8 +108,6 @@ public class IMAPPropertiesSessionProvider implements IIMAPMailSessionProvider
 
         String decryptedPassword = decryptPassword(encryptedPassword);
 
-        logger.info("[IMAP] Properties loaded");
-
         props.setProperty("mail.store.protocol", mailAccountProperties.getMailProtocol());
         props.setProperty("mail.imap.port", port);
         props.setProperty("mail.imap.user", user);
@@ -124,6 +123,11 @@ public class IMAPPropertiesSessionProvider implements IIMAPMailSessionProvider
         props.setProperty("mail.imap.partialfetch", partialFetch);
         props.setProperty("mail.imap.fetchsize", fetchSize);
 
+        props.setProperty("mail.imap.timeout", mailAccountProperties.getTimeout());
+        props.setProperty("mail.imap.connectiontimeout", mailAccountProperties.getTimeout());
+        props.setProperty("mail.imap.writetimeout", mailAccountProperties.getTimeout());
+        props.setProperty("mail.imap.connectionpooltimeout", mailAccountProperties.getTimeout());
+
         if(StringUtils.isNotEmpty(mailAccountProperties.getMailAuthMechanism()))
             props.setProperty("mail.imap.auth.mechanisms", mailAccountProperties.getMailAuthMechanism());
 
@@ -135,11 +139,10 @@ public class IMAPPropertiesSessionProvider implements IIMAPMailSessionProvider
 
 
         Session session = Session.getInstance(props, null);
-        Store store = session.getStore(new URLName("imap://"+email));
+        Store store = session.getStore(new URLName("imap://" + email));
         store.connect(host, user, decryptedPassword);
 
-        logger.info("[IMAP] Connected!");
-
+        logger.info("[IMAP] Connected to " + host + ':' + port + ", user=" + user);
         return store;
     }
 

@@ -9,13 +9,13 @@ import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.Table;
 
-import static pl.net.bluesoft.casemanagement.model.Constants.COMPLAINTS_SCHEMA;
+import static pl.net.bluesoft.casemanagement.model.Constants.CASES_SCHEMA;
 
 /**
  * Created by pkuciapski on 2014-05-16.
  */
 @Entity
-@Table(name = "pt_case_s_l_attr", schema = COMPLAINTS_SCHEMA)
+@Table(name = "pt_case_s_l_attr", schema = CASES_SCHEMA)
 @org.hibernate.annotations.Table(
         appliesTo = "pt_case_s_l_attr",
         indexes = {
@@ -25,7 +25,7 @@ import static pl.net.bluesoft.casemanagement.model.Constants.COMPLAINTS_SCHEMA;
                 @Index(name = "idx_pt_case_s_l_attr_case_id", columnNames = Case.CASE_ID)
         })
 public class CaseSimpleLargeAttribute extends AbstractCaseAttribute implements IAttribute {
-    public static final String TABLE = COMPLAINTS_SCHEMA + "." + CaseSimpleLargeAttribute.class.getAnnotation(Table.class).name();
+    public static final String TABLE = CASES_SCHEMA + "." + CaseSimpleLargeAttribute.class.getAnnotation(Table.class).name();
     @Column(name = "value")
     @Lob
     @Type(type = "org.hibernate.type.StringClobType")

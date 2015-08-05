@@ -7,13 +7,13 @@ import pl.net.bluesoft.rnd.processtool.model.PersistentEntity;
 import javax.persistence.*;
 import java.util.Date;
 
-import static pl.net.bluesoft.casemanagement.model.Constants.COMPLAINTS_SCHEMA;
+import static pl.net.bluesoft.casemanagement.model.Constants.CASES_SCHEMA;
 
 /**
  * Created by pkuciapski on 2014-05-08.
  */
 @Entity
-@Table(name = "pt_case_comment", schema = COMPLAINTS_SCHEMA)
+@Table(name = "pt_case_comment", schema = CASES_SCHEMA)
 @org.hibernate.annotations.Table(
         appliesTo = "pt_case_comment",
         indexes = {
@@ -23,7 +23,7 @@ import static pl.net.bluesoft.casemanagement.model.Constants.COMPLAINTS_SCHEMA;
                 @Index(name = "idx_pt_case_com_attr_id", columnNames = "case_comment_id")
         })
 public class CaseComment extends PersistentEntity {
-    public static final String TABLE = COMPLAINTS_SCHEMA + "." + CaseComment.class.getAnnotation(Table.class).name();
+    public static final String TABLE = CASES_SCHEMA + "." + CaseComment.class.getAnnotation(Table.class).name();
     @Column(name = "comment_body", length = Integer.MAX_VALUE)
     @Lob
     @Type(type = "org.hibernate.type.StringClobType")

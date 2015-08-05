@@ -18,7 +18,12 @@
         <module>sample-mule-step</module>
         <module>mule-flightsearch-sample</module>
         <module>mule-attachment-sample</module>
-<!--		<module>incident-process</module>-->
+        <module>application-webapp</module>
+        <module>application-ws-schema</module>
+        <module>application-ws</module>
+        <module>application-case</module>
+        <module>application-widgets</module>
+        <!--		<module>incident-process</module>-->
     </modules>
 
     <dependencies>

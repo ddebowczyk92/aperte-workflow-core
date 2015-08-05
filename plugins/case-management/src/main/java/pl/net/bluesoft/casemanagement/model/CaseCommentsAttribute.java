@@ -7,16 +7,16 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static pl.net.bluesoft.casemanagement.model.Constants.COMPLAINTS_SCHEMA;
+import static pl.net.bluesoft.casemanagement.model.Constants.CASES_SCHEMA;
 import static pl.net.bluesoft.util.lang.cquery.CQuery.from;
 
 /**
  * Created by pkuciapski on 2014-05-15.
  */
 @Entity
-@Table(name = "pt_case_comments_attr", schema = COMPLAINTS_SCHEMA)
+@Table(name = "pt_case_comments_attr", schema = CASES_SCHEMA)
 public class CaseCommentsAttribute extends CaseAttribute {
-    public static final String TABLE = COMPLAINTS_SCHEMA + "." + CaseCommentsAttribute.class.getAnnotation(Table.class).name();
+    public static final String TABLE = CASES_SCHEMA + "." + CaseCommentsAttribute.class.getAnnotation(Table.class).name();
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "case_comment_id")
     private Set<CaseComment> comments = new HashSet<CaseComment>();

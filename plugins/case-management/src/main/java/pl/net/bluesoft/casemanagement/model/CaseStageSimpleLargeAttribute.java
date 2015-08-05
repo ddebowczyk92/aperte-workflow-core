@@ -5,14 +5,14 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
-import static pl.net.bluesoft.casemanagement.model.Constants.COMPLAINTS_SCHEMA;
+import static pl.net.bluesoft.casemanagement.model.Constants.CASES_SCHEMA;
 
 /**
  * User: POlszewski
  * Date: 2014-06-11
  */
 @Entity
-@Table(name = "pt_case_stage_s_l_attr", schema = COMPLAINTS_SCHEMA)
+@Table(name = "pt_case_stage_s_l_attr", schema = CASES_SCHEMA)
 @org.hibernate.annotations.Table(
         appliesTo = "pt_case_stage_s_l_attr",
         indexes = {
@@ -21,7 +21,7 @@ import static pl.net.bluesoft.casemanagement.model.Constants.COMPLAINTS_SCHEMA;
                 )
         })
 public class CaseStageSimpleLargeAttribute extends AbstractCaseAttributeBase {
-    public static final String TABLE = COMPLAINTS_SCHEMA + "." + CaseStageSimpleLargeAttribute.class.getAnnotation(Table.class).name();
+    public static final String TABLE = CASES_SCHEMA + "." + CaseStageSimpleLargeAttribute.class.getAnnotation(Table.class).name();
 	@Column(name = "value")
 	@Lob
 	@Type(type = "org.hibernate.type.StringClobType")

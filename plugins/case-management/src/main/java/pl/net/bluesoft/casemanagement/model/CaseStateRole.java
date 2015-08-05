@@ -6,13 +6,13 @@ import pl.net.bluesoft.util.lang.Lang;
 
 import javax.persistence.*;
 
-import static pl.net.bluesoft.casemanagement.model.Constants.COMPLAINTS_SCHEMA;
+import static pl.net.bluesoft.casemanagement.model.Constants.CASES_SCHEMA;
 
 /**
  * Created by pkuciapski on 2014-05-06.
  */
 @Entity
-@Table(name = "pt_case_state_role", schema = COMPLAINTS_SCHEMA)
+@Table(name = "pt_case_state_role", schema = CASES_SCHEMA)
 @org.hibernate.annotations.Table(
         appliesTo = "pt_case_state_role",
         indexes = {
@@ -21,7 +21,7 @@ import static pl.net.bluesoft.casemanagement.model.Constants.COMPLAINTS_SCHEMA;
                 )
         })
 public class CaseStateRole extends PersistentEntity {
-    public static final String TABLE = COMPLAINTS_SCHEMA + "." + CaseStateRole.class.getAnnotation(Table.class).name();
+    public static final String TABLE = CASES_SCHEMA + "." + CaseStateRole.class.getAnnotation(Table.class).name();
     public static final String PRIVILEGE_EDIT = "EDIT";
     public static final String PRIVILEGE_VIEW = "VIEW";
 

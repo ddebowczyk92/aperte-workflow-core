@@ -60,6 +60,7 @@ import static org.aperteworkflow.webapi.main.processes.controller.TaskViewContro
 public class ProcessesListController extends AbstractProcessToolServletController
 {
 	private static Logger logger = Logger.getLogger(ProcessesListController.class.getName());
+    private static Logger performanceLogger = Logger.getLogger("PRF");
 
     private static final String TASKS_LIST_VIEW_NAME_PARAM = "taskListViewName";
 
@@ -79,7 +80,7 @@ public class ProcessesListController extends AbstractProcessToolServletControlle
 	@ResponseBody
 	public PerformActionResultBean performAction(final HttpServletRequest request)
 	{
-		logger.info("performAction ...");
+		logger.finest("performAction ...");
 		
 		final PerformActionResultBean resultBean = new PerformActionResultBean();
         try
@@ -143,7 +144,7 @@ public class ProcessesListController extends AbstractProcessToolServletControlle
                 @Override
                 public TasksListViewBean processWithContext(ProcessToolContext ctx) {
                     try {
-                        logger.log(Level.INFO, "performAction.withContext ... ");
+                        logger.log(Level.FINEST, "performAction.withContext ... ");
 
                         long t0 = System.currentTimeMillis();
                         long t1 = System.currentTimeMillis();
@@ -183,7 +184,7 @@ public class ProcessesListController extends AbstractProcessToolServletControlle
 
                         long t4 = System.currentTimeMillis();
 
-                        logger.log(Level.INFO, "performAction.withContext total: " + (t4 - t0) + "ms, " +
+                        logger.log(Level.FINEST, "performAction.withContext total: " + (t4 - t0) + "ms, " +
                                 "[1]: " + (t1 - t0) + "ms, " +
                                 "[2]: " + (t2 - t1) + "ms, " +
                                 "[3]: " + (t3 - t2) + "ms, " +
@@ -252,8 +253,8 @@ public class ProcessesListController extends AbstractProcessToolServletControlle
 		    resultBean.setNextTask(bpmTaskBean);
 
 		    long t2 = System.currentTimeMillis();
-		    
-			logger.log(Level.INFO, "performAction total: " + (t2-t0) + "ms, " +
+
+            performanceLogger.log(Level.FINEST, "performAction total: " + (t2-t0) + "ms, " +
 					"[1]: " + (t1-t0) + "ms, " +
 					"[2]: " + (t2-t1) + "ms " 
 					);
@@ -280,10 +281,9 @@ public class ProcessesListController extends AbstractProcessToolServletControlle
 	@ResponseBody
 	public GenericResultBean saveAction(final HttpServletRequest request)
 	{
-		logger.info("saveAction ...");
+		logger.finest("saveAction ...");
 		long t0 = System.currentTimeMillis();
 
-		logger.warning("SAVE!");
 		final GenericResultBean resultBean = new GenericResultBean();
 		
 		/* Initilize request context */
@@ -367,7 +367,7 @@ public class ProcessesListController extends AbstractProcessToolServletControlle
 
                     long t4 = System.currentTimeMillis();
 
-                    logger.log(Level.INFO, "saveAction.withContext total: " + (t4 - t0) + "ms, " +
+                        performanceLogger.log(Level.FINEST, "saveAction.withContext total: " + (t4 - t0) + "ms, " +
                             "[1]: " + (t1 - t0) + "ms, " +
                             "[2]: " + (t2 - t1) + "ms, " +
                             "[3]: " + (t3 - t2) + "ms, " +
@@ -408,7 +408,7 @@ public class ProcessesListController extends AbstractProcessToolServletControlle
 		
 		long t2 = System.currentTimeMillis();
 
-		logger.log(Level.INFO, "saveAction total: " + (t2-t0) + "ms, " +
+        performanceLogger.log(Level.FINEST, "saveAction total: " + (t2-t0) + "ms, " +
 				"[1]: " + (t1-t0) + "ms, " +
 				"[2]: " + (t2-t1) + "ms " 
 				);
@@ -429,7 +429,7 @@ public class ProcessesListController extends AbstractProcessToolServletControlle
 	@ResponseBody
 	public NewProcessInstanceBean startNewProcess(final HttpServletRequest request)
 	{
-		logger.info("startNewProcess ...");
+		logger.finest("startNewProcess ...");
 		final NewProcessInstanceBean newProcessInstanceBO = new NewProcessInstanceBean();
 
         try
@@ -494,7 +494,7 @@ public class ProcessesListController extends AbstractProcessToolServletControlle
 
                     long t3 = System.currentTimeMillis();
 
-                    logger.log(Level.INFO, "startNewProcess.withContext total: " + (t3 - t0) + "ms, " +
+                    performanceLogger.log(Level.FINEST, "startNewProcess.withContext total: " + (t3 - t0) + "ms, " +
                             "[1]: " + (t1 - t0) + "ms, " +
                             "[2]: " + (t2 - t1) + "ms, " +
                             "[3]: " + (t3 - t2) + "ms, "
@@ -505,9 +505,9 @@ public class ProcessesListController extends AbstractProcessToolServletControlle
             
     		long t2 = System.currentTimeMillis();
 
-    		logger.log(Level.INFO, "startNewProcess total: " + (t2-t0) + "ms, " +
+            performanceLogger.log(Level.FINEST, "startNewProcess total: " + (t2-t0) + "ms, " +
     				"[1]: " + (t1-t0) + "ms, " +
-    				"[2]: " + (t2-t1) + "ms " 
+    				"[2]: " + (t2-t1) + "ms "
     				);
     		
             return newProcessInstanceBO;
@@ -525,7 +525,7 @@ public class ProcessesListController extends AbstractProcessToolServletControlle
     @ResponseBody
     public DataPagingBean<TasksListViewBean> searchTasks(final HttpServletRequest request)
     {
-		logger.info("searchTasks ...");
+		logger.finest("searchTasks ...");
 		long t0 = System.currentTimeMillis();
 
     	final JQueryDataTable dataTable = JQueryDataTableUtil.analyzeRequest(request.getParameterMap());
@@ -608,7 +608,7 @@ public class ProcessesListController extends AbstractProcessToolServletControlle
 
                 long t3 = System.currentTimeMillis();
 
-                logger.log(Level.INFO, "searchTasks.withContext total: " + (t3 - t0) + "ms, " +
+                performanceLogger.log(Level.FINEST, "searchTasks.withContext total: " + (t3 - t0) + "ms, " +
                         "[1]: " + (t1 - t0) + "ms, " +
                         "[2]: " + (t2 - t1) + "ms " +
                         "[3]: " + (t3 - t2) + "ms "
@@ -619,9 +619,9 @@ public class ProcessesListController extends AbstractProcessToolServletControlle
 
 		long t2 = System.currentTimeMillis();
 
-		logger.log(Level.INFO, "searchTasks total: " + (t2-t0) + "ms, " +
+        performanceLogger.log(Level.FINEST, "searchTasks total: " + (t2-t0) + "ms, " +
 				"[1]: " + (t1-t0) + "ms, " +
-				"[2]: " + (t2-t1) + "ms " 
+				"[2]: " + (t2-t1) + "ms "
 				);
 		
         return pagingCollection;
@@ -631,7 +631,7 @@ public class ProcessesListController extends AbstractProcessToolServletControlle
     @ResponseBody
     public void loadQueue(final HttpServletRequest request, final HttpServletResponse response) throws IOException, ServletException
     {
-        logger.info("loadQueue ...");
+        logger.finest("loadQueue ...");
         long t0 = System.currentTimeMillis();
 
         /* Get process state configuration db id */
@@ -666,7 +666,7 @@ public class ProcessesListController extends AbstractProcessToolServletControlle
 
         long t3 = System.currentTimeMillis();
 
-        logger.log(Level.INFO, "loadTask total: " + (t3-t0) + "ms, " +
+        performanceLogger.log(Level.FINEST, "loadTask total: " + (t3-t0) + "ms, " +
                         "[1]: " + (t1-t0) + "ms, " +
                         "[2]: " + (t2-t1) + "ms, " +
                         "[3]: " + (t3-t2) + "ms, "
@@ -703,7 +703,7 @@ public class ProcessesListController extends AbstractProcessToolServletControlle
                 }
                 long t6 = System.currentTimeMillis();
 
-                logger.log(Level.INFO, "loadTask.withContext total: " + (t6-t0) + "ms, " +
+                performanceLogger.log(Level.FINEST, "loadTask.withContext total: " + (t6-t0) + "ms, " +
                                 "[1]: " + (t1-t0) + "ms, " +
                                 "[6]: " + (t6-t5) + "ms, "
                 );
@@ -716,7 +716,7 @@ public class ProcessesListController extends AbstractProcessToolServletControlle
 	@ResponseBody
 	public DataPagingBean<TasksListViewBean> loadProcessesList(final HttpServletRequest request)
 	{
-		logger.info("loadProcessesList ...");
+		logger.finest("loadProcessesList ...");
 		long t0 = System.currentTimeMillis();
 
         final JQueryDataTable dataTable = JQueryDataTableUtil.analyzeRequest(request.getParameterMap());
@@ -811,7 +811,7 @@ public class ProcessesListController extends AbstractProcessToolServletControlle
 
                 long t4 = System.currentTimeMillis();
 
-                logger.log(Level.INFO, "loadProcessesList.withContext total: " + (t4 - t0) + "ms, " +
+                performanceLogger.log(Level.FINEST, "loadProcessesList.withContext total: " + (t4 - t0) + "ms, " +
                         "[1]: " + (t1 - t0) + "ms, " +
                         "[2]: " + (t2 - t1) + "ms, " +
                         "[" +
@@ -824,7 +824,7 @@ public class ProcessesListController extends AbstractProcessToolServletControlle
 
 		long t2 = System.currentTimeMillis();
 
-		logger.log(Level.INFO, "loadProcessesList total: " + (t2-t0) + "ms, " +
+        performanceLogger.log(Level.FINEST, "loadProcessesList total: " + (t2-t0) + "ms, " +
 				"[1]: " + (t1-t0) + "ms, " +
 				"[2]: " + (t2-t1) + "ms "
 				);

@@ -42,7 +42,7 @@ import static pl.net.bluesoft.util.lang.Formats.parseShortDate;
  * 
  * @author: mpawlak@bluesoft.net.pl
  */
-@OsgiController(name = "substitutionController")
+@OsgiController(name = "substitutionsController")
 public class SubstitutionsController implements IOsgiWebController {
 	@Autowired
 	protected IPortalUserSource portalUserSource;

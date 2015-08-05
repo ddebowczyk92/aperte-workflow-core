@@ -7,13 +7,13 @@ import pl.net.bluesoft.util.lang.Lang;
 
 import javax.persistence.*;
 
-import static pl.net.bluesoft.casemanagement.model.Constants.COMPLAINTS_SCHEMA;
+import static pl.net.bluesoft.casemanagement.model.Constants.CASES_SCHEMA;
 
 /**
  * Created by pkuciapski on 2014-04-18.
  */
 @Entity
-@Table(name = "pt_case_state_widget_perm", schema = COMPLAINTS_SCHEMA)
+@Table(name = "pt_case_state_widget_perm", schema = CASES_SCHEMA)
 @org.hibernate.annotations.Table(
         appliesTo = "pt_case_state_widget_perm",
         indexes = {
@@ -22,7 +22,7 @@ import static pl.net.bluesoft.casemanagement.model.Constants.COMPLAINTS_SCHEMA;
                 )
         })
 public class CaseStateWidgetPermission extends PersistentEntity implements IPermission {
-    public static final String TABLE = COMPLAINTS_SCHEMA + "." + CaseStateWidgetPermission.class.getAnnotation(Table.class).name();
+    public static final String TABLE = CASES_SCHEMA + "." + CaseStateWidgetPermission.class.getAnnotation(Table.class).name();
     @Column(name = "role_name", nullable = false)
     private String roleName;
 

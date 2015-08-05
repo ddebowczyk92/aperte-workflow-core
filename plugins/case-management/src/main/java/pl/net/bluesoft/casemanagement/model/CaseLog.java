@@ -10,7 +10,7 @@ import javax.persistence.Lob;
 import javax.persistence.Table;
 import java.util.Date;
 
-import static pl.net.bluesoft.casemanagement.model.Constants.COMPLAINTS_SCHEMA;
+import static pl.net.bluesoft.casemanagement.model.Constants.CASES_SCHEMA;
 
 /**
  * Created with IntelliJ IDEA.
@@ -19,14 +19,14 @@ import static pl.net.bluesoft.casemanagement.model.Constants.COMPLAINTS_SCHEMA;
  * Time: 12:51
  */
 @Entity
-@Table(name = "pt_case_log", schema = COMPLAINTS_SCHEMA)
+@Table(name = "pt_case_log", schema = CASES_SCHEMA)
 @org.hibernate.annotations.Table(
         appliesTo = "pt_case_log",
         indexes = {
                 @Index(name = "idx_pt_case_log_case_id", columnNames = Case.CASE_ID)
         })
 public class CaseLog extends PersistentEntity{
-    public static final String TABLE = COMPLAINTS_SCHEMA + "." + CaseLog.class.getAnnotation(Table.class).name();
+    public static final String TABLE = CASES_SCHEMA + "." + CaseLog.class.getAnnotation(Table.class).name();
 
 	public static final String LOG_TYPE_CASE_CHANGE = "CASE_CHANGE";
 	private Date entryDate;

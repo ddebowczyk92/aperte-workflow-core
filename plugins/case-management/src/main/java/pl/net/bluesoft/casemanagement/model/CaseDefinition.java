@@ -10,13 +10,13 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import static pl.net.bluesoft.casemanagement.model.Constants.COMPLAINTS_SCHEMA;
+import static pl.net.bluesoft.casemanagement.model.Constants.CASES_SCHEMA;
 
 /**
  * Created by pkuciapski on 2014-04-18.
  */
 @Entity
-@Table(name = "pt_case_definition", schema = COMPLAINTS_SCHEMA)
+@Table(name = "pt_case_definition", schema = CASES_SCHEMA)
 @org.hibernate.annotations.Table(
         appliesTo = "pt_case_definition",
         indexes = {
@@ -25,7 +25,7 @@ import static pl.net.bluesoft.casemanagement.model.Constants.COMPLAINTS_SCHEMA;
                 )
         })
 public class CaseDefinition extends PersistentEntity {
-    public static final String TABLE = COMPLAINTS_SCHEMA + "." + CaseDefinition.class.getAnnotation(Table.class).name();
+    public static final String TABLE = CASES_SCHEMA + "." + CaseDefinition.class.getAnnotation(Table.class).name();
     static final String CASE_DEFINITION_ID = "case_definition_id";
     public static final String NAME = "name";
 

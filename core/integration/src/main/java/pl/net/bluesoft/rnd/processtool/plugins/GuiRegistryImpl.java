@@ -84,14 +84,14 @@ public class GuiRegistryImpl implements GuiRegistry {
 	public synchronized void registerWidget(Class<? extends ProcessToolWidget> clazz) {
 		String aliasName = getAliasName(clazz);
 		widgets.put(aliasName, clazz);
-		logger.info("Registered widget alias: " + aliasName + " -> " + clazz.getName());
+		logger.fine("Registered widget alias: " + aliasName + " -> " + clazz.getName());
 	}
 
 	@Override
 	public synchronized void unregisterWidget(Class<? extends ProcessToolWidget> clazz) {
 		String aliasName = getAliasName(clazz);
 		widgets.remove(aliasName);
-		logger.info("Unregistered widget alias: " + aliasName + " -> " + clazz.getName());
+		logger.fine("Unregistered widget alias: " + aliasName + " -> " + clazz.getName());
 	}
 
 	@Override
@@ -110,14 +110,14 @@ public class GuiRegistryImpl implements GuiRegistry {
 	public synchronized void registerButton(Class<? extends ProcessToolActionButton> clazz) {
 		String aliasName = getAliasName(clazz);
 		buttons.put(aliasName, clazz);
-		logger.info("Registered button alias: " + aliasName + " -> " + clazz.getName());
+		logger.finest("Registered button alias: " + aliasName + " -> " + clazz.getName());
 	}
 
 	@Override
 	public synchronized void unregisterButton(Class<? extends ProcessToolActionButton> clazz) {
 		String aliasName = getAliasName(clazz);
 		buttons.remove(aliasName);
-		logger.info("Unregistered button alias: " + aliasName + " -> " + clazz.getName());
+		logger.finest("Unregistered button alias: " + aliasName + " -> " + clazz.getName());
 	}
 
 	@Override
@@ -136,14 +136,14 @@ public class GuiRegistryImpl implements GuiRegistry {
 	public synchronized void registerStep(Class<? extends ProcessToolProcessStep> clazz) {
 		String aliasName = getAliasName(clazz);
 		steps.put(aliasName, clazz);
-		logger.info("Registered step extension: " + aliasName);
+		logger.finest("Registered step extension: " + aliasName);
 	}
 
 	@Override
 	public synchronized void unregisterStep(Class<? extends ProcessToolProcessStep> clazz) {
 		String aliasName = getAliasName(clazz);
 		steps.remove(aliasName);
-		logger.info("Unregistered step extension: " + aliasName);
+		logger.finest("Unregistered step extension: " + aliasName);
 	}
 
 	@Override

@@ -47,10 +47,12 @@
         <header-portlet-javascript>/sa/js/respond.min.js</header-portlet-javascript>
     </portlet>
 
-    <portlet id="aperte-substitution-admin">
+
+
+    <portlet id="Aperte Workflow Substitution Manager">
         <!-- Matches definition in portlet.xml. -->
         <!-- Note: Must not be the same as servlet name. -->
-        <portlet-name>AperteWorkflow User Substitutions</portlet-name>
+        <portlet-name>AperteWorkflow User Substitutions HTML</portlet-name>
         <instanceable>false</instanceable>
         <remoteable>true</remoteable>
         <ajaxable>true</ajaxable>
@@ -63,7 +65,6 @@
         <header-portlet-javascript>/sa/js/jquery.timer.js</header-portlet-javascript>
         <header-portlet-javascript>/sa/js/jquery.dataTables.bootstrap.js</header-portlet-javascript>
         <header-portlet-javascript>/sa/js/jquery.dateFormat-1.0.js</header-portlet-javascript>
-        <header-portlet-javascript>/sa/js/moment-with-locales.min.js</header-portlet-javascript>
         <header-portlet-javascript>/sa/js/select2.min.js</header-portlet-javascript>
         <header-portlet-javascript>/sa/js/select2_locale_pl.js</header-portlet-javascript>
         <header-portlet-javascript>/sa/js/colReorder.js</header-portlet-javascript>
@@ -76,10 +77,8 @@
         <header-portlet-javascript>/sa/js/jquery.fileupload-process.js</header-portlet-javascript>
         <header-portlet-javascript>/sa/js/jquery.fileupload-validate.js</header-portlet-javascript>
         <header-portlet-javascript>/sa/js/jquery.iframe-transport.js</header-portlet-javascript>
-        <header-portlet-javascript>/sa/js/dataTables.fixedHeader.js</header-portlet-javascript>
         <header-portlet-javascript>/sa/js/aperte/aperte.datatable.js</header-portlet-javascript>
-        <header-portlet-javascript>/sa/js/history.min.js</header-portlet-javascript>
-        <header-portlet-javascript>/sa/js/aperte/aperte.widget.js</header-portlet-javascript>
+        <header-portlet-javascript>/sa/js/moment-with-locales.min.js</header-portlet-javascript>
         <header-portlet-css>/sa/css/bootstrap.min.css</header-portlet-css>
         <header-portlet-css>/sa/css/bootstrap-theme.min.css</header-portlet-css>
         <header-portlet-css>/sa/css/aperteworkflow.css</header-portlet-css>
@@ -209,7 +208,7 @@
         <header-portlet-javascript>/sa/js/moment-with-locales.min.js</header-portlet-javascript>
 		<header-portlet-javascript>/sa/js/select2.min.js</header-portlet-javascript>
 		<header-portlet-javascript>/sa/js/select2_locale_pl.js</header-portlet-javascript>
-        <header-portlet-javascript>/sa/js/colReorderWithResize.js</header-portlet-javascript>
+        <header-portlet-javascript>/sa/js/colReorder.js</header-portlet-javascript>
 		<header-portlet-javascript>/sa/js/jquery-plugins.js</header-portlet-javascript>
 		<header-portlet-javascript>/sa/js/jquery.json-2.4.min.js</header-portlet-javascript>
 		<header-portlet-javascript>/sa/js/bootstrap-datepicker.js</header-portlet-javascript>

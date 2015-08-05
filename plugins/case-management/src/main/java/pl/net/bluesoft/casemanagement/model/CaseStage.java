@@ -8,13 +8,13 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import static pl.net.bluesoft.casemanagement.model.Constants.COMPLAINTS_SCHEMA;
+import static pl.net.bluesoft.casemanagement.model.Constants.CASES_SCHEMA;
 
 /**
  * Created by pkuciapski on 2014-04-18.
  */
 @Entity
-@Table(name = "pt_case_stage", schema = COMPLAINTS_SCHEMA)
+@Table(name = "pt_case_stage", schema = CASES_SCHEMA)
 @org.hibernate.annotations.Table(
         appliesTo = "pt_case_stage",
         indexes = {
@@ -23,7 +23,7 @@ import static pl.net.bluesoft.casemanagement.model.Constants.COMPLAINTS_SCHEMA;
                 )
         })
 public class CaseStage extends PersistentEntity {
-    public static final String TABLE = COMPLAINTS_SCHEMA + "." + CaseStage.class.getAnnotation(Table.class).name();
+    public static final String TABLE = CASES_SCHEMA + "." + CaseStage.class.getAnnotation(Table.class).name();
     final static String CASE_STAGE_ID = "case_stage_id";
 
     @Column(name = "name")

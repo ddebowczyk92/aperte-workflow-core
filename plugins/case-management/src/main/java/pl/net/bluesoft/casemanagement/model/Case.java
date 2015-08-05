@@ -5,7 +5,6 @@ import pl.net.bluesoft.rnd.processtool.model.IAttributesConsumer;
 import pl.net.bluesoft.rnd.processtool.model.IAttributesProvider;
 import pl.net.bluesoft.rnd.processtool.model.PersistentEntity;
 import pl.net.bluesoft.rnd.processtool.model.ProcessInstance;
-import pl.net.bluesoft.util.lang.Cons;
 
 import javax.persistence.*;
 import java.util.*;
@@ -16,7 +15,7 @@ import static pl.net.bluesoft.casemanagement.model.Constants.*;
  * Created by pkuciapski on 2014-04-18.
  */
 @Entity
-@Table(name = "pt_case", schema = COMPLAINTS_SCHEMA)
+@Table(name = "pt_case", schema = CASES_SCHEMA)
 @org.hibernate.annotations.Table(
         appliesTo = "pt_case",
         indexes = {
@@ -38,7 +37,7 @@ import static pl.net.bluesoft.casemanagement.model.Constants.*;
         )
 })
 public class Case extends PersistentEntity implements IAttributesProvider, IAttributesConsumer {
-    public static final String TABLE = COMPLAINTS_SCHEMA + "." + Case.class.getAnnotation(Table.class).name();
+    public static final String TABLE = CASES_SCHEMA + "." + Case.class.getAnnotation(Table.class).name();
     static final String CASE_ID = "case_id";
 
     @Column(name = "name", nullable = false)

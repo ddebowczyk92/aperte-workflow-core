@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config.CaseDefinition name="Application Case" initialStateName="OPEN">
+	<possibleStates>
+		<config.CaseStateDefinition name="OPEN,CLOSED">
+			<widgets>
+                <config.CaseStateWidget className="CaseApplicationInfo" priority="-1">
+                </config.CaseStateWidget>
+
+			</widgets>
+			<roles>
+				<config.CaseStateRole roleName=".*" privilegeName = "EDIT" />
+			</roles>
+
+		</config.CaseStateDefinition>
+	</possibleStates>
+</config.CaseDefinition>

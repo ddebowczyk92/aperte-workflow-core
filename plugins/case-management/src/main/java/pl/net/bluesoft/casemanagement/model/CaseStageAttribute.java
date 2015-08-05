@@ -5,14 +5,14 @@ import pl.net.bluesoft.rnd.processtool.model.PersistentEntity;
 
 import javax.persistence.*;
 
-import static pl.net.bluesoft.casemanagement.model.Constants.COMPLAINTS_SCHEMA;
+import static pl.net.bluesoft.casemanagement.model.Constants.CASES_SCHEMA;
 
 /**
  * User: POlszewski
  * Date: 2014-08-09
  */
 @Entity
-@Table(name = "pt_case_stage_attr", schema = COMPLAINTS_SCHEMA,
+@Table(name = "pt_case_stage_attr", schema = CASES_SCHEMA,
 		uniqueConstraints = @UniqueConstraint(columnNames = {CaseStage.CASE_STAGE_ID, "key"})
 )
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -26,7 +26,7 @@ import static pl.net.bluesoft.casemanagement.model.Constants.COMPLAINTS_SCHEMA;
 		}
 )
 public abstract class CaseStageAttribute extends PersistentEntity {
-    public static final String TABLE = COMPLAINTS_SCHEMA + "." + CaseStageAttribute.class.getAnnotation(Table.class).name();
+    public static final String TABLE = CASES_SCHEMA + "." + CaseStageAttribute.class.getAnnotation(Table.class).name();
 	@Column(name = "key")
 	private String key;
 

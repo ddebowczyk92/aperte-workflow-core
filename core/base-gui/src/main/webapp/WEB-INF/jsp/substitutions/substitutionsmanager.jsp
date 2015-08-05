@@ -21,7 +21,7 @@
 <div class="modal fade" id="NewSubstitutionModal" tabindex="-1"
 	role="dialog" aria-labelledby="categoryModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
-		<div class="modal-content">
+		<div class="modal-content apw">
 			<div class="modal-header">
 				<button type="button" id="CloseSubstitutionForm" class="close" data-dismiss="modal"
 					aria-hidden="true">&times;</button>
@@ -107,40 +107,42 @@
 	<!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+<div class="apw" />
+	<div class="process-queue-name apw_highlight">
+		<div class="row" style="margin:0px;">
+			<spring:message code="substitution.manager.title" />
+			<div class="btn-group  pull-right">
+				<c:if test="${isPermitted}">
+				<button class="btn btn-info" id="substitution-add-button"
+					data-toggle="modal" data-target="#NewSubstitutionModal"
+					data-original-title="" title="">
+					<span class="glyphicon glyphicon-plus"></span>
+					<spring:message code="substitution.action.add" />
+					</c:if>
+				</button>
+			</div>
+		</div>
+	</div>
 
-<div class="process-queue-name apw_highlight">
-	<spring:message code="substitution.manager.title" />
-	<div class="btn-group  pull-right">
-        <c:if test="${isPermitted}">
-		<button class="btn btn-info" id="substitution-add-button"
-			data-toggle="modal" data-target="#NewSubstitutionModal"
-			data-original-title="" title="">
-			<span class="glyphicon glyphicon-plus"></span>
-			<spring:message code="substitution.action.add" />
-			</c:if>
-		</button>
+	<div class="process-tasks-view" id="task-view-processes">
+		<table id="substitutionTable" class="process-table table table-striped"
+			border="1">
+			<thead>
+				<th style="width: 20%;"><spring:message
+						code="substitution.table.substituted" /></th>
+				<th style="width: 20%;"><spring:message
+						code="substitution.table.substituting" /></th>
+				<th style="width: 20%;"><spring:message
+						code="substitution.table.dateFrom" /></th>
+				<th style="width: 20%;"><spring:message
+						code="substitution.table.dateTo" /></th>
+				<th style="width: 20%;"><spring:message
+						code="substitution.table.action" /></th>
+			</thead>
+			<tbody></tbody>
+		</table>
 	</div>
 </div>
-
-<div class="process-tasks-view" id="task-view-processes">
-	<table id="substitutionTable" class="process-table table table-striped"
-		border="1">
-		<thead>
-			<th style="width: 20%;"><spring:message
-					code="substitution.table.substituted" /></th>
-			<th style="width: 20%;"><spring:message
-					code="substitution.table.substituting" /></th>
-			<th style="width: 20%;"><spring:message
-					code="substitution.table.dateFrom" /></th>
-			<th style="width: 20%;"><spring:message
-					code="substitution.table.dateTo" /></th>
-            <th style="width: 20%;"><spring:message
-                    code="substitution.table.action" /></th>
-		</thead>
-		<tbody></tbody>
-	</table>
-</div>
-
 
 <script type="text/javascript">
 	function editSubstitution(id, dateFrom, dateTo, userLogin, userSubstituteLogin)
@@ -213,6 +215,17 @@
 			addAlert('<spring:message code="substitution.alert.required.UserSubstituteLogin" />');
 			isValid=false;
 		}
+
+        if($("#UserLogin").val() != "" && $("#UserLogin").val() == $("#UserSubstituteLogin").val()){ //fix DPDW-720
+            addAlert('<spring:message code="substitution.alert.required.sameUsersLogins" />');
+            isValid=false;
+        }
+
+        if(moment(dateFrom).format("YYYY-MM-DD") < moment("1980-11-18").format("YYYY-MM-DD")){ //fix DPDW-718
+            addAlert('<spring:message code="substitution.alert.required.tooAgoDateFrom" />');
+            isValid=false;
+        }
+
 
 		return isValid;
 	}
@@ -345,8 +358,11 @@
 											"mData" : function(o) {
 											    out='';
 
+												if('${isPermitted}' == 'true')
+													{
 												out += '<button class="btn btn-mini" onclick="editSubstitution('+o.id+','+o.dateFrom+','+o.dateTo+',\''+o.userLogin+'\',\''+o.userSubstituteLogin+'\')" data-toggle="modal" data-target="#NewSubstitutionModal">';
 												out += '<i class="glyphicon glyphicon-edit"></i></button>';
+													}
 
 
                                                 if('${aperteUser.login}'==o.userLogin || '${aperteUser.login}'==o.userSubstituteLogin || '${isPermitted}' == 'true'){

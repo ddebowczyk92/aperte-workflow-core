@@ -151,7 +151,7 @@ public class UserProcessQueuesSizeProvider
 			Map<String, Object> listViewParameters = new HashMap<String, Object>();
 			listViewParameters.put(AbstractTaskListView.PARAMETER_USER_LOGIN, userLogin);
 			listViewParameters.put(AbstractTaskListView.PARAMETER_USER, userSource.getUserByLogin(userLogin));
-
+			listViewParameters.put(AbstractTaskListView.PARAMETER_QUEUE_ID, queueId);
 			ProcessInstanceFilter queueFilter = listView.getProcessInstanceFilter(listViewParameters);
 
 			int filteredQueueSize = bpmSession.getTasksCount(queueFilter);

@@ -7,13 +7,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import static pl.net.bluesoft.casemanagement.model.Constants.COMPLAINTS_SCHEMA;
+import static pl.net.bluesoft.casemanagement.model.Constants.CASES_SCHEMA;
 
 /**
  * Created by pkuciapski on 2014-04-18.
  */
 @Entity
-@Table(name = "pt_case_s_attr", schema = COMPLAINTS_SCHEMA)
+@Table(name = "pt_case_s_attr", schema = CASES_SCHEMA)
 @org.hibernate.annotations.Table(
         appliesTo = "pt_case_s_attr",
         indexes = {
@@ -23,7 +23,7 @@ import static pl.net.bluesoft.casemanagement.model.Constants.COMPLAINTS_SCHEMA;
                 @Index(name = "idx_pt_case_s_attr_case_id", columnNames = Case.CASE_ID)
         })
 public class CaseSimpleAttribute extends AbstractCaseAttribute implements Comparable<CaseSimpleAttribute>, IAttribute {
-    public static final String TABLE = COMPLAINTS_SCHEMA + "." + CaseSimpleAttribute.class.getAnnotation(Table.class).name();
+    public static final String TABLE = CASES_SCHEMA + "." + CaseSimpleAttribute.class.getAnnotation(Table.class).name();
     @Column(name = "value")
     private String value;
 

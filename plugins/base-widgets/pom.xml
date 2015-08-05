@@ -176,7 +176,8 @@
 							org.aperteworkflow.admin.controller.ProcessInstanceController
                         </ProcessTool-Controller>
                         <ProcessTool-TaskList-View>
-                            pl.net.bluesoft.rnd.processtool.ui.basewidgets.view.BpmQueueView
+                            pl.net.bluesoft.rnd.processtool.ui.basewidgets.view.BpmQueueView,
+                            pl.net.bluesoft.rnd.processtool.web.view.BpmTaskListView
                         </ProcessTool-TaskList-View>
                       <!--  <ProcessTool-Widget-Script>
                         requests-scripts.js;provider:=file

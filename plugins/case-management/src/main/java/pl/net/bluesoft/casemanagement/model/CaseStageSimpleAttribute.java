@@ -4,13 +4,13 @@ import org.hibernate.annotations.Index;
 
 import javax.persistence.*;
 
-import static pl.net.bluesoft.casemanagement.model.Constants.COMPLAINTS_SCHEMA;
+import static pl.net.bluesoft.casemanagement.model.Constants.CASES_SCHEMA;
 
 /**
  * Created by pkuciapski on 2014-04-22.
  */
 @Entity
-@Table(name = "pt_case_stage_s_attr", schema = COMPLAINTS_SCHEMA)
+@Table(name = "pt_case_stage_s_attr", schema = CASES_SCHEMA)
 @org.hibernate.annotations.Table(
         appliesTo = "pt_case_stage_s_attr",
         indexes = {
@@ -22,7 +22,7 @@ import static pl.net.bluesoft.casemanagement.model.Constants.COMPLAINTS_SCHEMA;
                 )
         })
 public class CaseStageSimpleAttribute extends AbstractCaseAttributeBase {
-    public static final String TABLE = COMPLAINTS_SCHEMA + "." + CaseStageSimpleAttribute.class.getAnnotation(Table.class).name();
+    public static final String TABLE = CASES_SCHEMA + "." + CaseStageSimpleAttribute.class.getAnnotation(Table.class).name();
     @Column(name = "value")
     private String value;
 

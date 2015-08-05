@@ -7,13 +7,13 @@ import pl.net.bluesoft.util.lang.Lang;
 
 import javax.persistence.*;
 
-import static pl.net.bluesoft.casemanagement.model.Constants.COMPLAINTS_SCHEMA;
+import static pl.net.bluesoft.casemanagement.model.Constants.CASES_SCHEMA;
 
 /**
  * Created by pkuciapski on 2014-04-18.
  */
 @Entity
-@Table(name = "pt_case_state_widget_attr", schema = COMPLAINTS_SCHEMA)
+@Table(name = "pt_case_state_widget_attr", schema = CASES_SCHEMA)
 @org.hibernate.annotations.Table(
         appliesTo = "pt_case_state_widget_attr",
         indexes = {
@@ -22,7 +22,7 @@ import static pl.net.bluesoft.casemanagement.model.Constants.COMPLAINTS_SCHEMA;
                 )
         })
 public class CaseStateWidgetAttribute extends PersistentEntity implements IStateWidgetAttribute {
-    public static final String TABLE = COMPLAINTS_SCHEMA + "." + CaseStateWidgetAttribute.class.getAnnotation(Table.class).name();
+    public static final String TABLE = CASES_SCHEMA + "." + CaseStateWidgetAttribute.class.getAnnotation(Table.class).name();
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = CaseStateWidget.CASE_STATE_WIDGET_ID)
     @Index(name = "idx_pt_case_state_wid_attr_id")
