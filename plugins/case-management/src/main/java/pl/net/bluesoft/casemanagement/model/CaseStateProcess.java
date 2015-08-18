@@ -30,6 +30,18 @@ public class CaseStateProcess extends PersistentEntity {
     @Index(name = "idx_pt_case_state_proc_def_id")
     private CaseStateDefinition stateDefinition;
 
+    @Column(name = "process_label", nullable = false)
+    private String processLabel;
+
+    @Column(name = "process_action_type", nullable = false)
+    private String processActionType;
+
+    @Column(name = "process_priority", nullable = false)
+    private String processPriority;
+
+    @Column(name = "process_icon", nullable = false)
+    private String processIcon;
+
     public String getBpmDefinitionKey() {
         return bpmDefinitionKey;
     }
@@ -46,7 +58,39 @@ public class CaseStateProcess extends PersistentEntity {
         this.stateDefinition = stateDefinition;
     }
 
-	public CaseStateProcess deepClone() {
+    public String getProcessLabel() {
+        return processLabel;
+    }
+
+    public void setProcessLabel(String processLabel) {
+        this.processLabel = processLabel;
+    }
+
+    public String getProcessActionType() {
+        return processActionType;
+    }
+
+    public void setProcessActionType(String processActionType) {
+        this.processActionType = processActionType;
+    }
+
+    public String getProcessPriority() {
+        return processPriority;
+    }
+
+    public void setProcessPriority(String processPriority) {
+        this.processPriority = processPriority;
+    }
+
+    public String getProcessIcon() {
+        return processIcon;
+    }
+
+    public void setProcessIcon(String processIcon) {
+        this.processIcon = processIcon;
+    }
+
+    public CaseStateProcess deepClone() {
 		CaseStateProcess result = new CaseStateProcess();
 		result.bpmDefinitionKey = bpmDefinitionKey;
 		return result;

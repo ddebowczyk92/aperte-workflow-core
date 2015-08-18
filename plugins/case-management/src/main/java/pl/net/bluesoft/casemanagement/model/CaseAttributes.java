@@ -5,6 +5,7 @@ package pl.net.bluesoft.casemanagement.model;
  */
 public enum CaseAttributes {
     COMMENTS("comments"),
+    FILES("files"),
     CASE_ID("caseId");
 
     private final String value;

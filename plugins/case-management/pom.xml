@@ -5,7 +5,7 @@
     <parent>
         <artifactId>plugins</artifactId>
         <groupId>org.aperteworkflow</groupId>
-        <version>3.1</version>
+        <version>3.2-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -22,13 +22,13 @@
         <dependency>
             <groupId>org.aperteworkflow</groupId>
             <artifactId>webapi</artifactId>
-            <version>3.1</version>
+            <version>3.2-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.aperteworkflow</groupId>
             <artifactId>integration-interface</artifactId>
-            <version>3.1</version>
+            <version>3.2-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -58,13 +58,13 @@
         <dependency>
             <groupId>org.aperteworkflow</groupId>
             <artifactId>integration</artifactId>
-            <version>3.1</version>
+            <version>3.2-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.aperteworkflow</groupId>
             <artifactId>webapi</artifactId>
-            <version>3.1</version>
+            <version>3.2-SNAPSHOT</version>
         </dependency>
         <dependency>
             <!-- jsoup HTML parser library @ http://jsoup.org/ -->
@@ -93,13 +93,13 @@
         <dependency>
             <groupId>org.aperteworkflow</groupId>
             <artifactId>files-repository</artifactId>
-            <version>3.1</version>
+            <version>3.2-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.aperteworkflow</groupId>
             <artifactId>base-widgets</artifactId>
-            <version>3.1</version>
+            <version>3.2-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
@@ -191,10 +191,12 @@
                             pl.net.bluesoft.casemanagement.model.CaseComment,
                             pl.net.bluesoft.casemanagement.model.CaseLog,
                             pl.net.bluesoft.casemanagement.model.CaseCommentsAttribute,
+                            pl.net.bluesoft.casemanagement.model.CaseStageCommentsAttribute,
                             org.aperteworkflow.files.model.FilesRepositoryItem,
                             org.aperteworkflow.files.model.IFilesRepositoryAttribute,
                             org.aperteworkflow.files.model.FilesRepositoryProcessAttribute,
-                            pl.net.bluesoft.casemanagement.model.FilesRepositoryCaseAttribute
+                            pl.net.bluesoft.casemanagement.model.FilesRepositoryCaseAttribute,
+                            pl.net.bluesoft.casemanagement.model.FilesRepositoryCaseStageAttribute
                         </ProcessTool-Model-Enhancement>
                         <ProcessTool-Spring-Beans>
                             pl.net.bluesoft.casemanagement.CaseManagementFacadeImpl

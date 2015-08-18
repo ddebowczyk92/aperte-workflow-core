@@ -161,4 +161,9 @@ public class CaseManagementFacadeImpl implements ICaseManagementFacade {
     public CaseStateDefinition getCaseStateDefinitionByName(String name, CaseDefinition definition) {
         return getCaseStateDefinitionDAO().getStateDefinitionByName(name, definition);
     }
+
+    @Override
+    public void updateCaseStage(CaseStage caseStage) {
+        getCaseStageDAO().updateStage(caseStage);
+    }
 }

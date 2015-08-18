@@ -6,4 +6,3437 @@
     <dict id="global#queues" name="User Queues">
 		<i18n-name lang="pl" value="Kolejki użytkownika"/>
     </dict>
+
+
+    <dict id="currencies" name="Currencies" description="Currencies">
+        <i18n-name lang="default" value="Waluty"/>
+        <entry key="PLN" valueType="String" defaultDescription="PLN">
+            <i18n-description lang="default" value="PLN" />
+            <val value="PLN"/>
+        </entry>
+        <entry key="EUR" valueType="String" defaultDescription="EUR">
+            <i18n-description lang="default" value="EUR" />
+            <val value="EUR"/>
+        </entry>
+    </dict>
+
+    <dict description="Extended Carrier Information" id="extended_carrier_information" name="extended_carrier_information">
+        <i18n-name lang="default" value="Adresy biur bagażowych"/>
+
+        <entry key="LO" valueType="String" defaultDescription="LO">
+            <i18n-description lang="default" value="LO" />
+            <val value="LO">
+                <i18n-value lang="default" value="LO" />
+                <ext name="address_line_1" value="Polskie Linie Lotnicze LOT S.A. - Reklamacje" />
+                <ext name="address_line_2" value="ul. 17 stycznia 39" />
+                <ext name="city" value="Warszawa" />
+                <ext name="post_code" value="00-906" />
+                <ext name="country" value="Poland" />
+            </val>
+        </entry>
+        <entry key="AA" valueType="String" defaultDescription="AA">
+            <i18n-description lang="default" value="AA" />
+            <val value="AA">
+                <i18n-value lang="default" value="AA" />
+                <ext name="address_line_1" value="AMERICAN  AIRLINES Central  Baggage Service" />
+                <ext name="address_line_2" value="P.O.BOX 619613" />
+                <ext name="city" value="Dallas Fort Worth Airport" />
+                <ext name="post_code" value="Texas 75261-9616" />
+                <ext name="country" value="USA" />
+            </val>
+        </entry>
+        <entry key="AF" valueType="String" defaultDescription="AF">
+            <i18n-description lang="default" value="AF" />
+            <val value="AF">
+                <i18n-value lang="default" value="AF" />
+                <ext name="address_line_1" value="AIR FRANCE Prorate Officers  Michel Bremond/ Jacques Pages" />
+                <ext name="address_line_2" value="Air France Service Clients/Bagages/JH.HR" />
+                <ext name="city" value="30 Avenue Leon Gaumont" />
+                <ext name="post_code" value="75985  Paris CEDEX 20" />
+                <ext name="country" value="FRANCE" />
+            </val>
+        </entry>
+        <entry key="KL" valueType="String" defaultDescription="KL">
+            <i18n-description lang="default" value="KL" />
+            <val value="KL">
+                <i18n-value lang="default" value="KL" />
+                <ext name="address_line_1" value="KLM  Prorate Officer AMS" />
+                <ext name="address_line_2" value="6TH FLOOR 3RD WING" />
+                <ext name="city" value="AMSTERDAM SEWEG 55" />
+                <ext name="post_code" value="1182 GP AMSTELVEEN" />
+                <ext name="country" value="THE NETHERLANDS" />
+            </val>
+        </entry>
+        <entry key="CX" valueType="String" defaultDescription="CX">
+            <i18n-description lang="default" value="CX" />
+            <val value="CX">
+                <i18n-value lang="default" value="CX" />
+                <ext name="address_line_1" value="Cathay Pacific Airways Limited" />
+                <ext name="address_line_2" value="5/F, Central Tower, Airports Department" />
+                <ext name="city" value="8 Scenic Road" />
+                <ext name="post_code" value="Hong Kong International Airport" />
+                <ext name="country" value="Lantau, Hong Kong  SAR China P.R." />
+            </val>
+        </entry>
+        <entry key="SU" valueType="String" defaultDescription="SU">
+            <i18n-description lang="default" value="SU" />
+            <val value="SU">
+                <i18n-value lang="default" value="SU" />
+                <ext name="address_line_1" value="AEROFLOT" />
+                <ext name="address_line_2" value="Claim Department" />
+                <ext name="city" value="141425 Moscow area" />
+                <ext name="post_code" value="Khimki District, OPS Sheremetyevo 1, PO Box 26" />
+                <ext name="country" value="Russia" />
+            </val>
+        </entry>
+        <entry key="EY" valueType="String" defaultDescription="EY">
+            <i18n-description lang="default" value="EY" />
+            <val value="EY">
+                <i18n-value lang="default" value="EY" />
+                <ext name="address_line_1" value="ETIHAD AIRWAYS" />
+                <ext name="address_line_2" value="Mr. Sartchu Govender Manager Revenue Accounting &amp; O/S" />
+                <ext name="city" value="P.O.BOX 35566" />
+                <ext name="post_code" value="New Airport Road" />
+                <ext name="country" value="ABU DHABI U.A.E" />
+            </val>
+        </entry>
+        <entry key="EK" valueType="String" defaultDescription="EK">
+            <i18n-description lang="default" value="EK" />
+            <val value="EK">
+                <i18n-value lang="default" value="EK" />
+                <ext name="address_line_1" value="EMIRATES AIRLINE" />
+                <ext name="address_line_2" value="PRORATE OFFICER   CUSTOMER AFFAIRS" />
+                <ext name="city" value="NEW EMIRATES GROUP HDQ" />
+                <ext name="post_code" value="P.O. BOX 686" />
+                <ext name="country" value="DUBAI      UAE" />
+            </val>
+        </entry>
+        <entry key="LT" valueType="String" defaultDescription="LT">
+            <i18n-description lang="default" value="LT" />
+            <val value="LT">
+                <i18n-value lang="default" value="LT" />
+                <ext name="address_line_1" value="LTU International  Airways" />
+                <ext name="address_line_2" value="Ms. Marita  Kaulen Manager Account  Receivable" />
+                <ext name="city" value="LTU International  Airways  FlughafenHalle 8A" />
+                <ext name="post_code" value="40474  Dusseldorf  30" />
+                <ext name="country" value="Germany" />
+            </val>
+        </entry>
+        <entry key="KE" valueType="String" defaultDescription="KE">
+            <i18n-description lang="default" value="KE" />
+            <val value="KE">
+                <i18n-value lang="default" value="KE" />
+                <ext name="address_line_1" value="KOREAN  AIR LINES  CO.LTD" />
+                <ext name="address_line_2" value="1370  Gong Hang-Dong" />
+                <ext name="city" value="Kang Seo-Gu" />
+                <ext name="post_code" value="Seoul, Korea" />
+                <ext name="country" value="re: prorate notice conc. baggage claim" />
+            </val>
+        </entry>
+        <entry key="UL" valueType="String" defaultDescription="UL">
+            <i18n-description lang="default" value="UL" />
+            <val value="UL">
+                <i18n-value lang="default" value="UL" />
+                <ext name="address_line_1" value="SRILANKAN AIRLINES LTD." />
+                <ext name="address_line_2" value="Customer Affairs" />
+                <ext name="city" value="#20 East  Tower   World Trade Centre" />
+                <ext name="post_code" value="Colombo, 01" />
+                <ext name="country" value="SRILANKA" />
+            </val>
+        </entry>
+        <entry key="BA" valueType="String" defaultDescription="BA">
+            <i18n-description lang="default" value="BA" />
+            <val value="BA">
+                <i18n-value lang="default" value="BA" />
+                <ext name="address_line_1" value="BRITISH  AIRWAYS  PLC  Customer Relations   PRORATE OFFICER" />
+                <ext name="address_line_2" value="Waterside, PO BOX 365" />
+                <ext name="city" value="Africa House" />
+                <ext name="post_code" value="Harmondsworth UB7 0GB" />
+                <ext name="country" value="United Kingdom" />
+            </val>
+        </entry>
+        <entry key="GF" valueType="String" defaultDescription="GF">
+            <i18n-description lang="default" value="GF" />
+            <val value="GF">
+                <i18n-value lang="default" value="GF" />
+                <ext name="address_line_1" value="GULF AIR, GF -072" />
+                <ext name="address_line_2" value="Mrs. Ameera Mohammed  Officer STN Debtors" />
+                <ext name="city" value="Corporate Finance, Acct Receivable Section" />
+                <ext name="post_code" value="2nd Floor wnig A  Gulf Air H.Q., P.O.BOX 138" />
+                <ext name="country" value="Muharraq  Kingdom of Bahrain" />
+            </val>
+        </entry>
+        <entry key="AZ" valueType="String" defaultDescription="AZ">
+            <i18n-description lang="default" value="AZ" />
+            <val value="AZ">
+                <i18n-value lang="default" value="AZ" />
+                <ext name="address_line_1" value="ALITALIA SPA  LUGGAGE HEADQUARTERS" />
+                <ext name="address_line_2" value="LARGO LOCATEL" />
+                <ext name="city" value="AEROPORTO LEONARDO DA VINCI" />
+                <ext name="post_code" value="00054 FIUMICI, ROME" />
+                <ext name="country" value="ITALY" />
+            </val>
+        </entry>
+        <entry key="EI" valueType="String" defaultDescription="EI">
+            <i18n-description lang="default" value="EI" />
+            <val value="EI">
+                <i18n-value lang="default" value="EI" />
+                <ext name="address_line_1" value="AER LINGUS p.l.c EI-053" />
+                <ext name="address_line_2" value="Mrs. Rita Howard   IATA Billing Officer" />
+                <ext name="city" value="Head Office Building PA 6" />
+                <ext name="post_code" value="DUBLIN AIRPORT" />
+                <ext name="country" value="Ireland" />
+            </val>
+        </entry>
+        <entry key="AY" valueType="String" defaultDescription="AY">
+            <i18n-description lang="default" value="AY" />
+            <val value="AY">
+                <i18n-value lang="default" value="AY" />
+                <ext name="address_line_1" value="FINNAIR   Plc" />
+                <ext name="address_line_2" value="SL/11  Prorate Officer" />
+                <ext name="city" value="" />
+                <ext name="post_code" value="01053 Finnair" />
+                <ext name="country" value="FINLAND" />
+            </val>
+        </entry>
+        <entry key="MU" valueType="String" defaultDescription="MU">
+            <i18n-description lang="default" value="MU" />
+            <val value="MU">
+                <i18n-value lang="default" value="MU" />
+                <ext name="address_line_1" value="CHINA EASTERN AIRLINES  MU-781" />
+                <ext name="address_line_2" value="c/o Accounting  Centre of China  Miss Wu Ya Ru  General manager of Clearing &amp; Settlement  Dep. of ACC." />
+                <ext name="city" value="12 Building, Xi Ba He Beili" />
+                <ext name="post_code" value="Chao Yang Disrict, P.O.BOX 5402" />
+                <ext name="country" value="Bijing, People\'s Republic of China" />
+            </val>
+        </entry>
+        <entry key="HK" valueType="String" defaultDescription="HK">
+            <i18n-description lang="default" value="HK" />
+            <val value="HK">
+                <i18n-value lang="default" value="HK" />
+                <ext name="address_line_1" value="HONG KONG DRAGON AIRLINES LTD.  KA-043" />
+                <ext name="address_line_2" value="4/F Dragonair House" />
+                <ext name="city" value="11 Tung Rai Road" />
+                <ext name="post_code" value="Hong Kong International Airport" />
+                <ext name="country" value="Lautau, Hong Kong China, P.R." />
+            </val>
+        </entry>
+        <entry key="CO" valueType="String" defaultDescription="CO">
+            <i18n-description lang="default" value="CO" />
+            <val value="CO">
+                <i18n-value lang="default" value="CO" />
+                <ext name="address_line_1" value="CONTINENTAL AIRLINES" />
+                <ext name="address_line_2" value="P.O.BOX  4607" />
+                <ext name="city" value="Houston" />
+                <ext name="post_code" value=" Texas 77210-4607" />
+                <ext name="country" value="U.S.A." />
+            </val>
+        </entry>
+        <entry key="DL" valueType="String" defaultDescription="DL">
+            <i18n-description lang="default" value="DL" />
+            <val value="DL">
+                <i18n-value lang="default" value="DL" />
+                <ext name="address_line_1" value="DELTA AIRLINES" />
+                <ext name="address_line_2" value="Consumer Affairs Baggage" />
+                <ext name="city" value="P.O.BOX 20598" />
+                <ext name="post_code" value="Atlanta, Georgia 30320-2598" />
+                <ext name="country" value="U.S.A." />
+            </val>
+        </entry>
+        <entry key="MH" valueType="String" defaultDescription="MH">
+            <i18n-description lang="default" value="MH" />
+            <val value="MH">
+                <i18n-value lang="default" value="MH" />
+                <ext name="address_line_1" value="MALAYSIA AIRLINES  CENTRAL BAGGAGE TRACING OFFICE  " />
+                <ext name="address_line_2" value="AIRPORT OPERATIONS MALAYSIA AIRLINES" />
+                <ext name="city" value="LEVEL 3 MAIN TERMINAL BUILDING KLIA" />
+                <ext name="post_code" value="64000 SEPANG SELANGOR MALAYSIA  " />
+                <ext name="country" value="MALAYSIA" />
+            </val>
+        </entry>
+        <entry key="FI" valueType="String" defaultDescription="FI">
+            <i18n-description lang="default" value="FI" />
+            <val value="FI">
+                <i18n-value lang="default" value="FI" />
+                <ext name="address_line_1" value="ICELANDAIR" />
+                <ext name="address_line_2" value="Reykjavik Airport" />
+                <ext name="city" value="" />
+                <ext name="post_code" value="Reykjavik" />
+                <ext name="country" value="ICELAND  Re: prorate notice conc. baggage claim" />
+            </val>
+        </entry>
+        <entry key="IB" valueType="String" defaultDescription="IB">
+            <i18n-description lang="default" value="IB" />
+            <val value="IB">
+                <i18n-value lang="default" value="IB" />
+                <ext name="address_line_1" value="IBERIA  LINEAS AEREAS DE ESPANA" />
+                <ext name="address_line_2" value="DTO Central Equipajes ( LZ) Prorate Notice Att. Mj Gomez" />
+                <ext name="city" value="Edificio  Iberia Zona Modular M - 15" />
+                <ext name="post_code" value="28042 Madrid- Barajas" />
+                <ext name="country" value="ESPANA" />
+            </val>
+        </entry>
+        <entry key="OK." valueType="String" defaultDescription="OK.">
+            <i18n-description lang="default" value="OK." />
+            <val value="OK.">
+                <i18n-value lang="default" value="OK." />
+                <ext name="address_line_1" value="CZECH AIRLINES a.s., CSA" />
+                <ext name="address_line_2" value="Stare Leriste - NBE" />
+                <ext name="city" value="Praha 6, Letiste Ruzyne     " />
+                <ext name="post_code" value="" />
+                <ext name="country" value="Czech Republic 160 00" />
+            </val>
+        </entry>
+        <entry key="DE" valueType="String" defaultDescription="DE">
+            <i18n-description lang="default" value="DE" />
+            <val value="DE">
+                <i18n-value lang="default" value="DE" />
+                <ext name="address_line_1" value="CONDOR COSTUMER RELATIONS   " />
+                <ext name="address_line_2" value="THOMAS-COOK-PLATZ 1         " />
+                <ext name="city" value="OBERURSEL" />
+                <ext name="post_code" value="D-61440" />
+                <ext name="country" value="GERMANY" />
+            </val>
+        </entry>
+        <entry key="QF" valueType="String" defaultDescription="QF">
+            <i18n-description lang="default" value="QF" />
+            <val value="QF">
+                <i18n-value lang="default" value="QF" />
+                <ext name="address_line_1" value="QANTAS   AIRWAYS LTD." />
+                <ext name="address_line_2" value="QCC3, Baggage Claims  Services" />
+                <ext name="city" value="203, Coward Street" />
+                <ext name="post_code" value="Mascot, N.S.W.  2020" />
+                <ext name="country" value="Australia" />
+            </val>
+        </entry>
+        <entry key="QR" valueType="String" defaultDescription="QR">
+            <i18n-description lang="default" value="QR" />
+            <val value="QR">
+                <i18n-value lang="default" value="QR" />
+                <ext name="address_line_1" value="QATAR AIRWAYS  QR-157" />
+                <ext name="address_line_2" value="Mr. p. Sasidharan  Revenue Accounting Manager" />
+                <ext name="city" value="P.O.BOX 22550" />
+                <ext name="post_code" value="DOHA" />
+                <ext name="country" value="QATAR  Re: prorate notice conc. baggage claim" />
+            </val>
+        </entry>
+        <entry key="BW" valueType="String" defaultDescription="BW">
+            <i18n-description lang="default" value="BW" />
+            <val value="BW">
+                <i18n-value lang="default" value="BW" />
+                <ext name="address_line_1" value="BWIA INTERNATIONAL AIRLINES LTD  BW-106" />
+                <ext name="address_line_2" value="Ms. Maxine King  Financial Controller" />
+                <ext name="city" value="PO BOX 604" />
+                <ext name="post_code" value="Golden Grove Rd." />
+                <ext name="country" value="PIARCO, Trinidad, West Indies" />
+            </val>
+        </entry>
+
+
+
+
+        <entry key="QI" valueType="String" defaultDescription="QI">
+            <i18n-description lang="default" value="QI" />
+            <val value="QI">
+                <i18n-value lang="default" value="QI" />
+                <ext name="address_line_1" value="CIMBER AIR    QI-647" />
+                <ext name="address_line_2" value="Lufthavnsvej 2, Sonderborg" />
+                <ext name="city" value="" />
+                <ext name="post_code" value=" DK-6400" />
+                <ext name="country" value="DENMARK     RE: prorate conc. baggage claim" />
+            </val>
+        </entry>
+        <entry key="OV" valueType="String" defaultDescription="OV">
+            <i18n-description lang="default" value="OV" />
+            <val value="OV">
+                <i18n-value lang="default" value="OV" />
+                <ext name="address_line_1" value="ESTONIAN AIR  - OV" />
+                <ext name="address_line_2" value="Mrs. Galina Rudneva  Revenue Accounting Manager" />
+                <ext name="city" value="13 Lennujaama St." />
+                <ext name="post_code" value="Tallin" />
+                <ext name="country" value="ESTONIA, 11101" />
+            </val>
+        </entry>
+        <entry key="AB" valueType="String" defaultDescription="AB">
+            <i18n-description lang="default" value="AB" />
+            <val value="AB">
+                <i18n-value lang="default" value="AB" />
+                <ext name="address_line_1" value="AIR BERLIN PLC AND CO" />
+                <ext name="address_line_2" value="LUFTVERKEHRS KG  CUSTOMER SERVICE       " />
+                <ext name="city" value="SAATWINKLER DAMM 42-43" />
+                <ext name="post_code" value="13627 BERLIN" />
+                <ext name="country" value="GERMANY" />
+            </val>
+        </entry>
+        <entry key="MK" valueType="String" defaultDescription="MK">
+            <i18n-description lang="default" value="MK" />
+            <val value="MK">
+                <i18n-value lang="default" value="MK" />
+                <ext name="address_line_1" value="AIR MAURITIUS   MK" />
+                <ext name="address_line_2" value="P.O.BOX  441" />
+                <ext name="city" value="Port Louis" />
+                <ext name="post_code" value="RE: prorate notice conc. baggage claim" />
+                <ext name="country" value="Mauritius" />
+            </val>
+        </entry>
+        <entry key="BD" valueType="String" defaultDescription="BD">
+            <i18n-description lang="default" value="BD" />
+            <val value="BD">
+                <i18n-value lang="default" value="BD" />
+                <ext name="address_line_1" value="British  Midland Airways Ltd,  BD-236" />
+                <ext name="address_line_2" value="Mr.Chris White  Accounts Payable-IATA" />
+                <ext name="city" value="Hastings House" />
+                <ext name="post_code" value="Castle Donington" />
+                <ext name="country" value="DERBY  DE7 2SB UK" />
+            </val>
+        </entry>
+        <entry key="UX" valueType="String" defaultDescription="UX">
+            <i18n-description lang="default" value="UX" />
+            <val value="UX">
+                <i18n-value lang="default" value="UX" />
+                <ext name="address_line_1" value="AIR EUROPA Lineas Aereas S.A." />
+                <ext name="address_line_2" value="" />
+                <ext name="city" value="APARTAT DE CORREUS 220" />
+                <ext name="post_code" value="7080" />
+                <ext name="country" value="PALMA DE MALLORCA - BALEARES" />
+            </val>
+        </entry>
+        <entry key="VS" valueType="String" defaultDescription="VS">
+            <i18n-description lang="default" value="VS" />
+            <val value="VS">
+                <i18n-value lang="default" value="VS" />
+                <ext name="address_line_1" value="VIRGIN ATLANTIC FAO THE PRORATES OFFICER  CUSTOMER RELATIONS" />
+                <ext name="address_line_2" value="VIRGIN ATLANTIC AIRWAYS LTD  THE OFFICE" />
+                <ext name="city" value="CRAWLEY , WEST SUSSEX  " />
+                <ext name="post_code" value="RH10 9NU" />
+                <ext name="country" value=" United Kingdom" />
+            </val>
+        </entry>
+        <entry key="FV" valueType="String" defaultDescription="FV">
+            <i18n-description lang="default" value="FV" />
+            <val value="FV">
+                <i18n-value lang="default" value="FV" />
+                <ext name="address_line_1" value="Rossiya  Russian Airlines  FV-195" />
+                <ext name="address_line_2" value="Accounting Centre" />
+                <ext name="city" value="18/4 Pilotov street" />
+                <ext name="post_code" value="st. Petersburg 196210" />
+                <ext name="country" value="Russia" />
+            </val>
+        </entry>
+        <entry key="B2" valueType="String" defaultDescription="B2">
+            <i18n-description lang="default" value="B2" />
+            <val value="B2">
+                <i18n-value lang="default" value="B2" />
+                <ext name="address_line_1" value="BELAVIA" />
+                <ext name="address_line_2" value="Belarusian Airlines" />
+                <ext name="city" value="Nemiga str. 14" />
+                <ext name="post_code" value="220004 Minsk" />
+                <ext name="country" value="The Republic of Belarus" />
+            </val>
+        </entry>
+        <entry key="RO" valueType="String" defaultDescription="RO">
+            <i18n-description lang="default" value="RO" />
+            <val value="RO">
+                <i18n-value lang="default" value="RO" />
+                <ext name="address_line_1" value="TAROM  - Romanian  Air Transport" />
+                <ext name="address_line_2" value="Otopeni Airport" />
+                <ext name="city" value="505 Bucuresti-Ploiesti Rd. KM" />
+                <ext name="post_code" value="16,5 Bucharest," />
+                <ext name="country" value=" Romania" />
+            </val>
+        </entry>
+        <entry key="LY" valueType="String" defaultDescription="LY">
+            <i18n-description lang="default" value="LY" />
+            <val value="LY">
+                <i18n-value lang="default" value="LY" />
+                <ext name="address_line_1" value="EL AL. ISRAEL AIRLINES" />
+                <ext name="address_line_2" value="P.O.BOX 41" />
+                <ext name="city" value="Tel Aviv" />
+                <ext name="post_code" value="Ben-Gurion International Airport" />
+                <ext name="country" value="ISRAEL" />
+            </val>
+        </entry>
+        <entry key="TA" valueType="String" defaultDescription="TA">
+            <i18n-description lang="default" value="TA" />
+            <val value="TA">
+                <i18n-value lang="default" value="TA" />
+                <ext name="address_line_1" value="TACA INTERNATIONAL AIRLINES  TA-202" />
+                <ext name="address_line_2" value="Mr. Edwin RojasRevenue Accounting" />
+                <ext name="city" value="Apartado 1531" />
+                <ext name="post_code" value="San Jose 1000" />
+                <ext name="country" value=" Costa Rica" />
+            </val>
+        </entry>
+        <entry key="WF" valueType="String" defaultDescription="WF">
+            <i18n-description lang="default" value="WF" />
+            <val value="WF">
+                <i18n-value lang="default" value="WF" />
+                <ext name="address_line_1" value="WIDEROE  S Flyveselskap Asa, WF" />
+                <ext name="address_line_2" value="PRORATE OFFICER" />
+                <ext name="city" value="LANGSTRANDA 6 P BOX 247 " />
+                <ext name="post_code" value="8001 BOOWF" />
+                <ext name="country" value="  NORGE        " />
+            </val>
+        </entry>
+        <entry key="HF" valueType="String" defaultDescription="HF">
+            <i18n-description lang="default" value="HF" />
+            <val value="HF">
+                <i18n-value lang="default" value="HF" />
+                <ext name="address_line_1" value="HAPAG-LLOYD FLUGGESELLSCHAFT   HF-617" />
+                <ext name="address_line_2" value="Mr. Diethart Muehge  Director Finance and Accounting" />
+                <ext name="city" value="P.O.BOX 420240" />
+                <ext name="post_code" value="30662 HANNOVER" />
+                <ext name="country" value="GERMANY" />
+            </val>
+        </entry>
+        <entry key="AP" valueType="String" defaultDescription="AP">
+            <i18n-description lang="default" value="AP" />
+            <val value="AP">
+                <i18n-value lang="default" value="AP" />
+                <ext name="address_line_1" value="AIR ONE" />
+                <ext name="address_line_2" value="ALITALIA LUGGAGE HEADQUARTERS  LARGO LOCATELLI SNC" />
+                <ext name="city" value="AEROPORTO LEONARDO DA VINCI -  " />
+                <ext name="post_code" value="00054 FIUMICINO  ROME" />
+                <ext name="country" value=" ITALY         " />
+            </val>
+        </entry>
+        <entry key="KQ" valueType="String" defaultDescription="KQ">
+            <i18n-description lang="default" value="KQ" />
+            <val value="KQ">
+                <i18n-value lang="default" value="KQ" />
+                <ext name="address_line_1" value="KENYA AIRWAYS LTD, KQ-706" />
+                <ext name="address_line_2" value="Head Office" />
+                <ext name="city" value="Airport  North  Road, Embakasi" />
+                <ext name="post_code" value="P.O.BOX 19002  00501" />
+                <ext name="country" value="Nairobi, Kenya" />
+            </val>
+        </entry>
+        <entry key="NH" valueType="String" defaultDescription="NH">
+            <i18n-description lang="default" value="NH" />
+            <val value="NH">
+                <i18n-value lang="default" value="NH" />
+                <ext name="address_line_1" value="ALL NIPPON AIRWAYS" />
+                <ext name="address_line_2" value="CENTRAL BAGGAGE TRACING &amp; PRORATE OFFICE" />
+                <ext name="city" value="031A NARITA INTERNATIONAL AIRPORT " />
+                <ext name="post_code" value="TERMINAL1 NARITA 282-0011" />
+                <ext name="country" value="JAPAN   " />
+            </val>
+        </entry>
+        <entry key="VN" valueType="String" defaultDescription="VN">
+            <i18n-description lang="default" value="VN" />
+            <val value="VN">
+                <i18n-value lang="default" value="VN" />
+                <ext name="address_line_1" value="VIETNAM AIRLINES CORPORATION-VN" />
+                <ext name="address_line_2" value="Interline Accounting Department  Finance Division" />
+                <ext name="city" value="200 Nguyen Son, Gialam Airport" />
+                <ext name="post_code" value="Hanoi  10701" />
+                <ext name="country" value="VIETNAM" />
+            </val>
+        </entry>
+        <entry key="BJ" valueType="String" defaultDescription="BJ">
+            <i18n-description lang="default" value="BJ" />
+            <val value="BJ">
+                <i18n-value lang="default" value="BJ" />
+                <ext name="address_line_1" value="NOUVELAIR" />
+                <ext name="address_line_2" value="Zone TouristiqueDkhila" />
+                <ext name="city" value="5065, Monastir Aeroport, MONASTIR" />
+                <ext name="post_code" value="/RE: prorate notice conc. baggage claim/" />
+                <ext name="country" value="TUNISIE" />
+            </val>
+        </entry>
+
+        <entry key="KM" valueType="String" defaultDescription="KM">
+            <i18n-description lang="default" value="KM" />
+            <val value="KM">
+                <i18n-value lang="default" value="KM" />
+                <ext name="address_line_1" value="AIR  MALTA p.l.c" />
+                <ext name="address_line_2" value="Luqa Airport" />
+                <ext name="city" value="Head Office" />
+                <ext name="post_code" value="Luqa" />
+                <ext name="country" value="Malta    Re: prorate notice conc. baggage claim" />
+            </val>
+        </entry>
+        <entry key="IG" valueType="String" defaultDescription="IG">
+            <i18n-description lang="default" value="IG" />
+            <val value="IG">
+                <i18n-value lang="default" value="IG" />
+                <ext name="address_line_1" value="MERIDIANA S.P.A" />
+                <ext name="address_line_2" value="Zona Industriale A." />
+                <ext name="city" value="Olbia (SS)" />
+                <ext name="post_code" value=" Italy 07026" />
+                <ext name="country" value="RE: prorate notice conc. baggage claim" />
+            </val>
+        </entry>
+        <entry key="FB" valueType="String" defaultDescription="FB">
+            <i18n-description lang="default" value="FB" />
+            <val value="FB">
+                <i18n-value lang="default" value="FB" />
+                <ext name="address_line_1" value="BULGARIA AIR EADS, FB-623" />
+                <ext name="address_line_2" value="Mr Svetin Dimitrov Financial Director" />
+                <ext name="city" value="1, Brussels Blvd. Sofia Airport" />
+                <ext name="post_code" value="1540 Sofia" />
+                <ext name="country" value=" Bulgaria" />
+            </val>
+        </entry>
+        <entry key="A-9" valueType="String" defaultDescription="A-9">
+            <i18n-description lang="default" value="A-9" />
+            <val value="A-9">
+                <i18n-value lang="default" value="A-9" />
+                <ext name="address_line_1" value="GEORGIAN  Airways, A-9-606" />
+                <ext name="address_line_2" value="AIRZENA AIR COMPANY LTD" />
+                <ext name="city" value="79 AIRPORT" />
+                <ext name="post_code" value="TBILISI  " />
+                <ext name="country" value="380058 GEORGIA       " />
+            </val>
+        </entry>
+        <entry key="MD" valueType="String" defaultDescription="MD">
+            <i18n-description lang="default" value="MD" />
+            <val value="MD">
+                <i18n-value lang="default" value="MD" />
+                <ext name="address_line_1" value="AIR MADAGASCAR" />
+                <ext name="address_line_2" value="31, Avenue de LIndependence" />
+                <ext name="city" value="Analakely  Antananarivo 101" />
+                <ext name="post_code" value="Madagascar" />
+                <ext name="country" value="re: prorate notice conc. baggage claim" />
+            </val>
+        </entry>
+        <entry key="QK" valueType="String" defaultDescription="QK">
+            <i18n-description lang="default" value="QK" />
+            <val value="QK">
+                <i18n-value lang="default" value="QK" />
+                <ext name="address_line_1" value="JAZZ AIR LIMITED PARTNERSHIP" />
+                <ext name="address_line_2" value="Mr Troy Higdonl  Accounts Receivable Coordinator" />
+                <ext name="city" value="310 Goudey Dr." />
+                <ext name="post_code" value="Halifax International Airport   ENFIELD, Nova Scotia" />
+                <ext name="country" value="Canada B2T 1E4" />
+            </val>
+        </entry>
+        <entry key="CZ" valueType="String" defaultDescription="CZ">
+            <i18n-description lang="default" value="CZ" />
+            <val value="CZ">
+                <i18n-value lang="default" value="CZ" />
+                <ext name="address_line_1" value="CHINA SOUTHERN AIRLINES   c/o ACCOUNTING CENTRE OF CHINA  AVIATION ( ACCA)" />
+                <ext name="address_line_2" value="BAGGAGE CLAIM DEPARTMENT, GROUND HANDLING DIVIS" />
+                <ext name="city" value="CAAC CENTRAL&amp; SOUTHERN REGINAL ADMINISTRATION" />
+                <ext name="post_code" value="BUILDING B210D SOUTH WORKING ZONE          BAIYUN INTERNATIONAL AIRPORT, " />
+                <ext name="country" value="GUANGZHOU CHINA" />
+            </val>
+        </entry>
+        <entry key="9W" valueType="String" defaultDescription="9W">
+            <i18n-description lang="default" value="9W" />
+            <val value="9W">
+                <i18n-value lang="default" value="9W" />
+                <ext name="address_line_1" value="JET AIRWAYS (INDIA) LIMITED  ( 9W-589)" />
+                <ext name="address_line_2" value="Ms. Radhika Shekharan - Manager-Revenue Accounts" />
+                <ext name="city" value="3rd  Floor  A Wing, Kaledonia (HDIL)" />
+                <ext name="post_code" value="Sahar Road, Near Andheri Railway Station, Andheri ( East)" />
+                <ext name="country" value="Mumbai  400069  INDIA" />
+            </val>
+        </entry>
+        <entry key="HM" valueType="String" defaultDescription="HM">
+            <i18n-description lang="default" value="HM" />
+            <val value="HM">
+                <i18n-value lang="default" value="HM" />
+                <ext name="address_line_1" value="AIR  SEYCHELLES LTD. HM-061" />
+                <ext name="address_line_2" value="Revenue Section" />
+                <ext name="city" value="The Creole  Spirit" />
+                <ext name="post_code" value="Quincy Street  P.O.BOX 386" />
+                <ext name="country" value="MAHE, Seychelles" />
+            </val>
+        </entry>
+        <entry key="CY" valueType="String" defaultDescription="CY">
+            <i18n-description lang="default" value="CY" />
+            <val value="CY">
+                <i18n-value lang="default" value="CY" />
+                <ext name="address_line_1" value="CYPRUS AIRWAYS" />
+                <ext name="address_line_2" value="P.O.BOX 1903-15141" />
+                <ext name="city" value="ALKEOU Street" />
+                <ext name="post_code" value="NICOSIA," />
+                <ext name="country" value="CYPRUS" />
+            </val>
+        </entry>
+        <entry key="KC" valueType="String" defaultDescription="KC">
+            <i18n-description lang="default" value="KC" />
+            <val value="KC">
+                <i18n-value lang="default" value="KC" />
+                <ext name="address_line_1" value="AIR ASTANA" />
+                <ext name="address_line_2" value="4A,Zakarpatskaya Street" />
+                <ext name="city" value="" />
+                <ext name="post_code" value="Almaty, 050039" />
+                <ext name="country" value="Kazakhstan PRORATE NOTICE CONC. BAGGAGE CLAIM" />
+            </val>
+        </entry>
+        <entry key="LG" valueType="String" defaultDescription="LG">
+            <i18n-description lang="default" value="LG" />
+            <val value="LG">
+                <i18n-value lang="default" value="LG" />
+                <ext name="address_line_1" value="LUXAIR" />
+                <ext name="address_line_2" value="Customer  Relations Luxair S.A." />
+                <ext name="city" value="Aeroport de Luxembourg" />
+                <ext name="post_code" value="L-2987" />
+                <ext name="country" value="Luxembourg  Re: prorate notice conc. baggage claim" />
+            </val>
+        </entry>
+        <entry key="2M" valueType="String" defaultDescription="2M">
+            <i18n-description lang="default" value="2M" />
+            <val value="2M">
+                <i18n-value lang="default" value="2M" />
+                <ext name="address_line_1" value="MOLDAVIAN AIRLINES, 2M-860" />
+                <ext name="address_line_2" value="Mr Arcadie Stempovschi Director Revenue Accounting" />
+                <ext name="city" value="Aeroportul Chrisinau" />
+                <ext name="post_code" value="MD-2026 Chisinau" />
+                <ext name="country" value="Republic of Moldowia" />
+            </val>
+        </entry>
+        <entry key="SW" valueType="String" defaultDescription="SW">
+            <i18n-description lang="default" value="SW" />
+            <val value="SW">
+                <i18n-value lang="default" value="SW" />
+                <ext name="address_line_1" value="AIR NAMIBIA" />
+                <ext name="address_line_2" value="CENTRAL BAGGAGE OFFICE" />
+                <ext name="city" value="P O  BOX 731" />
+                <ext name="post_code" value="WINDHOEK" />
+                <ext name="country" value="NAMIBIA" />
+            </val>
+        </entry>
+        <entry key="XS" valueType="String" defaultDescription="XS">
+            <i18n-description lang="default" value="XS" />
+            <val value="XS">
+                <i18n-value lang="default" value="XS" />
+                <ext name="address_line_1" value="SITA AIR" />
+                <ext name="address_line_2" value="GPO BOX  9002" />
+                <ext name="city" value="Sinamangal Ward No 9" />
+                <ext name="post_code" value="Kathmaandu" />
+                <ext name="country" value="Nepal" />
+            </val>
+        </entry>
+
+        <entry key="KU" valueType="String" defaultDescription="KU">
+            <i18n-description lang="default" value="KU" />
+            <val value="KU">
+                <i18n-value lang="default" value="KU" />
+                <ext name="address_line_1" value="KUWAIT AIRWAYS" />
+                <ext name="address_line_2" value="MANAGER - BAGGAGE SERVICES " />
+                <ext name="city" value="KWILZKU   GROUND HANDLING     " />
+                <ext name="post_code" value="  P.O. BOX 394" />
+                <ext name="country" value="13004 SAFAT KUWAIT         " />
+            </val>
+        </entry>
+        <entry key="JU" valueType="String" defaultDescription="JU">
+            <i18n-description lang="default" value="JU" />
+            <val value="JU">
+                <i18n-value lang="default" value="JU" />
+                <ext name="address_line_1" value="AIR SERBIA   JU-115" />
+                <ext name="address_line_2" value="Claims Department Air Serbia Poslovni centar" />
+                <ext name="city" value="Bul. Umetnosti 16, 11070 Novi" />
+                <ext name="post_code" value="BEOGRAD" />
+                <ext name="country" value="SERBIA  " />
+            </val>
+        </entry>
+        <entry key="MX" valueType="String" defaultDescription="MX">
+            <i18n-description lang="default" value="MX" />
+            <val value="MX">
+                <i18n-value lang="default" value="MX" />
+                <ext name="address_line_1" value="MEXICANA DE AVIACION SA MX-132" />
+                <ext name="address_line_2" value="CENTRAL BAGGAGE TRACING" />
+                <ext name="city" value=" " />
+                <ext name="post_code" value="P.O. BOX 39-56" />
+                <ext name="country" value="  MEXICO D.F. 15620 " />
+            </val>
+        </entry>
+        <entry key="AT" valueType="String" defaultDescription="AT">
+            <i18n-description lang="default" value="AT" />
+            <val value="AT">
+                <i18n-value lang="default" value="AT" />
+                <ext name="address_line_1" value="ROYAL AIR MAROC  AT-147" />
+                <ext name="address_line_2" value="AEROPORT  CASA-ANFA" />
+                <ext name="city" value="CASABLANCA" />
+                <ext name="post_code" value="" />
+                <ext name="country" value="MOROCCO     RE: prorate notice conc. baggage claim" />
+            </val>
+        </entry>
+        <entry key="SC" valueType="String" defaultDescription="SC">
+            <i18n-description lang="default" value="SC" />
+            <val value="SC">
+                <i18n-value lang="default" value="SC" />
+                <ext name="address_line_1" value="SHANDONG AIRLINES" />
+                <ext name="address_line_2" value="S.C C/O ACCOUNTING CENTRE OF AVIATION ACCA" />
+                <ext name="city" value="MISS WU YA RU, General Manager of Clearing &amp; Settlement" />
+                <ext name="post_code" value="Dept. of Acca, 12 Building, Xi Ba He Beili  Chao Yang District  P.O.BOX 5402" />
+                <ext name="country" value="Beijing, Peoples Republic of China" />
+            </val>
+        </entry>
+
+        <entry key="AS" valueType="String" defaultDescription="AS">
+            <i18n-description lang="default" value="AS" />
+            <val value="AS">
+                <i18n-value lang="default" value="AS" />
+                <ext name="address_line_1" value="ALASKA  AIRLINES Inc." />
+                <ext name="address_line_2" value="P.O.BOX  68900" />
+                <ext name="city" value="19300 Pacific Highway South," />
+                <ext name="post_code" value="Seattle, Washington" />
+                <ext name="country" value="USA" />
+            </val>
+        </entry>
+        <entry key="JL" valueType="String" defaultDescription="JL">
+            <i18n-description lang="default" value="JL" />
+            <val value="JL">
+                <i18n-value lang="default" value="JL" />
+                <ext name="address_line_1" value="JAPAN  AIRLINES" />
+                <ext name="address_line_2" value="CENTRAL BAGGAGE TRACING" />
+                <ext name="city" value="ESS-2-4-11 20F TYOUPV HIGASHISHINAGAWA  SHINAGAWAWKU" />
+                <ext name="post_code" value="TOKYO 140-8637" />
+                <ext name="country" value="JAPAN   RE: prorate notice concerning baggage claim" />
+            </val>
+        </entry>
+        <entry key="TU" valueType="String" defaultDescription="TU">
+            <i18n-description lang="default" value="TU" />
+            <val value="TU">
+                <i18n-value lang="default" value="TU" />
+                <ext name="address_line_1" value="TUNIS  AIR" />
+                <ext name="address_line_2" value="Boulevard  7 November, Carthage" />
+                <ext name="city" value="Tunis" />
+                <ext name="post_code" value="" />
+                <ext name="country" value="Tunisia  2035  RE: prorate notice conc. baggage claim" />
+            </val>
+        </entry>
+        <entry key="KA" valueType="String" defaultDescription="KA">
+            <i18n-description lang="default" value="KA" />
+            <val value="KA">
+                <i18n-value lang="default" value="KA" />
+                <ext name="address_line_1" value="DRAGONAIR  / KA /" />
+                <ext name="address_line_2" value="4/F DRAGONAIR HOUSE  11 TUNG FAI ROAD" />
+                <ext name="city" value="HONG KONG INTERNATIONAL AIRPORT" />
+                <ext name="post_code" value="LAUTA" />
+                <ext name="country" value="HONG KONG, CHINA" />
+            </val>
+        </entry>
+        <entry key="XQ" valueType="String" defaultDescription="XQ">
+            <i18n-description lang="default" value="XQ" />
+            <val value="XQ">
+                <i18n-value lang="default" value="XQ" />
+                <ext name="address_line_1" value="SunExpress Airlines - XQ564" />
+                <ext name="address_line_2" value="Mehmetcik Mah. Aspendos Bulvari" />
+                <ext name="city" value="Aspendos Is Merkezi" />
+                <ext name="post_code" value="No: 63/1-2, PO BOX 28   TR-07300 Antalya" />
+                <ext name="country" value="Turkey" />
+            </val>
+        </entry>
+        <entry key="HU" valueType="String" defaultDescription="HU">
+            <i18n-description lang="default" value="HU" />
+            <val value="HU">
+                <i18n-value lang="default" value="HU" />
+                <ext name="address_line_1" value="HAINAN AIRLINES" />
+                <ext name="address_line_2" value="c/o Accounting Centre of China Aviation (ACCA)  Miss Wu Ya Ru  General Manager of Clearing &amp; Settlement  Dept. of ACCA" />
+                <ext name="city" value="12 Building,Xi Ba He Beili" />
+                <ext name="post_code" value="Chao Yang Distr. P.O.BOX 5402" />
+                <ext name="country" value="Beijing, peoples Republic of China" />
+            </val>
+        </entry>
+        <entry key="PX" valueType="String" defaultDescription="PX">
+            <i18n-description lang="default" value="PX" />
+            <val value="PX">
+                <i18n-value lang="default" value="PX" />
+                <ext name="address_line_1" value="AIR NIUGINI PTY LTD   PX-656" />
+                <ext name="address_line_2" value="MARYAILEEN SOLIEN    CUSTOMER SERVICES MANAGER       WORLDTRACER COORDINATOR" />
+                <ext name="city" value="AIR NIUGINI " />
+                <ext name="post_code" value="BOROKO NCD" />
+                <ext name="country" value="PAPUA NEW GUINEA" />
+            </val>
+        </entry>
+        <entry key="LA" valueType="String" defaultDescription="LA">
+            <i18n-description lang="default" value="LA" />
+            <val value="LA">
+                <i18n-value lang="default" value="LA" />
+                <ext name="address_line_1" value="LAN-CHILE S.A.            ( Linea Aerea Nacional-Chile)" />
+                <ext name="address_line_2" value="Estado 10, Piso 18" />
+                <ext name="city" value="Casilla 147-D" />
+                <ext name="post_code" value="Santiago" />
+                <ext name="country" value="CHILE" />
+            </val>
+        </entry>
+        <entry key="WK" valueType="String" defaultDescription="WK">
+            <i18n-description lang="default" value="WK" />
+            <val value="WK">
+                <i18n-value lang="default" value="WK" />
+                <ext name="address_line_1" value="EDELWEISS  AIR AG" />
+                <ext name="address_line_2" value="Operations Center" />
+                <ext name="city" value="Postfach" />
+                <ext name="post_code" value="8058 Zurich-Flughafen" />
+                <ext name="country" value="Switzerland   RE: prorate notice conc. baggage claim" />
+            </val>
+        </entry>
+        <entry key="OM" valueType="String" defaultDescription="OM">
+            <i18n-description lang="default" value="OM" />
+            <val value="OM">
+                <i18n-value lang="default" value="OM" />
+                <ext name="address_line_1" value="MIAT    MONGOLIAN   AIRLINES" />
+                <ext name="address_line_2" value="MIAT Building" />
+                <ext name="city" value="Buyant-Ukhaa 45" />
+                <ext name="post_code" value="Ulaanbaatar 210134" />
+                <ext name="country" value="Mongolia            Re: prorate notice conc. baggage claim" />
+            </val>
+        </entry>
+        <entry key="IC" valueType="String" defaultDescription="IC">
+            <i18n-description lang="default" value="IC" />
+            <val value="IC">
+                <i18n-value lang="default" value="IC" />
+                <ext name="address_line_1" value="NACIL, D/B/A INDIAN AIRLINES         IC-058" />
+                <ext name="address_line_2" value="Mr. Sunil Dua   Chief, Manager-Finance CRA         Central Revenue Accounts" />
+                <ext name="city" value="Safdarjung Airport" />
+                <ext name="post_code" value="NEW DELHI" />
+                <ext name="country" value="INDIA     RE: prorate notice conc. baggage claim" />
+            </val>
+        </entry>
+        <entry key="MP" valueType="String" defaultDescription="MP">
+            <i18n-description lang="default" value="MP" />
+            <val value="MP">
+                <i18n-value lang="default" value="MP" />
+                <ext name="address_line_1" value="MARTINAIR HOLLAND   N.V." />
+                <ext name="address_line_2" value="P.O.BOX  7507" />
+                <ext name="city" value="1118 ZG  Schiphol Airport" />
+                <ext name="post_code" value="Amsterdam" />
+                <ext name="country" value="Netherlands         RE: PRORATE NOTICE CONC. BAGGAGE CLAIM" />
+            </val>
+        </entry>
+        <entry key="PK" valueType="String" defaultDescription="PK">
+            <i18n-description lang="default" value="PK" />
+            <val value="PK">
+                <i18n-value lang="default" value="PK" />
+                <ext name="address_line_1" value="PAKISTAN INTERNATIONAL AIRLINES   PK-214" />
+                <ext name="address_line_2" value="MANAGER BAGGAGE SERVICES-MR WASEEM-UL-ISLAM" />
+                <ext name="city" value="PIA HEAD OFFICE BUILDING" />
+                <ext name="post_code" value="MBS OFFICE, ROOM 127, JIAP    KARACHI" />
+                <ext name="country" value="PAKISTAN     " />
+            </val>
+        </entry>
+        <entry key="PR" valueType="String" defaultDescription="PR">
+            <i18n-description lang="default" value="PR" />
+            <val value="PR">
+                <i18n-value lang="default" value="PR" />
+                <ext name="address_line_1" value="PHILIPPINE   AIRLINES" />
+                <ext name="address_line_2" value="MANAGER-CENTRAL TRACING AND CLAIMS  MS LOURDES D AFZELIUS" />
+                <ext name="city" value="SOUTHWING ARRIVAL AREA        " />
+                <ext name="post_code" value="NINOY AQUINO CENTENNIAL TERMINAL 2   PASAY CITY METRO MANILA" />
+                <ext name="country" value="PHILIPPINES" />
+            </val>
+        </entry>
+        <entry key="BT" valueType="String" defaultDescription="BT">
+            <i18n-description lang="default" value="BT" />
+            <val value="BT">
+                <i18n-value lang="default" value="BT" />
+                <ext name="address_line_1" value="Air Baltic Corporation AS" />
+                <ext name="address_line_2" value="Riga International Airport" />
+                <ext name="city" value="Marupes County," />
+                <ext name="post_code" value="LV-1053" />
+                <ext name="country" value="LATVIA" />
+            </val>
+        </entry>
+        <entry key="RA" valueType="String" defaultDescription="RA">
+            <i18n-description lang="default" value="RA" />
+            <val value="RA">
+                <i18n-value lang="default" value="RA" />
+                <ext name="address_line_1" value="NEPAL AIRLINES" />
+                <ext name="address_line_2" value="Head Office" />
+                <ext name="city" value="NAC Building, Kantipath" />
+                <ext name="post_code" value="Kathmandu" />
+                <ext name="country" value="NEPAL" />
+            </val>
+        </entry>
+        <entry key="CI" valueType="String" defaultDescription="CI">
+            <i18n-description lang="default" value="CI" />
+            <val value="CI">
+                <i18n-value lang="default" value="CI" />
+                <ext name="address_line_1" value="CHINA AIRLINES" />
+                <ext name="address_line_2" value="c/o CENTRAL BAGGAGE CLAIMS" />
+                <ext name="city" value="P.O.BOX 34-97 YAOYUAN" />
+                <ext name="post_code" value="TAOYUAN  COUNTY 33758" />
+                <ext name="country" value="TAIWAN   R.O.C" />
+            </val>
+        </entry>
+        <entry key="RJ" valueType="String" defaultDescription="RJ">
+            <i18n-description lang="default" value="RJ" />
+            <val value="RJ">
+                <i18n-value lang="default" value="RJ" />
+                <ext name="address_line_1" value="ROYAL JORDANIAN" />
+                <ext name="address_line_2" value="Mr. Bader Halteh   Central Accounts Manager   Head Office Finance &amp; Accounts Dept" />
+                <ext name="city" value="P.O. Box 302" />
+                <ext name="post_code" value="11118 Amman" />
+                <ext name="country" value="JORDAN" />
+            </val>
+        </entry>
+        <entry key="OB." valueType="String" defaultDescription="OB.">
+            <i18n-description lang="default" value="OB." />
+            <val value="OB.">
+                <i18n-value lang="default" value="OB." />
+                <ext name="address_line_1" value="COMPAA BOLIVIANA DE TRANSPORTE" />
+                <ext name="address_line_2" value="AREO PRIVADO AEROSUR S.A" />
+                <ext name="city" value="AVENIDA IRALFA 616" />
+                <ext name="post_code" value="SANTA CRUZ 3104" />
+                <ext name="country" value="BOLIVIA      RE: PRORATE NOTICE CONC. BAGGAGE CLAIM" />
+            </val>
+        </entry>
+        <entry key="TX" valueType="String" defaultDescription="TX">
+            <i18n-description lang="default" value="TX" />
+            <val value="TX">
+                <i18n-value lang="default" value="TX" />
+                <ext name="address_line_1" value="AIR  CARAIBES" />
+                <ext name="address_line_2" value="Mr. Jean-Denis Petit   Revenue Accounting Manager" />
+                <ext name="city" value="Immeuble Le Caducee" />
+                <ext name="post_code" value="Morne Vergain  97139 ABYMES" />
+                <ext name="country" value="GAUDELOUPE" />
+            </val>
+        </entry>
+        <entry key="EN" valueType="String" defaultDescription="EN">
+            <i18n-description lang="default" value="EN" />
+            <val value="EN">
+                <i18n-value lang="default" value="EN" />
+                <ext name="address_line_1" value="AIR DOLOMITI S P A" />
+                <ext name="address_line_2" value="LINE AERRE REGIONALI EUROPEE  " />
+                <ext name="city" value="VIA PAOLO BEMBO 70" />
+                <ext name="post_code" value="I-37062 DOSSOBUONO DI VILLAFRANCA VERONA" />
+                <ext name="country" value=" ITALY     " />
+            </val>
+        </entry>
+        <entry key="AH" valueType="String" defaultDescription="AH">
+            <i18n-description lang="default" value="AH" />
+            <val value="AH">
+                <i18n-value lang="default" value="AH" />
+                <ext name="address_line_1" value="AIR ALGERIE" />
+                <ext name="address_line_2" value="1 Place Maurice  Audin" />
+                <ext name="city" value="Algiers" />
+                <ext name="post_code" value="" />
+                <ext name="country" value="Algeria" />
+            </val>
+        </entry>
+        <entry key="PS" valueType="String" defaultDescription="PS">
+            <i18n-description lang="default" value="PS" />
+            <val value="PS">
+                <i18n-value lang="default" value="PS" />
+                <ext name="address_line_1" value="UKRAINE INTERNATIONAL AIRLINES    PS-566" />
+                <ext name="address_line_2" value="MS LARISA KLUCHKOVSKAYA   DIREKTOR OF REVENUE ACCOUNTING DEPT." />
+                <ext name="city" value="201-203  KHARKIVSKE RD." />
+                <ext name="post_code" value="02121,  KIEV" />
+                <ext name="country" value="UKRAINE" />
+            </val>
+        </entry>
+        <entry key="B6" valueType="String" defaultDescription="B6">
+            <i18n-description lang="default" value="B6" />
+            <val value="B6">
+                <i18n-value lang="default" value="B6" />
+                <ext name="address_line_1" value="JETBLUE AIRWAYS CORP." />
+                <ext name="address_line_2" value="Ms Sheryl Smith   Manager  Revenue Accounting" />
+                <ext name="city" value="27-01  Queens Plaza North" />
+                <ext name="post_code" value="LONG ISLAND CITY 11101" />
+                <ext name="country" value="USA" />
+            </val>
+        </entry>
+        <entry key="8Q" valueType="String" defaultDescription="8Q">
+            <i18n-description lang="default" value="8Q" />
+            <val value="8Q">
+                <i18n-value lang="default" value="8Q" />
+                <ext name="address_line_1" value="ONURAIR   FINANCIAL DEPARTMENT" />
+                <ext name="address_line_2" value="ATATURK HAVALIMANI B KAPISI" />
+                <ext name="city" value="TEKNIK HANGAR YANI" />
+                <ext name="post_code" value="34149  YESILKOY ISTAMBUL" />
+                <ext name="country" value=" TURKEY" />
+            </val>
+        </entry>
+        <entry key="AZA" valueType="String" defaultDescription="AZA">
+            <i18n-description lang="default" value="AZA" />
+            <val value="AZA">
+                <i18n-value lang="default" value="AZA" />
+                <ext name="address_line_1" value="AZERBAJIAN    AIRLINES" />
+                <ext name="address_line_2" value="HEYDAR   ALIYEV INTERNATIONAK AIRPORT" />
+                <ext name="city" value="BAKU" />
+                <ext name="post_code" value="AZ1044" />
+                <ext name="country" value="AZERBAIJAN REPUBLIC     Re: prorate notice conc. baggage claim" />
+            </val>
+        </entry>
+        <entry key="4U" valueType="String" defaultDescription="4U">
+            <i18n-description lang="default" value="4U" />
+            <val value="4U">
+                <i18n-value lang="default" value="4U" />
+                <ext name="address_line_1" value="GERMANWINGS  GMBH-   4U" />
+                <ext name="address_line_2" value="CENTRAL BAGGAGE TRACING" />
+                <ext name="city" value="GERMANWINGS - STR. 2" />
+                <ext name="post_code" value="D-51147 KOELN" />
+                <ext name="country" value="GERMANY" />
+            </val>
+        </entry>
+        <entry key="WY" valueType="String" defaultDescription="WY">
+            <i18n-description lang="default" value="WY" />
+            <val value="WY">
+                <i18n-value lang="default" value="WY" />
+                <ext name="address_line_1" value="OFFICER - BAGGAGE SERVICES   CUSTOMER SUPPORT DEPT." />
+                <ext name="address_line_2" value="" />
+                <ext name="city" value="P.O.BOX 58" />
+                <ext name="post_code" value="MUSCAT INTERNATIONAL AIROPRT, PC111" />
+                <ext name="country" value="SOLTANATE OF OMAN" />
+            </val>
+        </entry>
+        <entry key="UU" valueType="String" defaultDescription="UU">
+            <i18n-description lang="default" value="UU" />
+            <val value="UU">
+                <i18n-value lang="default" value="UU" />
+                <ext name="address_line_1" value="AIR AUSTRAL - SEPT" />
+                <ext name="address_line_2" value="11 RUE  TRONCHET" />
+                <ext name="city" value="CS 60021" />
+                <ext name="post_code" value="75378 PARIS CEDEX8" />
+                <ext name="country" value="FRANCE   Re: prorate notice conc. baggage claim" />
+            </val>
+        </entry>
+        <entry key="LA-045" valueType="String" defaultDescription="LA-045">
+            <i18n-description lang="default" value="LA-045" />
+            <val value="LA-045">
+                <i18n-value lang="default" value="LA-045" />
+                <ext name="address_line_1" value="LATAM AIRLINES GROUP SA   LAN AIRLINES LA-045" />
+                <ext name="address_line_2" value="Central Baggage Tracing Manager" />
+                <ext name="city" value="Santiago International Airport" />
+                <ext name="post_code" value="Oficina 21 Santiago de Chile" />
+                <ext name="country" value="CHILE Rep.    RE: prorate notice concerning baggage claim" />
+            </val>
+        </entry>
+        <entry key="S4" valueType="String" defaultDescription="S4">
+            <i18n-description lang="default" value="S4" />
+            <val value="S4">
+                <i18n-value lang="default" value="S4" />
+                <ext name="address_line_1" value="SATA International" />
+                <ext name="address_line_2" value="Av. Infante D.Henrique 55 - 1 andar" />
+                <ext name="city" value="9504-528 Ponta Delgada" />
+                <ext name="post_code" value="Azores" />
+                <ext name="country" value="Portugal" />
+            </val>
+        </entry>
+
+        <default-ext name="address_line_1" value="address_line_1_value" description="Adres linia 1"/>
+        <default-ext name="address_line_2" value="address_line_2_value" description="Adres linia 2"/>
+        <default-ext name="city" value="city_value" description="Miasto"/>
+        <default-ext name="post_code" value="post_code_value" description="Kod"/>
+        <default-ext name="country" value="country_value" description="Kraj"/>
+    </dict>
+    <dict description="country" id="country" name="Kraje / Waluty / IBAN">
+        <i18n-name lang="default" value="Kraje / Waluty / IBAN"/>
+        <entry key="AF" valueType="String" defaultDescription="Afganistan">
+            <i18n-description lang="default" value="Afganistan" />
+            <val value="AF">
+                <i18n-value lang="default" value="Afganistan" />
+                <ext name="currency" value="AFN" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="AL" valueType="String" defaultDescription="Albania">
+            <i18n-description lang="default" value="Albania" />
+            <val value="AL">
+                <i18n-value lang="default" value="Albania" />
+                <ext name="currency" value="ALL" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+                <ext name="iban" value="AL## #### #### %%%% %%%% %%%% %%%%" />
+            </val>
+        </entry>
+        <entry key="DZ" valueType="String" defaultDescription="Algieria">
+            <i18n-description lang="default" value="Algieria" />
+            <val value="DZ">
+                <i18n-value lang="default" value="Algieria" />
+                <ext name="currency" value="DZD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="AD" valueType="String" defaultDescription="Andora">
+            <i18n-description lang="default" value="Andora" />
+            <val value="AD">
+                <i18n-value lang="default" value="Andora" />
+                <ext name="currency" value="EUR" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+                <ext name="iban" value="AD## #### #### %%%% %%%% %%%%" />
+            </val>
+        </entry>
+        <entry key="AO" valueType="String" defaultDescription="Angola">
+            <i18n-description lang="default" value="Angola" />
+            <val value="AO">
+                <i18n-value lang="default" value="Angola" />
+                <ext name="currency" value="AOA" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="AI" valueType="String" defaultDescription="Anguilla">
+            <i18n-description lang="default" value="Anguilla" />
+            <val value="AI">
+                <i18n-value lang="default" value="Anguilla" />
+                <ext name="currency" value="XCD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="AQ" valueType="String" defaultDescription="Antarktyka">
+            <i18n-description lang="default" value="Antarktyka" />
+            <val value="AQ">
+                <i18n-value lang="default" value="Antarktyka" />
+                <ext name="currency" value="USD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="AG" valueType="String" defaultDescription="Antigua i Barbuda">
+            <i18n-description lang="default" value="Antigua i Barbuda" />
+            <val value="AG">
+                <i18n-value lang="default" value="Antigua i Barbuda" />
+                <ext name="currency" value="XCD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="SA" valueType="String" defaultDescription="Arabia Saudyjska">
+            <i18n-description lang="default" value="Arabia Saudyjska" />
+            <val value="SA">
+                <i18n-value lang="default" value="Arabia Saudyjska" />
+                <ext name="currency" value="SAR" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+                <ext name="iban" value="SA## ##%% %%%% %%%% %%%% %%%%" />
+            </val>
+        </entry>
+        <entry key="AR" valueType="String" defaultDescription="Argentyna">
+            <i18n-description lang="default" value="Argentyna" />
+            <val value="AR">
+                <i18n-value lang="default" value="Argentyna" />
+                <ext name="currency" value="ARS" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="AM" valueType="String" defaultDescription="Armenia">
+            <i18n-description lang="default" value="Armenia" />
+            <val value="AM">
+                <i18n-value lang="default" value="Armenia" />
+                <ext name="currency" value="AMD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="AW" valueType="String" defaultDescription="Aruba">
+            <i18n-description lang="default" value="Aruba" />
+            <val value="AW">
+                <i18n-value lang="default" value="Aruba" />
+                <ext name="currency" value="AWG" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="AU" valueType="String" defaultDescription="Australia">
+            <i18n-description lang="default" value="Australia" />
+            <val value="AU">
+                <i18n-value lang="default" value="Australia" />
+                <ext name="currency" value="AUD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="AT" valueType="String" defaultDescription="Austria">
+            <i18n-description lang="default" value="Austria" />
+            <val value="AT">
+                <i18n-value lang="default" value="Austria" />
+                <ext name="currency" value="EUR" />
+                <ext name="isUE" value="true" />
+                <ext name="isSepa" value="true" />
+                <ext name="iban" value="AT## #### #### #### ####" />
+            </val>
+        </entry>
+        <entry key="AZ" valueType="String" defaultDescription="Azerbejdżan">
+            <i18n-description lang="default" value="Azerbejdżan" />
+            <val value="AZ">
+                <i18n-value lang="default" value="Azerbejdżan" />
+                <ext name="currency" value="AZN" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+                <ext name="iban" value="AZ## $$$$ %%%% %%%% %%%% %%%% %%%%" />
+            </val>
+        </entry>
+        <entry key="BS" valueType="String" defaultDescription="Bahamy">
+            <i18n-description lang="default" value="Bahamy" />
+            <val value="BS">
+                <i18n-value lang="default" value="Bahamy" />
+                <ext name="currency" value="BSD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="BH" valueType="String" defaultDescription="Bahrajn">
+            <i18n-description lang="default" value="Bahrajn" />
+            <val value="BH">
+                <i18n-value lang="default" value="Bahrajn" />
+                <ext name="currency" value="BHD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+                <ext name="iban" value="BH## $$$$ %%%% %%%% %%%% %%" />
+            </val>
+        </entry>
+        <entry key="BD" valueType="String" defaultDescription="Bangladesz">
+            <i18n-description lang="default" value="Bangladesz" />
+            <val value="BD">
+                <i18n-value lang="default" value="Bangladesz" />
+                <ext name="currency" value="BDT" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="BB" valueType="String" defaultDescription="Barbados">
+            <i18n-description lang="default" value="Barbados" />
+            <val value="BB">
+                <i18n-value lang="default" value="Barbados" />
+                <ext name="currency" value="BBD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="BE" valueType="String" defaultDescription="Belgia">
+            <i18n-description lang="default" value="Belgia" />
+            <val value="BE">
+                <i18n-value lang="default" value="Belgia" />
+                <ext name="currency" value="EUR" />
+                <ext name="isUE" value="true" />
+                <ext name="isSepa" value="true" />
+                <ext name="iban" value="BE## #### #### ####" />
+            </val>
+        </entry>
+        <entry key="BZ" valueType="String" defaultDescription="Belize">
+            <i18n-description lang="default" value="Belize" />
+            <val value="BZ">
+                <i18n-value lang="default" value="Belize" />
+                <ext name="currency" value="BZD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="BJ" valueType="String" defaultDescription="Benin">
+            <i18n-description lang="default" value="Benin" />
+            <val value="BJ">
+                <i18n-value lang="default" value="Benin" />
+                <ext name="currency" value="XOF" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="BM" valueType="String" defaultDescription="Bermudy">
+            <i18n-description lang="default" value="Bermudy" />
+            <val value="BM">
+                <i18n-value lang="default" value="Bermudy" />
+                <ext name="currency" value="BMD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="BT" valueType="String" defaultDescription="Bhutan">
+            <i18n-description lang="default" value="Bhutan" />
+            <val value="BT">
+                <i18n-value lang="default" value="Bhutan" />
+                <ext name="currency" value="BTN" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="BY" valueType="String" defaultDescription="Białoruś">
+            <i18n-description lang="default" value="Białoruś" />
+            <val value="BY">
+                <i18n-value lang="default" value="Białoruś" />
+                <ext name="currency" value="BYR" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="BO" valueType="String" defaultDescription="Boliwia">
+            <i18n-description lang="default" value="Boliwia" />
+            <val value="BO">
+                <i18n-value lang="default" value="Boliwia" />
+                <ext name="currency" value="BOB" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="BQ" valueType="String" defaultDescription="Bonaire, Sint Eustatius i Saba">
+            <i18n-description lang="default" value="Bonaire, Sint Eustatius i Saba" />
+            <val value="BQ">
+                <i18n-value lang="default" value="Bonaire, Sint Eustatius i Saba" />
+                <ext name="currency" value="USD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="BA" valueType="String" defaultDescription="Bośnia i Hercegowina">
+            <i18n-description lang="default" value="Bośnia i Hercegowina" />
+            <val value="BA">
+                <i18n-value lang="default" value="Bośnia i Hercegowina" />
+                <ext name="currency" value="BAM" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+                <ext name="iban" value="BA## #### #### #### ####" />
+            </val>
+        </entry>
+        <entry key="BW" valueType="String" defaultDescription="Botswana">
+            <i18n-description lang="default" value="Botswana" />
+            <val value="BW">
+                <i18n-value lang="default" value="Botswana" />
+                <ext name="currency" value="BWP" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="BR" valueType="String" defaultDescription="Brazylia">
+            <i18n-description lang="default" value="Brazylia" />
+            <val value="BR">
+                <i18n-value lang="default" value="Brazylia" />
+                <ext name="currency" value="BRL" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+                <ext name="iban" value="BR## #### #### #### #### #### ###$ %" />
+            </val>
+        </entry>
+        <entry key="BN" valueType="String" defaultDescription="Brunei">
+            <i18n-description lang="default" value="Brunei" />
+            <val value="BN">
+                <i18n-value lang="default" value="Brunei" />
+                <ext name="currency" value="BND" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="IO" valueType="String" defaultDescription="Brytyjskie Terytorium Oceanu Indyjskiego">
+            <i18n-description lang="default" value="Brytyjskie Terytorium Oceanu Indyjskiego" />
+            <val value="IO">
+                <i18n-value lang="default" value="Brytyjskie Terytorium Oceanu Indyjskiego" />
+                <ext name="currency" value="USD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="VG" valueType="String" defaultDescription="Brytyjskie Wyspy Dziewicze">
+            <i18n-description lang="default" value="Brytyjskie Wyspy Dziewicze" />
+            <val value="VG">
+                <i18n-value lang="default" value="Brytyjskie Wyspy Dziewicze" />
+                <ext name="currency" value="USD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="BG" valueType="String" defaultDescription="Bułgaria">
+            <i18n-description lang="default" value="Bułgaria" />
+            <val value="BG">
+                <i18n-value lang="default" value="Bułgaria" />
+                <ext name="currency" value="BGN" />
+                <ext name="isUE" value="true" />
+                <ext name="isSepa" value="true" />
+                <ext name="iban" value="BG## $$$$ #### ##%% %%%% %%" />
+            </val>
+        </entry>
+        <entry key="BF" valueType="String" defaultDescription="Burkina Faso">
+            <i18n-description lang="default" value="Burkina Faso" />
+            <val value="BF">
+                <i18n-value lang="default" value="Burkina Faso" />
+                <ext name="currency" value="XOF" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="BI" valueType="String" defaultDescription="Burundi">
+            <i18n-description lang="default" value="Burundi" />
+            <val value="BI">
+                <i18n-value lang="default" value="Burundi" />
+                <ext name="currency" value="BIF" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="CL" valueType="String" defaultDescription="Chile">
+            <i18n-description lang="default" value="Chile" />
+            <val value="CL">
+                <i18n-value lang="default" value="Chile" />
+                <ext name="currency" value="CLP" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="CN" valueType="String" defaultDescription="Chiny">
+            <i18n-description lang="default" value="Chiny" />
+            <val value="CN">
+                <i18n-value lang="default" value="Chiny" />
+                <ext name="currency" value="CNY" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="HR" valueType="String" defaultDescription="Chorwacja">
+            <i18n-description lang="default" value="Chorwacja" />
+            <val value="HR">
+                <i18n-value lang="default" value="Chorwacja" />
+                <ext name="currency" value="HRK" />
+                <ext name="isUE" value="true" />
+                <ext name="isSepa" value="true" />
+                <ext name="iban" value="HR## #### #### #### #### #" />
+            </val>
+        </entry>
+        <entry key="CW" valueType="String" defaultDescription="Curaçao">
+            <i18n-description lang="default" value="Curaçao" />
+            <val value="CW">
+                <i18n-value lang="default" value="Curaçao" />
+                <ext name="currency" value="ANG" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="CY" valueType="String" defaultDescription="Cypr">
+            <i18n-description lang="default" value="Cypr" />
+            <val value="CY">
+                <i18n-value lang="default" value="Cypr" />
+                <ext name="currency" value="EUR" />
+                <ext name="isUE" value="true" />
+                <ext name="isSepa" value="true" />
+                <ext name="iban" value="CY## #### #### %%%% %%%% %%%% %%%%" />
+            </val>
+        </entry>
+        <entry key="TD" valueType="String" defaultDescription="Czad">
+            <i18n-description lang="default" value="Czad" />
+            <val value="TD">
+                <i18n-value lang="default" value="Czad" />
+                <ext name="currency" value="XAF" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="ME" valueType="String" defaultDescription="Czarnogóra">
+            <i18n-description lang="default" value="Czarnogóra" />
+            <val value="ME">
+                <i18n-value lang="default" value="Czarnogóra" />
+                <ext name="currency" value="EUR" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+                <ext name="iban" value="ME## #### #### #### #### ##" />
+            </val>
+        </entry>
+        <entry key="CZ" valueType="String" defaultDescription="Czechy">
+            <i18n-description lang="default" value="Czechy" />
+            <val value="CZ">
+                <i18n-value lang="default" value="Czechy" />
+                <ext name="currency" value="CZK" />
+                <ext name="isUE" value="true" />
+                <ext name="isSepa" value="true" />
+                <ext name="iban" value="CZ## #### #### #### #### ####" />
+            </val>
+        </entry>
+        <entry key="UM" valueType="String" defaultDescription="Dalekie Wyspy Mniejsze Stanów Zjednoczonych">
+            <i18n-description lang="default" value="Dalekie Wyspy Mniejsze Stanów Zjednoczonych" />
+            <val value="UM">
+                <i18n-value lang="default" value="Dalekie Wyspy Mniejsze Stanów Zjednoczonych" />
+                <ext name="currency" value="USD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="DK" valueType="String" defaultDescription="Dania">
+            <i18n-description lang="default" value="Dania" />
+            <val value="DK">
+                <i18n-value lang="default" value="Dania" />
+                <ext name="currency" value="DKK" />
+                <ext name="isUE" value="true" />
+                <ext name="isSepa" value="true" />
+                <ext name="iban" value="DK## #### #### #### ##" />
+            </val>
+        </entry>
+        <entry key="CD" valueType="String" defaultDescription="Demokratyczna Republika Konga">
+            <i18n-description lang="default" value="Demokratyczna Republika Konga" />
+            <val value="CD">
+                <i18n-value lang="default" value="Demokratyczna Republika Konga" />
+                <ext name="currency" value="CDF" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="DM" valueType="String" defaultDescription="Dominika">
+            <i18n-description lang="default" value="Dominika" />
+            <val value="DM">
+                <i18n-value lang="default" value="Dominika" />
+                <ext name="currency" value="XCD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="DO" valueType="String" defaultDescription="Dominikana">
+            <i18n-description lang="default" value="Dominikana" />
+            <val value="DO">
+                <i18n-value lang="default" value="Dominikana" />
+                <ext name="currency" value="DOP" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+                <ext name="iban" value="DO## %%%% #### #### #### #### ####" />
+            </val>
+        </entry>
+        <entry key="DJ" valueType="String" defaultDescription="Dżibuti">
+            <i18n-description lang="default" value="Dżibuti" />
+            <val value="DJ">
+                <i18n-value lang="default" value="Dżibuti" />
+                <ext name="currency" value="DJF" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="EG" valueType="String" defaultDescription="Egipt">
+            <i18n-description lang="default" value="Egipt" />
+            <val value="EG">
+                <i18n-value lang="default" value="Egipt" />
+                <ext name="currency" value="EGP" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="EC" valueType="String" defaultDescription="Ekwador">
+            <i18n-description lang="default" value="Ekwador" />
+            <val value="EC">
+                <i18n-value lang="default" value="Ekwador" />
+                <ext name="currency" value="USD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="ER" valueType="String" defaultDescription="Erytrea">
+            <i18n-description lang="default" value="Erytrea" />
+            <val value="ER">
+                <i18n-value lang="default" value="Erytrea" />
+                <ext name="currency" value="ERN" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="EE" valueType="String" defaultDescription="Estonia">
+            <i18n-description lang="default" value="Estonia" />
+            <val value="EE">
+                <i18n-value lang="default" value="Estonia" />
+                <ext name="currency" value="EUR" />
+                <ext name="isUE" value="true" />
+                <ext name="isSepa" value="true" />
+                <ext name="iban" value="EE## #### #### #### ####" />
+            </val>
+        </entry>
+        <entry key="ET" valueType="String" defaultDescription="Etiopia">
+            <i18n-description lang="default" value="Etiopia" />
+            <val value="ET">
+                <i18n-value lang="default" value="Etiopia" />
+                <ext name="currency" value="ETB" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="FK" valueType="String" defaultDescription="Falklandy">
+            <i18n-description lang="default" value="Falklandy" />
+            <val value="FK">
+                <i18n-value lang="default" value="Falklandy" />
+                <ext name="currency" value="FKP" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="FJ" valueType="String" defaultDescription="Fidżi">
+            <i18n-description lang="default" value="Fidżi" />
+            <val value="FJ">
+                <i18n-value lang="default" value="Fidżi" />
+                <ext name="currency" value="FJD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="PH" valueType="String" defaultDescription="Filipiny">
+            <i18n-description lang="default" value="Filipiny" />
+            <val value="PH">
+                <i18n-value lang="default" value="Filipiny" />
+                <ext name="currency" value="PHP" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="FI" valueType="String" defaultDescription="Finlandia">
+            <i18n-description lang="default" value="Finlandia" />
+            <val value="FI">
+                <i18n-value lang="default" value="Finlandia" />
+                <ext name="currency" value="EUR" />
+                <ext name="isUE" value="true" />
+                <ext name="isSepa" value="true" />
+                <ext name="iban" value="FI## #### #### #### ##" />
+            </val>
+        </entry>
+        <entry key="FR" valueType="String" defaultDescription="Francja">
+            <i18n-description lang="default" value="Francja" />
+            <val value="FR">
+                <i18n-value lang="default" value="Francja" />
+                <ext name="currency" value="EUR" />
+                <ext name="isUE" value="true" />
+                <ext name="isSepa" value="true" />
+                <ext name="iban" value="FR## #### #### ##%% %%%% %%%% %##" />
+            </val>
+        </entry>
+        <entry key="TF" valueType="String" defaultDescription="Francuskie Terytoria Południowe i Antarktyczne">
+            <i18n-description lang="default" value="Francuskie Terytoria Południowe i Antarktyczne" />
+            <val value="TF">
+                <i18n-value lang="default" value="Francuskie Terytoria Południowe i Antarktyczne" />
+                <ext name="currency" value="EUR" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="GA" valueType="String" defaultDescription="Gabon">
+            <i18n-description lang="default" value="Gabon" />
+            <val value="GA">
+                <i18n-value lang="default" value="Gabon" />
+                <ext name="currency" value="XAF" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="GM" valueType="String" defaultDescription="Gambia">
+            <i18n-description lang="default" value="Gambia" />
+            <val value="GM">
+                <i18n-value lang="default" value="Gambia" />
+                <ext name="currency" value="GMD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="GS" valueType="String" defaultDescription="Georgia Południowa i Sandwich Południowy">
+            <i18n-description lang="default" value="Georgia Południowa i Sandwich Południowy" />
+            <val value="GS">
+                <i18n-value lang="default" value="Georgia Południowa i Sandwich Południowy" />
+                <ext name="currency" value="GBP" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="GH" valueType="String" defaultDescription="Ghana">
+            <i18n-description lang="default" value="Ghana" />
+            <val value="GH">
+                <i18n-value lang="default" value="Ghana" />
+                <ext name="currency" value="GHS" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="GI" valueType="String" defaultDescription="Gibraltar">
+            <i18n-description lang="default" value="Gibraltar" />
+            <val value="GI">
+                <i18n-value lang="default" value="Gibraltar" />
+                <ext name="currency" value="GIP" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="true" />
+                <ext name="iban" value="GI## $$$$ %%%% %%%% %%%% %%%" />
+            </val>
+        </entry>
+        <entry key="GR" valueType="String" defaultDescription="Grecja">
+            <i18n-description lang="default" value="Grecja" />
+            <val value="GR">
+                <i18n-value lang="default" value="Grecja" />
+                <ext name="currency" value="EUR" />
+                <ext name="isUE" value="true" />
+                <ext name="isSepa" value="true" />
+                <ext name="iban" value="GR## #### ###% %%%% %%%% %%%% %%%" />
+            </val>
+        </entry>
+        <entry key="GD" valueType="String" defaultDescription="Grenada">
+            <i18n-description lang="default" value="Grenada" />
+            <val value="GD">
+                <i18n-value lang="default" value="Grenada" />
+                <ext name="currency" value="XCD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="GL" valueType="String" defaultDescription="Grenlandia">
+            <i18n-description lang="default" value="Grenlandia" />
+            <val value="GL">
+                <i18n-value lang="default" value="Grenlandia" />
+                <ext name="currency" value="DKK" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+                <ext name="iban" value="GL## #### #### #### ##" />
+            </val>
+        </entry>
+        <entry key="GE" valueType="String" defaultDescription="Gruzja">
+            <i18n-description lang="default" value="Gruzja" />
+            <val value="GE">
+                <i18n-value lang="default" value="Gruzja" />
+                <ext name="currency" value="GEL" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+                <ext name="iban" value="GE## $$## #### #### #### ##" />
+            </val>
+        </entry>
+        <entry key="GU" valueType="String" defaultDescription="Guam">
+            <i18n-description lang="default" value="Guam" />
+            <val value="GU">
+                <i18n-value lang="default" value="Guam" />
+                <ext name="currency" value="USD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="GG" valueType="String" defaultDescription="Guernsey">
+            <i18n-description lang="default" value="Guernsey" />
+            <val value="GG">
+                <i18n-value lang="default" value="Guernsey" />
+                <ext name="currency" value="GGP" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="GF" valueType="String" defaultDescription="Gujana Francuska">
+            <i18n-description lang="default" value="Gujana Francuska" />
+            <val value="GF">
+                <i18n-value lang="default" value="Gujana Francuska" />
+                <ext name="currency" value="EUR" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="true" />
+                <ext name="iban" value="FR## #### #### ##%% %%%% %%%% %##" />
+            </val>
+        </entry>
+        <entry key="GY" valueType="String" defaultDescription="Gujana">
+            <i18n-description lang="default" value="Gujana" />
+            <val value="GY">
+                <i18n-value lang="default" value="Gujana" />
+                <ext name="currency" value="GYD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="GP" valueType="String" defaultDescription="Gwadelupa">
+            <i18n-description lang="default" value="Gwadelupa" />
+            <val value="GP">
+                <i18n-value lang="default" value="Gwadelupa" />
+                <ext name="currency" value="EUR" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="true" />
+                <ext name="iban" value="FR## #### #### ##%% %%%% %%%% %##" />
+            </val>
+        </entry>
+        <entry key="GT" valueType="String" defaultDescription="Gwatemala">
+            <i18n-description lang="default" value="Gwatemala" />
+            <val value="GT">
+                <i18n-value lang="default" value="Gwatemala" />
+                <ext name="currency" value="GTQ" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+                <ext name="iban" value="GT## %%%% %%%% %%%% %%%% %%%% %%%%" />
+            </val>
+        </entry>
+        <entry key="GW" valueType="String" defaultDescription="Gwinea Bissau">
+            <i18n-description lang="default" value="Gwinea Bissau" />
+            <val value="GW">
+                <i18n-value lang="default" value="Gwinea Bissau" />
+                <ext name="currency" value="XOF" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="GQ" valueType="String" defaultDescription="Gwinea Równikowa">
+            <i18n-description lang="default" value="Gwinea Równikowa" />
+            <val value="GQ">
+                <i18n-value lang="default" value="Gwinea Równikowa" />
+                <ext name="currency" value="XAF" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="GN" valueType="String" defaultDescription="Gwinea">
+            <i18n-description lang="default" value="Gwinea" />
+            <val value="GN">
+                <i18n-value lang="default" value="Gwinea" />
+                <ext name="currency" value="GNF" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="HT" valueType="String" defaultDescription="Haiti">
+            <i18n-description lang="default" value="Haiti" />
+            <val value="HT">
+                <i18n-value lang="default" value="Haiti" />
+                <ext name="currency" value="HTG" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="ES" valueType="String" defaultDescription="Hiszpania">
+            <i18n-description lang="default" value="Hiszpania" />
+            <val value="ES">
+                <i18n-value lang="default" value="Hiszpania" />
+                <ext name="currency" value="EUR" />
+                <ext name="isUE" value="true" />
+                <ext name="isSepa" value="true" />
+                <ext name="iban" value="ES## #### #### #### #### ####" />
+            </val>
+        </entry>
+        <entry key="NL" valueType="String" defaultDescription="Holandia">
+            <i18n-description lang="default" value="Holandia" />
+            <val value="NL">
+                <i18n-value lang="default" value="Holandia" />
+                <ext name="currency" value="EUR" />
+                <ext name="isUE" value="true" />
+                <ext name="isSepa" value="true" />
+                <ext name="iban" value="NL## $$$$ #### #### ##" />
+            </val>
+        </entry>
+        <entry key="HN" valueType="String" defaultDescription="Honduras">
+            <i18n-description lang="default" value="Honduras" />
+            <val value="HN">
+                <i18n-value lang="default" value="Honduras" />
+                <ext name="currency" value="HNL" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="HK" valueType="String" defaultDescription="Hongkong">
+            <i18n-description lang="default" value="Hongkong" />
+            <val value="HK">
+                <i18n-value lang="default" value="Hongkong" />
+                <ext name="currency" value="HKD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="IN" valueType="String" defaultDescription="Indie">
+            <i18n-description lang="default" value="Indie" />
+            <val value="IN">
+                <i18n-value lang="default" value="Indie" />
+                <ext name="currency" value="INR" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="ID" valueType="String" defaultDescription="Indonezja">
+            <i18n-description lang="default" value="Indonezja" />
+            <val value="ID">
+                <i18n-value lang="default" value="Indonezja" />
+                <ext name="currency" value="IDR" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="IQ" valueType="String" defaultDescription="Irak">
+            <i18n-description lang="default" value="Irak" />
+            <val value="IQ">
+                <i18n-value lang="default" value="Irak" />
+                <ext name="currency" value="IQD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="IR" valueType="String" defaultDescription="Iran">
+            <i18n-description lang="default" value="Iran" />
+            <val value="IR">
+                <i18n-value lang="default" value="Iran" />
+                <ext name="currency" value="IRR" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="IE" valueType="String" defaultDescription="Irlandia">
+            <i18n-description lang="default" value="Irlandia" />
+            <val value="IE">
+                <i18n-value lang="default" value="Irlandia" />
+                <ext name="currency" value="EUR" />
+                <ext name="isUE" value="true" />
+                <ext name="isSepa" value="true" />
+                <ext name="iban" value="IE## $$$$ #### #### #### ##" />
+            </val>
+        </entry>
+        <entry key="IS" valueType="String" defaultDescription="Islandia">
+            <i18n-description lang="default" value="Islandia" />
+            <val value="IS">
+                <i18n-value lang="default" value="Islandia" />
+                <ext name="currency" value="ISK" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="true" />
+                <ext name="iban" value="IS## #### #### #### #### #### ##" />
+            </val>
+        </entry>
+        <entry key="IL" valueType="String" defaultDescription="Izrael">
+            <i18n-description lang="default" value="Izrael" />
+            <val value="IL">
+                <i18n-value lang="default" value="Izrael" />
+                <ext name="currency" value="ILS" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+                <ext name="iban" value="IL## #### #### #### #### ###" />
+            </val>
+        </entry>
+        <entry key="JM" valueType="String" defaultDescription="Jamajka">
+            <i18n-description lang="default" value="Jamajka" />
+            <val value="JM">
+                <i18n-value lang="default" value="Jamajka" />
+                <ext name="currency" value="JMD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="JP" valueType="String" defaultDescription="Japonia">
+            <i18n-description lang="default" value="Japonia" />
+            <val value="JP">
+                <i18n-value lang="default" value="Japonia" />
+                <ext name="currency" value="JPY" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="YE" valueType="String" defaultDescription="Jemen">
+            <i18n-description lang="default" value="Jemen" />
+            <val value="YE">
+                <i18n-value lang="default" value="Jemen" />
+                <ext name="currency" value="YER" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="JE" valueType="String" defaultDescription="Jersey">
+            <i18n-description lang="default" value="Jersey" />
+            <val value="JE">
+                <i18n-value lang="default" value="Jersey" />
+                <ext name="currency" value="JEP" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="JO" valueType="String" defaultDescription="Jordania">
+            <i18n-description lang="default" value="Jordania" />
+            <val value="JO">
+                <i18n-value lang="default" value="Jordania" />
+                <ext name="currency" value="JOD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+                <ext name="iban" value="AA## $$$$ #### %%%% %%%% %%%% %%%% %%" />
+            </val>
+        </entry>
+        <entry key="KY" valueType="String" defaultDescription="Kajmany">
+            <i18n-description lang="default" value="Kajmany" />
+            <val value="KY">
+                <i18n-value lang="default" value="Kajmany" />
+                <ext name="currency" value="KYD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="KH" valueType="String" defaultDescription="Kambodża">
+            <i18n-description lang="default" value="Kambodża" />
+            <val value="KH">
+                <i18n-value lang="default" value="Kambodża" />
+                <ext name="currency" value="KHR" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="CM" valueType="String" defaultDescription="Kamerun">
+            <i18n-description lang="default" value="Kamerun" />
+            <val value="CM">
+                <i18n-value lang="default" value="Kamerun" />
+                <ext name="currency" value="XAF" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="CA" valueType="String" defaultDescription="Kanada">
+            <i18n-description lang="default" value="Kanada" />
+            <val value="CA">
+                <i18n-value lang="default" value="Kanada" />
+                <ext name="currency" value="CAD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="QA" valueType="String" defaultDescription="Katar">
+            <i18n-description lang="default" value="Katar" />
+            <val value="QA">
+                <i18n-value lang="default" value="Katar" />
+                <ext name="currency" value="QAR" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+                <ext name="iban" value="QA## $$$$ %%%% %%%% %%%% %%%% %%%% %" />
+            </val>
+        </entry>
+        <entry key="KZ" valueType="String" defaultDescription="Kazachstan">
+            <i18n-description lang="default" value="Kazachstan" />
+            <val value="KZ">
+                <i18n-value lang="default" value="Kazachstan" />
+                <ext name="currency" value="KZT" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+                <ext name="iban" value="KZ## ###% %%%% %%%% %%%%" />
+            </val>
+        </entry>
+        <entry key="KE" valueType="String" defaultDescription="Kenia">
+            <i18n-description lang="default" value="Kenia" />
+            <val value="KE">
+                <i18n-value lang="default" value="Kenia" />
+                <ext name="currency" value="KES" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="KG" valueType="String" defaultDescription="Kirgistan">
+            <i18n-description lang="default" value="Kirgistan" />
+            <val value="KG">
+                <i18n-value lang="default" value="Kirgistan" />
+                <ext name="currency" value="KGS" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="KI" valueType="String" defaultDescription="Kiribati">
+            <i18n-description lang="default" value="Kiribati" />
+            <val value="KI">
+                <i18n-value lang="default" value="Kiribati" />
+                <ext name="currency" value="AUD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="CO" valueType="String" defaultDescription="Kolumbia">
+            <i18n-description lang="default" value="Kolumbia" />
+            <val value="CO">
+                <i18n-value lang="default" value="Kolumbia" />
+                <ext name="currency" value="COP" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="KM" valueType="String" defaultDescription="Komory">
+            <i18n-description lang="default" value="Komory" />
+            <val value="KM">
+                <i18n-value lang="default" value="Komory" />
+                <ext name="currency" value="KMF" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="CG" valueType="String" defaultDescription="Kongo">
+            <i18n-description lang="default" value="Kongo" />
+            <val value="CG">
+                <i18n-value lang="default" value="Kongo" />
+                <ext name="currency" value="XAF" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="KR" valueType="String" defaultDescription="Korea Południowa">
+            <i18n-description lang="default" value="Korea Południowa" />
+            <val value="KR">
+                <i18n-value lang="default" value="Korea Południowa" />
+                <ext name="currency" value="KRW" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="KP" valueType="String" defaultDescription="Korea Północna">
+            <i18n-description lang="default" value="Korea Północna" />
+            <val value="KP">
+                <i18n-value lang="default" value="Korea Północna" />
+                <ext name="currency" value="KPW" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="CR" valueType="String" defaultDescription="Kostaryka">
+            <i18n-description lang="default" value="Kostaryka" />
+            <val value="CR">
+                <i18n-value lang="default" value="Kostaryka" />
+                <ext name="currency" value="CRC" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+                <ext name="iban" value="CR## #### #### #### #### #" />
+            </val>
+        </entry>
+        <entry key="CU" valueType="String" defaultDescription="Kuba">
+            <i18n-description lang="default" value="Kuba" />
+            <val value="CU">
+                <i18n-value lang="default" value="Kuba" />
+                <ext name="currency" value="CUP" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="KW" valueType="String" defaultDescription="Kuwejt">
+            <i18n-description lang="default" value="Kuwejt" />
+            <val value="KW">
+                <i18n-value lang="default" value="Kuwejt" />
+                <ext name="currency" value="KWD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+                <ext name="iban" value="KW## $$$$ %%%% %%%% %%%% %%%% %%%% %%" />
+            </val>
+        </entry>
+        <entry key="LA" valueType="String" defaultDescription="Laos">
+            <i18n-description lang="default" value="Laos" />
+            <val value="LA">
+                <i18n-value lang="default" value="Laos" />
+                <ext name="currency" value="LAK" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="LS" valueType="String" defaultDescription="Lesotho">
+            <i18n-description lang="default" value="Lesotho" />
+            <val value="LS">
+                <i18n-value lang="default" value="Lesotho" />
+                <ext name="currency" value="LSL" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="LB" valueType="String" defaultDescription="Liban">
+            <i18n-description lang="default" value="Liban" />
+            <val value="LB">
+                <i18n-value lang="default" value="Liban" />
+                <ext name="currency" value="LBP" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+                <ext name="iban" value="LB## #### %%%% %%%% %%%% %%%% %%%%" />
+            </val>
+        </entry>
+        <entry key="LR" valueType="String" defaultDescription="Liberia">
+            <i18n-description lang="default" value="Liberia" />
+            <val value="LR">
+                <i18n-value lang="default" value="Liberia" />
+                <ext name="currency" value="LRD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="LY" valueType="String" defaultDescription="Libia">
+            <i18n-description lang="default" value="Libia" />
+            <val value="LY">
+                <i18n-value lang="default" value="Libia" />
+                <ext name="currency" value="LYD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="LI" valueType="String" defaultDescription="Liechtenstein">
+            <i18n-description lang="default" value="Liechtenstein" />
+            <val value="LI">
+                <i18n-value lang="default" value="Liechtenstein" />
+                <ext name="currency" value="CHF" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="true" />
+                <ext name="iban" value="LI## #### #%%% %%%% %%%% %" />
+            </val>
+        </entry>
+        <entry key="LT" valueType="String" defaultDescription="Litwa">
+            <i18n-description lang="default" value="Litwa" />
+            <val value="LT">
+                <i18n-value lang="default" value="Litwa" />
+                <ext name="currency" value="LTL" />
+                <ext name="isUE" value="true" />
+                <ext name="isSepa" value="true" />
+                <ext name="iban" value="LT## #### #### #### ####" />
+            </val>
+        </entry>
+        <entry key="LU" valueType="String" defaultDescription="Luksemburg">
+            <i18n-description lang="default" value="Luksemburg" />
+            <val value="LU">
+                <i18n-value lang="default" value="Luksemburg" />
+                <ext name="currency" value="EUR" />
+                <ext name="isUE" value="true" />
+                <ext name="isSepa" value="true" />
+                <ext name="iban" value="LU## ###% %%%% %%%% %%%%" />
+            </val>
+        </entry>
+        <entry key="LV" valueType="String" defaultDescription="Łotwa">
+            <i18n-description lang="default" value="Łotwa" />
+            <val value="LV">
+                <i18n-value lang="default" value="Łotwa" />
+                <ext name="currency" value="EUR" />
+                <ext name="isUE" value="true" />
+                <ext name="isSepa" value="true" />
+                <ext name="iban" value="LV## $$$$ %%%% %%%% %%%% %" />
+            </val>
+        </entry>
+        <entry key="MK" valueType="String" defaultDescription="Macedonia">
+            <i18n-description lang="default" value="Macedonia" />
+            <val value="MK">
+                <i18n-value lang="default" value="Macedonia" />
+                <ext name="currency" value="MKD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+                <ext name="iban" value="MK## ###% %%%% %%%% %##" />
+            </val>
+        </entry>
+        <entry key="MG" valueType="String" defaultDescription="Madagaskar">
+            <i18n-description lang="default" value="Madagaskar" />
+            <val value="MG">
+                <i18n-value lang="default" value="Madagaskar" />
+                <ext name="currency" value="MGA" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="YT" valueType="String" defaultDescription="Majotta">
+            <i18n-description lang="default" value="Majotta" />
+            <val value="YT">
+                <i18n-value lang="default" value="Majotta" />
+                <ext name="currency" value="EUR" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="true" />
+                <ext name="iban" value="FR## #### #### ##%% %%%% %%%% %##" />
+            </val>
+        </entry>
+        <entry key="MO" valueType="String" defaultDescription="Makau">
+            <i18n-description lang="default" value="Makau" />
+            <val value="MO">
+                <i18n-value lang="default" value="Makau" />
+                <ext name="currency" value="MOP" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="MW" valueType="String" defaultDescription="Malawi">
+            <i18n-description lang="default" value="Malawi" />
+            <val value="MW">
+                <i18n-value lang="default" value="Malawi" />
+                <ext name="currency" value="MWK" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="MV" valueType="String" defaultDescription="Malediwy">
+            <i18n-description lang="default" value="Malediwy" />
+            <val value="MV">
+                <i18n-value lang="default" value="Malediwy" />
+                <ext name="currency" value="MVR" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="MY" valueType="String" defaultDescription="Malezja">
+            <i18n-description lang="default" value="Malezja" />
+            <val value="MY">
+                <i18n-value lang="default" value="Malezja" />
+                <ext name="currency" value="MYR" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="ML" valueType="String" defaultDescription="Mali">
+            <i18n-description lang="default" value="Mali" />
+            <val value="ML">
+                <i18n-value lang="default" value="Mali" />
+                <ext name="currency" value="XOF" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="MT" valueType="String" defaultDescription="Malta">
+            <i18n-description lang="default" value="Malta" />
+            <val value="MT">
+                <i18n-value lang="default" value="Malta" />
+                <ext name="currency" value="EUR" />
+                <ext name="isUE" value="true" />
+                <ext name="isSepa" value="true" />
+                <ext name="iban" value="MT## $$$$ #### #%%% %%%% %%%% %%%% %%%" />
+            </val>
+        </entry>
+        <entry key="MP" valueType="String" defaultDescription="Mariany Północne">
+            <i18n-description lang="default" value="Mariany Północne" />
+            <val value="MP">
+                <i18n-value lang="default" value="Mariany Północne" />
+                <ext name="currency" value="USD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="MA" valueType="String" defaultDescription="Maroko">
+            <i18n-description lang="default" value="Maroko" />
+            <val value="MA">
+                <i18n-value lang="default" value="Maroko" />
+                <ext name="currency" value="MAD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="MQ" valueType="String" defaultDescription="Martynika">
+            <i18n-description lang="default" value="Martynika" />
+            <val value="MQ">
+                <i18n-value lang="default" value="Martynika" />
+                <ext name="currency" value="EUR" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="true" />
+                <ext name="iban" value="FR## #### #### ##%% %%%% %%%% %##" />
+            </val>
+        </entry>
+        <entry key="MR" valueType="String" defaultDescription="Mauretania">
+            <i18n-description lang="default" value="Mauretania" />
+            <val value="MR">
+                <i18n-value lang="default" value="Mauretania" />
+                <ext name="currency" value="MRO" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+                <ext name="iban" value="MR13 #### #### #### #### #### ###" />
+            </val>
+        </entry>
+        <entry key="MU" valueType="String" defaultDescription="Mauritius">
+            <i18n-description lang="default" value="Mauritius" />
+            <val value="MU">
+                <i18n-value lang="default" value="Mauritius" />
+                <ext name="currency" value="MUR" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+                <ext name="iban" value="MU## $$$$ #### #### #### #### ###$ $$" />
+            </val>
+        </entry>
+        <entry key="MX" valueType="String" defaultDescription="Meksyk">
+            <i18n-description lang="default" value="Meksyk" />
+            <val value="MX">
+                <i18n-value lang="default" value="Meksyk" />
+                <ext name="currency" value="MXN" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="FM" valueType="String" defaultDescription="Mikronezja">
+            <i18n-description lang="default" value="Mikronezja" />
+            <val value="FM">
+                <i18n-value lang="default" value="Mikronezja" />
+                <ext name="currency" value="USD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="MM" valueType="String" defaultDescription="Mjanma">
+            <i18n-description lang="default" value="Mjanma" />
+            <val value="MM">
+                <i18n-value lang="default" value="Mjanma" />
+                <ext name="currency" value="MMK" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="MD" valueType="String" defaultDescription="Mołdawia">
+            <i18n-description lang="default" value="Mołdawia" />
+            <val value="MD">
+                <i18n-value lang="default" value="Mołdawia" />
+                <ext name="currency" value="MDL" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+                <ext name="iban" value="MD## %%%% %%%% %%%% %%%% %%%%" />
+            </val>
+        </entry>
+        <entry key="MC" valueType="String" defaultDescription="Monako">
+            <i18n-description lang="default" value="Monako" />
+            <val value="MC">
+                <i18n-value lang="default" value="Monako" />
+                <ext name="currency" value="EUR" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="true" />
+                <ext name="iban" value="MC## #### #### ##%% %%%% %%%% %##" />
+            </val>
+        </entry>
+        <entry key="MN" valueType="String" defaultDescription="Mongolia">
+            <i18n-description lang="default" value="Mongolia" />
+            <val value="MN">
+                <i18n-value lang="default" value="Mongolia" />
+                <ext name="currency" value="MNT" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="MS" valueType="String" defaultDescription="Montserrat">
+            <i18n-description lang="default" value="Montserrat" />
+            <val value="MS">
+                <i18n-value lang="default" value="Montserrat" />
+                <ext name="currency" value="XCD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="MZ" valueType="String" defaultDescription="Mozambik">
+            <i18n-description lang="default" value="Mozambik" />
+            <val value="MZ">
+                <i18n-value lang="default" value="Mozambik" />
+                <ext name="currency" value="MZN" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="NA" valueType="String" defaultDescription="Namibia">
+            <i18n-description lang="default" value="Namibia" />
+            <val value="NA">
+                <i18n-value lang="default" value="Namibia" />
+                <ext name="currency" value="NAD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="NR" valueType="String" defaultDescription="Nauru">
+            <i18n-description lang="default" value="Nauru" />
+            <val value="NR">
+                <i18n-value lang="default" value="Nauru" />
+                <ext name="currency" value="AUD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="NP" valueType="String" defaultDescription="Nepal">
+            <i18n-description lang="default" value="Nepal" />
+            <val value="NP">
+                <i18n-value lang="default" value="Nepal" />
+                <ext name="currency" value="NPR" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="DE" valueType="String" defaultDescription="Niemcy">
+            <i18n-description lang="default" value="Niemcy" />
+            <val value="DE">
+                <i18n-value lang="default" value="Niemcy" />
+                <ext name="currency" value="EUR" />
+                <ext name="isUE" value="true" />
+                <ext name="isSepa" value="true" />
+                <ext name="iban" value="DE## #### #### #### #### ##" />
+            </val>
+        </entry>
+        <entry key="NE" valueType="String" defaultDescription="Niger">
+            <i18n-description lang="default" value="Niger" />
+            <val value="NE">
+                <i18n-value lang="default" value="Niger" />
+                <ext name="currency" value="XOF" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="NG" valueType="String" defaultDescription="Nigeria">
+            <i18n-description lang="default" value="Nigeria" />
+            <val value="NG">
+                <i18n-value lang="default" value="Nigeria" />
+                <ext name="currency" value="NGN" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="NI" valueType="String" defaultDescription="Nikaragua">
+            <i18n-description lang="default" value="Nikaragua" />
+            <val value="NI">
+                <i18n-value lang="default" value="Nikaragua" />
+                <ext name="currency" value="NIO" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="NU" valueType="String" defaultDescription="Niue">
+            <i18n-description lang="default" value="Niue" />
+            <val value="NU">
+                <i18n-value lang="default" value="Niue" />
+                <ext name="currency" value="NZD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="NF" valueType="String" defaultDescription="Norfolk">
+            <i18n-description lang="default" value="Norfolk" />
+            <val value="NF">
+                <i18n-value lang="default" value="Norfolk" />
+                <ext name="currency" value="AUD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="NO" valueType="String" defaultDescription="Norwegia">
+            <i18n-description lang="default" value="Norwegia" />
+            <val value="NO">
+                <i18n-value lang="default" value="Norwegia" />
+                <ext name="currency" value="NOK" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="true" />
+                <ext name="iban" value="NO## #### #### ###" />
+            </val>
+        </entry>
+        <entry key="NC" valueType="String" defaultDescription="Nowa Kaledonia">
+            <i18n-description lang="default" value="Nowa Kaledonia" />
+            <val value="NC">
+                <i18n-value lang="default" value="Nowa Kaledonia" />
+                <ext name="currency" value="XPF" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+                <ext name="iban" value="FR## #### #### ##%% %%%% %%%% %##" />
+            </val>
+        </entry>
+        <entry key="NZ" valueType="String" defaultDescription="Nowa Zelandia">
+            <i18n-description lang="default" value="Nowa Zelandia" />
+            <val value="NZ">
+                <i18n-value lang="default" value="Nowa Zelandia" />
+                <ext name="currency" value="NZD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="OM" valueType="String" defaultDescription="Oman">
+            <i18n-description lang="default" value="Oman" />
+            <val value="OM">
+                <i18n-value lang="default" value="Oman" />
+                <ext name="currency" value="OMR" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="PK" valueType="String" defaultDescription="Pakistan">
+            <i18n-description lang="default" value="Pakistan" />
+            <val value="PK">
+                <i18n-value lang="default" value="Pakistan" />
+                <ext name="currency" value="PKR" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+                <ext name="iban" value="PK## $$$$ %%%% %%%% %%%% %%%%" />
+            </val>
+        </entry>
+        <entry key="PW" valueType="String" defaultDescription="Palau">
+            <i18n-description lang="default" value="Palau" />
+            <val value="PW">
+                <i18n-value lang="default" value="Palau" />
+                <ext name="currency" value="USD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="PS" valueType="String" defaultDescription="Palestyna">
+            <i18n-description lang="default" value="Palestyna" />
+            <val value="PS">
+                <i18n-value lang="default" value="Palestyna" />
+                <ext name="currency" value="ILS" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="PA" valueType="String" defaultDescription="Panama">
+            <i18n-description lang="default" value="Panama" />
+            <val value="PA">
+                <i18n-value lang="default" value="Panama" />
+                <ext name="currency" value="PAB" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="PG" valueType="String" defaultDescription="Papua-Nowa Gwinea">
+            <i18n-description lang="default" value="Papua-Nowa Gwinea" />
+            <val value="PG">
+                <i18n-value lang="default" value="Papua-Nowa Gwinea" />
+                <ext name="currency" value="PGK" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="PY" valueType="String" defaultDescription="Paragwaj">
+            <i18n-description lang="default" value="Paragwaj" />
+            <val value="PY">
+                <i18n-value lang="default" value="Paragwaj" />
+                <ext name="currency" value="PYG" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="PE" valueType="String" defaultDescription="Peru">
+            <i18n-description lang="default" value="Peru" />
+            <val value="PE">
+                <i18n-value lang="default" value="Peru" />
+                <ext name="currency" value="PEN" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="PN" valueType="String" defaultDescription="Pitcairn">
+            <i18n-description lang="default" value="Pitcairn" />
+            <val value="PN">
+                <i18n-value lang="default" value="Pitcairn" />
+                <ext name="currency" value="NZD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="PF" valueType="String" defaultDescription="Polinezja Francuska">
+            <i18n-description lang="default" value="Polinezja Francuska" />
+            <val value="PF">
+                <i18n-value lang="default" value="Polinezja Francuska" />
+                <ext name="currency" value="XPF" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+                <ext name="iban" value="FR## #### #### ##%% %%%% %%%% %##" />
+            </val>
+        </entry>
+        <entry key="PL" valueType="String" defaultDescription="Polska">
+            <i18n-description lang="default" value="Polska" />
+            <val value="PL">
+                <i18n-value lang="default" value="Polska" />
+                <ext name="currency" value="PLN" />
+                <ext name="isUE" value="true" />
+                <ext name="isSepa" value="true" />
+                <ext name="iban" value="PL## #### #### #### #### #### ####" />
+            </val>
+        </entry>
+        <entry key="PR" valueType="String" defaultDescription="Portoryko">
+            <i18n-description lang="default" value="Portoryko" />
+            <val value="PR">
+                <i18n-value lang="default" value="Portoryko" />
+                <ext name="currency" value="USD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="PT" valueType="String" defaultDescription="Portugalia">
+            <i18n-description lang="default" value="Portugalia" />
+            <val value="PT">
+                <i18n-value lang="default" value="Portugalia" />
+                <ext name="currency" value="EUR" />
+                <ext name="isUE" value="true" />
+                <ext name="isSepa" value="true" />
+                <ext name="iban" value="PT50 #### #### #### #### #### #" />
+            </val>
+        </entry>
+        <entry key="ZA" valueType="String" defaultDescription="Republika Południowej Afryki">
+            <i18n-description lang="default" value="Republika Południowej Afryki" />
+            <val value="ZA">
+                <i18n-value lang="default" value="Republika Południowej Afryki" />
+                <ext name="currency" value="ZAR" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="CF" valueType="String" defaultDescription="Republika Środkowoafrykańska">
+            <i18n-description lang="default" value="Republika Środkowoafrykańska" />
+            <val value="CF">
+                <i18n-value lang="default" value="Republika Środkowoafrykańska" />
+                <ext name="currency" value="XAF" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="CV" valueType="String" defaultDescription="Republika Zielonego Przylądka">
+            <i18n-description lang="default" value="Republika Zielonego Przylądka" />
+            <val value="CV">
+                <i18n-value lang="default" value="Republika Zielonego Przylądka" />
+                <ext name="currency" value="CVE" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="RE" valueType="String" defaultDescription="Reunion">
+            <i18n-description lang="default" value="Reunion" />
+            <val value="RE">
+                <i18n-value lang="default" value="Reunion" />
+                <ext name="currency" value="EUR" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="true" />
+                <ext name="iban" value="FR## #### #### ##%% %%%% %%%% %##" />
+            </val>
+        </entry>
+        <entry key="RU" valueType="String" defaultDescription="Rosja">
+            <i18n-description lang="default" value="Rosja" />
+            <val value="RU">
+                <i18n-value lang="default" value="Rosja" />
+                <ext name="currency" value="RUB" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="RO" valueType="String" defaultDescription="Rumunia">
+            <i18n-description lang="default" value="Rumunia" />
+            <val value="RO">
+                <i18n-value lang="default" value="Rumunia" />
+                <ext name="currency" value="RON" />
+                <ext name="isUE" value="true" />
+                <ext name="isSepa" value="true" />
+                <ext name="iban" value="RO## $$$$ %%%% %%%% %%%% %%%%" />
+            </val>
+        </entry>
+        <entry key="RW" valueType="String" defaultDescription="Rwanda">
+            <i18n-description lang="default" value="Rwanda" />
+            <val value="RW">
+                <i18n-value lang="default" value="Rwanda" />
+                <ext name="currency" value="RWF" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="EH" valueType="String" defaultDescription="Sahara Zachodnia">
+            <i18n-description lang="default" value="Sahara Zachodnia" />
+            <val value="EH">
+                <i18n-value lang="default" value="Sahara Zachodnia" />
+                <ext name="currency" value="MAD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="KN" valueType="String" defaultDescription="Saint Kitts i Nevis">
+            <i18n-description lang="default" value="Saint Kitts i Nevis" />
+            <val value="KN">
+                <i18n-value lang="default" value="Saint Kitts i Nevis" />
+                <ext name="currency" value="XCD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="LC" valueType="String" defaultDescription="Saint Lucia">
+            <i18n-description lang="default" value="Saint Lucia" />
+            <val value="LC">
+                <i18n-value lang="default" value="Saint Lucia" />
+                <ext name="currency" value="XCD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="VC" valueType="String" defaultDescription="Saint Vincent i Grenadyny">
+            <i18n-description lang="default" value="Saint Vincent i Grenadyny" />
+            <val value="VC">
+                <i18n-value lang="default" value="Saint Vincent i Grenadyny" />
+                <ext name="currency" value="XCD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="BL" valueType="String" defaultDescription="Saint-Barthélemy">
+            <i18n-description lang="default" value="Saint-Barthélemy" />
+            <val value="BL">
+                <i18n-value lang="default" value="Saint-Barthélemy" />
+                <ext name="currency" value="EUR" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="MF" valueType="String" defaultDescription="Saint-Martin">
+            <i18n-description lang="default" value="Saint-Martin" />
+            <val value="MF">
+                <i18n-value lang="default" value="Saint-Martin" />
+                <ext name="currency" value="EUR" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="PM" valueType="String" defaultDescription="Saint-Pierre i Miquelon">
+            <i18n-description lang="default" value="Saint-Pierre i Miquelon" />
+            <val value="PM">
+                <i18n-value lang="default" value="Saint-Pierre i Miquelon" />
+                <ext name="currency" value="EUR" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="SV" valueType="String" defaultDescription="Salwador">
+            <i18n-description lang="default" value="Salwador" />
+            <val value="SV">
+                <i18n-value lang="default" value="Salwador" />
+                <ext name="currency" value="SVC" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="AS" valueType="String" defaultDescription="Samoa Amerykańskie">
+            <i18n-description lang="default" value="Samoa Amerykańskie" />
+            <val value="AS">
+                <i18n-value lang="default" value="Samoa Amerykańskie" />
+                <ext name="currency" value="USD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="WS" valueType="String" defaultDescription="Samoa">
+            <i18n-description lang="default" value="Samoa" />
+            <val value="WS">
+                <i18n-value lang="default" value="Samoa" />
+                <ext name="currency" value="WST" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="SM" valueType="String" defaultDescription="San Marino">
+            <i18n-description lang="default" value="San Marino" />
+            <val value="SM">
+                <i18n-value lang="default" value="San Marino" />
+                <ext name="currency" value="EUR" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+                <ext name="iban" value="SM## $### #### ###% %%%% %%%% %%%" />
+            </val>
+        </entry>
+        <entry key="SN" valueType="String" defaultDescription="Senegal">
+            <i18n-description lang="default" value="Senegal" />
+            <val value="SN">
+                <i18n-value lang="default" value="Senegal" />
+                <ext name="currency" value="XOF" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="RS" valueType="String" defaultDescription="Serbia">
+            <i18n-description lang="default" value="Serbia" />
+            <val value="RS">
+                <i18n-value lang="default" value="Serbia" />
+                <ext name="currency" value="RSD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+                <ext name="iban" value="RS## #### #### #### #### ##" />
+            </val>
+        </entry>
+        <entry key="SC" valueType="String" defaultDescription="Seszele">
+            <i18n-description lang="default" value="Seszele" />
+            <val value="SC">
+                <i18n-value lang="default" value="Seszele" />
+                <ext name="currency" value="SCR" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="SL" valueType="String" defaultDescription="Sierra Leone">
+            <i18n-description lang="default" value="Sierra Leone" />
+            <val value="SL">
+                <i18n-value lang="default" value="Sierra Leone" />
+                <ext name="currency" value="SLL" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="SG" valueType="String" defaultDescription="Singapur">
+            <i18n-description lang="default" value="Singapur" />
+            <val value="SG">
+                <i18n-value lang="default" value="Singapur" />
+                <ext name="currency" value="SGD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="SX" valueType="String" defaultDescription="Sint Maarten">
+            <i18n-description lang="default" value="Sint Maarten" />
+            <val value="SX">
+                <i18n-value lang="default" value="Sint Maarten" />
+                <ext name="currency" value="ANG" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="SK" valueType="String" defaultDescription="Słowacja">
+            <i18n-description lang="default" value="Słowacja" />
+            <val value="SK">
+                <i18n-value lang="default" value="Słowacja" />
+                <ext name="currency" value="EUR" />
+                <ext name="isUE" value="true" />
+                <ext name="isSepa" value="true" />
+                <ext name="iban" value="SK## #### #### #### #### ####" />
+            </val>
+        </entry>
+        <entry key="SI" valueType="String" defaultDescription="Słowenia">
+            <i18n-description lang="default" value="Słowenia" />
+            <val value="SI">
+                <i18n-value lang="default" value="Słowenia" />
+                <ext name="currency" value="EUR" />
+                <ext name="isUE" value="true" />
+                <ext name="isSepa" value="true" />
+                <ext name="iban" value="SI## #### #### #### ###" />
+            </val>
+        </entry>
+        <entry key="SO" valueType="String" defaultDescription="Somalia">
+            <i18n-description lang="default" value="Somalia" />
+            <val value="SO">
+                <i18n-value lang="default" value="Somalia" />
+                <ext name="currency" value="SOS" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="LK" valueType="String" defaultDescription="Sri Lanka">
+            <i18n-description lang="default" value="Sri Lanka" />
+            <val value="LK">
+                <i18n-value lang="default" value="Sri Lanka" />
+                <ext name="currency" value="LKR" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="US" valueType="String" defaultDescription="Stany Zjednoczone">
+            <i18n-description lang="default" value="Stany Zjednoczone" />
+            <val value="US">
+                <i18n-value lang="default" value="Stany Zjednoczone" />
+                <ext name="currency" value="USD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="SZ" valueType="String" defaultDescription="Suazi">
+            <i18n-description lang="default" value="Suazi" />
+            <val value="SZ">
+                <i18n-value lang="default" value="Suazi" />
+                <ext name="currency" value="SZL" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="SD" valueType="String" defaultDescription="Sudan">
+            <i18n-description lang="default" value="Sudan" />
+            <val value="SD">
+                <i18n-value lang="default" value="Sudan" />
+                <ext name="currency" value="SDG" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="SS" valueType="String" defaultDescription="Sudan Południowy">
+            <i18n-description lang="default" value="Sudan Południowy" />
+            <val value="SS">
+                <i18n-value lang="default" value="Sudan Południowy" />
+                <ext name="currency" value="SSP" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="SR" valueType="String" defaultDescription="Surinam">
+            <i18n-description lang="default" value="Surinam" />
+            <val value="SR">
+                <i18n-value lang="default" value="Surinam" />
+                <ext name="currency" value="SRD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="SJ" valueType="String" defaultDescription="Svalbard i Jan Mayen">
+            <i18n-description lang="default" value="Svalbard i Jan Mayen" />
+            <val value="SJ">
+                <i18n-value lang="default" value="Svalbard i Jan Mayen" />
+                <ext name="currency" value="NOK" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="SY" valueType="String" defaultDescription="Syria">
+            <i18n-description lang="default" value="Syria" />
+            <val value="SY">
+                <i18n-value lang="default" value="Syria" />
+                <ext name="currency" value="SYP" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="CH" valueType="String" defaultDescription="Szwajcaria">
+            <i18n-description lang="default" value="Szwajcaria" />
+            <val value="CH">
+                <i18n-value lang="default" value="Szwajcaria" />
+                <ext name="currency" value="CHF" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="true" />
+                <ext name="iban" value="CH## #### #%%% %%%% %%%% %" />
+            </val>
+        </entry>
+        <entry key="SE" valueType="String" defaultDescription="Szwecja">
+            <i18n-description lang="default" value="Szwecja" />
+            <val value="SE">
+                <i18n-value lang="default" value="Szwecja" />
+                <ext name="currency" value="SEK" />
+                <ext name="isUE" value="true" />
+                <ext name="isSepa" value="true" />
+                <ext name="iban" value="SE## #### #### #### #### ####" />
+            </val>
+        </entry>
+        <entry key="TJ" valueType="String" defaultDescription="Tadżykistan">
+            <i18n-description lang="default" value="Tadżykistan" />
+            <val value="TJ">
+                <i18n-value lang="default" value="Tadżykistan" />
+                <ext name="currency" value="TJS" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="TH" valueType="String" defaultDescription="Tajlandia">
+            <i18n-description lang="default" value="Tajlandia" />
+            <val value="TH">
+                <i18n-value lang="default" value="Tajlandia" />
+                <ext name="currency" value="THB" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="TW" valueType="String" defaultDescription="Tajwan">
+            <i18n-description lang="default" value="Tajwan" />
+            <val value="TW">
+                <i18n-value lang="default" value="Tajwan" />
+                <ext name="currency" value="TWD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="TZ" valueType="String" defaultDescription="Tanzania">
+            <i18n-description lang="default" value="Tanzania" />
+            <val value="TZ">
+                <i18n-value lang="default" value="Tanzania" />
+                <ext name="currency" value="TZS" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="TL" valueType="String" defaultDescription="Timor Wschodni">
+            <i18n-description lang="default" value="Timor Wschodni" />
+            <val value="TL">
+                <i18n-value lang="default" value="Timor Wschodni" />
+                <ext name="currency" value="USD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="TG" valueType="String" defaultDescription="Togo">
+            <i18n-description lang="default" value="Togo" />
+            <val value="TG">
+                <i18n-value lang="default" value="Togo" />
+                <ext name="currency" value="XOF" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="TK" valueType="String" defaultDescription="Tokelau">
+            <i18n-description lang="default" value="Tokelau" />
+            <val value="TK">
+                <i18n-value lang="default" value="Tokelau" />
+                <ext name="currency" value="NZD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="TO" valueType="String" defaultDescription="Tonga">
+            <i18n-description lang="default" value="Tonga" />
+            <val value="TO">
+                <i18n-value lang="default" value="Tonga" />
+                <ext name="currency" value="TOP" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="TT" valueType="String" defaultDescription="Trynidad i Tobago">
+            <i18n-description lang="default" value="Trynidad i Tobago" />
+            <val value="TT">
+                <i18n-value lang="default" value="Trynidad i Tobago" />
+                <ext name="currency" value="TTD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="TN" valueType="String" defaultDescription="Tunezja">
+            <i18n-description lang="default" value="Tunezja" />
+            <val value="TN">
+                <i18n-value lang="default" value="Tunezja" />
+                <ext name="currency" value="TND" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+                <ext name="iban" value="TN59 #### #### #### #### ####" />
+            </val>
+        </entry>
+        <entry key="TR" valueType="String" defaultDescription="Turcja">
+            <i18n-description lang="default" value="Turcja" />
+            <val value="TR">
+                <i18n-value lang="default" value="Turcja" />
+                <ext name="currency" value="TRY" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+                <ext name="iban" value="TR## #### #%%% %%%% %%%% %%%% %%" />
+            </val>
+        </entry>
+        <entry key="TM" valueType="String" defaultDescription="Turkmenistan">
+            <i18n-description lang="default" value="Turkmenistan" />
+            <val value="TM">
+                <i18n-value lang="default" value="Turkmenistan" />
+                <ext name="currency" value="TMT" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="TC" valueType="String" defaultDescription="Turks i Caicos">
+            <i18n-description lang="default" value="Turks i Caicos" />
+            <val value="TC">
+                <i18n-value lang="default" value="Turks i Caicos" />
+                <ext name="currency" value="USD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="TV" valueType="String" defaultDescription="Tuvalu">
+            <i18n-description lang="default" value="Tuvalu" />
+            <val value="TV">
+                <i18n-value lang="default" value="Tuvalu" />
+                <ext name="currency" value="AUD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="UG" valueType="String" defaultDescription="Uganda">
+            <i18n-description lang="default" value="Uganda" />
+            <val value="UG">
+                <i18n-value lang="default" value="Uganda" />
+                <ext name="currency" value="UGX" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="UA" valueType="String" defaultDescription="Ukraina">
+            <i18n-description lang="default" value="Ukraina" />
+            <val value="UA">
+                <i18n-value lang="default" value="Ukraina" />
+                <ext name="currency" value="UAH" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="UY" valueType="String" defaultDescription="Urugwaj">
+            <i18n-description lang="default" value="Urugwaj" />
+            <val value="UY">
+                <i18n-value lang="default" value="Urugwaj" />
+                <ext name="currency" value="UYU" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="UZ" valueType="String" defaultDescription="Uzbekistan">
+            <i18n-description lang="default" value="Uzbekistan" />
+            <val value="UZ">
+                <i18n-value lang="default" value="Uzbekistan" />
+                <ext name="currency" value="UZS" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="VU" valueType="String" defaultDescription="Vanuatu">
+            <i18n-description lang="default" value="Vanuatu" />
+            <val value="VU">
+                <i18n-value lang="default" value="Vanuatu" />
+                <ext name="currency" value="VUV" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="WF" valueType="String" defaultDescription="Wallis i Futuna">
+            <i18n-description lang="default" value="Wallis i Futuna" />
+            <val value="WF">
+                <i18n-value lang="default" value="Wallis i Futuna" />
+                <ext name="currency" value="XPF" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+                <ext name="iban" value="FR## #### #### ##%% %%%% %%%% %##" />
+            </val>
+        </entry>
+        <entry key="VA" valueType="String" defaultDescription="Watykan">
+            <i18n-description lang="default" value="Watykan" />
+            <val value="VA">
+                <i18n-value lang="default" value="Watykan" />
+                <ext name="currency" value="EUR" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="VE" valueType="String" defaultDescription="Wenezuela">
+            <i18n-description lang="default" value="Wenezuela" />
+            <val value="VE">
+                <i18n-value lang="default" value="Wenezuela" />
+                <ext name="currency" value="VEF" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="HU" valueType="String" defaultDescription="Węgry">
+            <i18n-description lang="default" value="Węgry" />
+            <val value="HU">
+                <i18n-value lang="default" value="Węgry" />
+                <ext name="currency" value="HUF" />
+                <ext name="isUE" value="true" />
+                <ext name="isSepa" value="true" />
+                <ext name="iban" value="HU## #### #### #### #### #### ####" />
+            </val>
+        </entry>
+        <entry key="GB" valueType="String" defaultDescription="Wielka Brytania">
+            <i18n-description lang="default" value="Wielka Brytania" />
+            <val value="GB">
+                <i18n-value lang="default" value="Wielka Brytania" />
+                <ext name="currency" value="GBP" />
+                <ext name="isUE" value="true" />
+                <ext name="isSepa" value="true" />
+                <ext name="iban" value="GB## $$$$ #### #### #### ##" />
+            </val>
+        </entry>
+        <entry key="VN" valueType="String" defaultDescription="Wietnam">
+            <i18n-description lang="default" value="Wietnam" />
+            <val value="VN">
+                <i18n-value lang="default" value="Wietnam" />
+                <ext name="currency" value="VND" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="IT" valueType="String" defaultDescription="Włochy">
+            <i18n-description lang="default" value="Włochy" />
+            <val value="IT">
+                <i18n-value lang="default" value="Włochy" />
+                <ext name="currency" value="EUR" />
+                <ext name="isUE" value="true" />
+                <ext name="isSepa" value="true" />
+                <ext name="iban" value="IT## $### #### ###% %%%% %%%% %%%" />
+            </val>
+        </entry>
+        <entry key="CI" valueType="String" defaultDescription="Wybrzeże Kości Słoniowej">
+            <i18n-description lang="default" value="Wybrzeże Kości Słoniowej" />
+            <val value="CI">
+                <i18n-value lang="default" value="Wybrzeże Kości Słoniowej" />
+                <ext name="currency" value="XOF" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="BV" valueType="String" defaultDescription="Wyspa Bouveta">
+            <i18n-description lang="default" value="Wyspa Bouveta" />
+            <val value="BV">
+                <i18n-value lang="default" value="Wyspa Bouveta" />
+                <ext name="currency" value="NOK" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="CX" valueType="String" defaultDescription="Wyspa Bożego Narodzenia">
+            <i18n-description lang="default" value="Wyspa Bożego Narodzenia" />
+            <val value="CX">
+                <i18n-value lang="default" value="Wyspa Bożego Narodzenia" />
+                <ext name="currency" value="AUD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="IM" valueType="String" defaultDescription="Wyspa Man">
+            <i18n-description lang="default" value="Wyspa Man" />
+            <val value="IM">
+                <i18n-value lang="default" value="Wyspa Man" />
+                <ext name="currency" value="IMP" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="SH" valueType="String" defaultDescription="Wyspa Świętej Heleny, Wyspa Wniebowstąpienia i Tristan da Cunha">
+            <i18n-description lang="default" value="Wyspa Świętej Heleny, Wyspa Wniebowstąpienia i Tristan da Cunha" />
+            <val value="SH">
+                <i18n-value lang="default" value="Wyspa Świętej Heleny, Wyspa Wniebowstąpienia i Tristan da Cunha" />
+                <ext name="currency" value="SHP" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="AX" valueType="String" defaultDescription="Wyspy Alandzkie">
+            <i18n-description lang="default" value="Wyspy Alandzkie" />
+            <val value="AX">
+                <i18n-value lang="default" value="Wyspy Alandzkie" />
+                <ext name="currency" value="EUR" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="CK" valueType="String" defaultDescription="Wyspy Cooka">
+            <i18n-description lang="default" value="Wyspy Cooka" />
+            <val value="CK">
+                <i18n-value lang="default" value="Wyspy Cooka" />
+                <ext name="currency" value="NZD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="VI" valueType="String" defaultDescription="Wyspy Dziewicze Stanów Zjednoczonych">
+            <i18n-description lang="default" value="Wyspy Dziewicze Stanów Zjednoczonych" />
+            <val value="VI">
+                <i18n-value lang="default" value="Wyspy Dziewicze Stanów Zjednoczonych" />
+                <ext name="currency" value="USD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+                <ext name="iban" value="VG## $$$$ #### #### #### ####" />
+            </val>
+        </entry>
+        <entry key="HM" valueType="String" defaultDescription="Wyspy Heard i McDonalda">
+            <i18n-description lang="default" value="Wyspy Heard i McDonalda" />
+            <val value="HM">
+                <i18n-value lang="default" value="Wyspy Heard i McDonalda" />
+                <ext name="currency" value="AUD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="CC" valueType="String" defaultDescription="Wyspy Kokosowe">
+            <i18n-description lang="default" value="Wyspy Kokosowe" />
+            <val value="CC">
+                <i18n-value lang="default" value="Wyspy Kokosowe" />
+                <ext name="currency" value="AUD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="MH" valueType="String" defaultDescription="Wyspy Marshalla">
+            <i18n-description lang="default" value="Wyspy Marshalla" />
+            <val value="MH">
+                <i18n-value lang="default" value="Wyspy Marshalla" />
+                <ext name="currency" value="USD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="FO" valueType="String" defaultDescription="Wyspy Owcze">
+            <i18n-description lang="default" value="Wyspy Owcze" />
+            <val value="FO">
+                <i18n-value lang="default" value="Wyspy Owcze" />
+                <ext name="currency" value="DKK" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+                <ext name="iban" value="FO## #### #### #### ##" />
+            </val>
+        </entry>
+        <entry key="SB" valueType="String" defaultDescription="Wyspy Salomona">
+            <i18n-description lang="default" value="Wyspy Salomona" />
+            <val value="SB">
+                <i18n-value lang="default" value="Wyspy Salomona" />
+                <ext name="currency" value="SBD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="ST" valueType="String" defaultDescription="Wyspy Świętego Tomasza i Książęca">
+            <i18n-description lang="default" value="Wyspy Świętego Tomasza i Książęca" />
+            <val value="ST">
+                <i18n-value lang="default" value="Wyspy Świętego Tomasza i Książęca" />
+                <ext name="currency" value="STD" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="ZM" valueType="String" defaultDescription="Zambia">
+            <i18n-description lang="default" value="Zambia" />
+            <val value="ZM">
+                <i18n-value lang="default" value="Zambia" />
+                <ext name="currency" value="ZMW" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="ZW" valueType="String" defaultDescription="Zimbabwe">
+            <i18n-description lang="default" value="Zimbabwe" />
+            <val value="ZW">
+                <i18n-value lang="default" value="Zimbabwe" />
+                <ext name="currency" value="ZWL" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+            </val>
+        </entry>
+        <entry key="AE" valueType="String" defaultDescription="Zjednoczone Emiraty Arabskie">
+            <i18n-description lang="default" value="Zjednoczone Emiraty Arabskie" />
+            <val value="AE">
+                <i18n-value lang="default" value="Zjednoczone Emiraty Arabskie" />
+                <ext name="currency" value="AED" />
+                <ext name="isUE" value="false" />
+                <ext name="isSepa" value="false" />
+                <ext name="iban" value="AE## #### #### #### #### ###" />
+            </val>
+        </entry>
+
+
+        <default-ext name="currency" value="" description="Kod ISO waluty"/>
+        <default-ext name="isSepa" value="" description="Czy kraj obsługuje SEPA [true/false]"/>
+        <default-ext name="isUE" value="" description="Czy kraj jest w Unii [true/false]"/>
+        <!--<default-ext name="iban" value="" description="Wzorzec numeru konta"/>-->
+    </dict>
+
 </process-dictionaries>

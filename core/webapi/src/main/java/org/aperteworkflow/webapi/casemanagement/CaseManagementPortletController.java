@@ -2,6 +2,8 @@ package org.aperteworkflow.webapi.casemanagement;
 
 import org.aperteworkflow.webapi.PortletUtil;
 import org.aperteworkflow.webapi.main.DispatcherController;
+import org.aperteworkflow.webapi.main.processes.controller.ProcessesListController;
+import org.aperteworkflow.webapi.main.processes.controller.TaskViewController;
 import org.aperteworkflow.webapi.tools.WebApiConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,8 +23,10 @@ import pl.net.bluesoft.rnd.processtool.plugins.ProcessToolRegistry;
 import pl.net.bluesoft.rnd.processtool.usersource.IPortalUserSource;
 
 import javax.portlet.*;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -41,7 +45,13 @@ public class CaseManagementPortletController {
     private static Logger logger = Logger.getLogger(CaseManagementPortletController.class.getName());
 
     @Autowired(required = false)
+    private TaskViewController taskViewController;
+
+    @Autowired(required = false)
     private DispatcherController mainDispatcher;
+
+    @Autowired(required = false)
+    private ProcessesListController processesListController;
 
     @Autowired(required = false)
     protected IPortalUserSource portalUserSource;
@@ -158,6 +168,27 @@ public class CaseManagementPortletController {
             httpServletResponse.setContentType("text/plain");
         }
         return dispatcher(request, response);
+    }
+
+    @ResourceMapping("loadTask")
+    public void loadTask(ResourceRequest request, ResourceResponse response) throws IOException, ServletException {
+        HttpServletRequest originalHttpServletRequest = PortletUtil.getOriginalHttpServletRequest(portalUserSource, request);
+        HttpServletResponse httpServletResponse = portalUserSource.getHttpServletResponse(response);
+        taskViewController.loadTask(originalHttpServletRequest, httpServletResponse);
+    }
+
+    @ResourceMapping("performAction")
+    @ResponseBody
+    public ModelAndView performAction(ResourceRequest request, ResourceResponse response) throws IOException, ServletException {
+        HttpServletRequest originalHttpServletRequest = PortletUtil.getOriginalHttpServletRequest(portalUserSource, request);
+        return PortletUtil.translate(PORTLET_JSON_RESULT_ROOT_NAME, processesListController.performAction(originalHttpServletRequest));
+    }
+
+    @ResourceMapping("saveAction")
+    @ResponseBody
+    public ModelAndView saveAction(ResourceRequest request, ResourceResponse response) throws IOException, ServletException {
+        HttpServletRequest originalHttpServletRequest = PortletUtil.getOriginalHttpServletRequest(portalUserSource, request);
+        return PortletUtil.translate(PORTLET_JSON_RESULT_ROOT_NAME, processesListController.saveAction(originalHttpServletRequest));
     }
 
     /**

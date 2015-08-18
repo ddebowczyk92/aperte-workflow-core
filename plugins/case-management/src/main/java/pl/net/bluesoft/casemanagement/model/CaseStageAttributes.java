@@ -4,7 +4,8 @@ package pl.net.bluesoft.casemanagement.model;
  * Created by pkuciapski on 2014-06-26.
  */
 public enum CaseStageAttributes {
-    STAGE_FILES("stageFiles");
+    STAGE_FILES("stageFiles"),
+    COMMENTS("stageComments");
 
     private final String value;
 

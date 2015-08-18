@@ -45,13 +45,21 @@ public class ApplicationFormController {
             req.setAttachmentName(file.getOriginalFilename());
             req.setAttachmentMimeType(file.getContentType());
         }
-
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("index.jsp");
+        modelAndView.addObject("applicationForm", new ApplicationForm());
         try {
            RegisterApplicationResponseType res = wsClient.getService().registerApplication(req);
+            if("OK".equals(res.getStatus()))
+                modelAndView.addObject("applicationSent", true);
+            else {
+                modelAndView.addObject("applicationSent", false);
+            }
         } catch (Exception e) {
             log.error(e);
+            modelAndView.addObject("applicationSent", false);
         }
-        return new ModelAndView("index.jsp", "applicationForm", new ApplicationForm());
+        return modelAndView;
     }
 
     private String getFileString(CommonsMultipartFile file) {

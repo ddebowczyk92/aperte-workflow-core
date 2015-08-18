@@ -1,6 +1,7 @@
 package pl.net.bluesoft.casemanagement.controller.bean;
 
 import pl.net.bluesoft.casemanagement.model.Case;
+import pl.net.bluesoft.casemanagement.util.CaseProcessUtil;
 import pl.net.bluesoft.rnd.util.i18n.I18NSource;
 import pl.net.bluesoft.util.lang.Formats;
 
@@ -17,6 +18,7 @@ public class CaseDTO implements Comparable<CaseDTO> {
     private String currentStageName;
     private String createDate;
     private String modificationDate;
+    private String caseStateProcessesJson;
 
     public static CaseDTO createFrom(Case caseInstance, I18NSource messageSource) {
         CaseDTO caseDTO = new CaseDTO();
@@ -24,11 +26,14 @@ public class CaseDTO implements Comparable<CaseDTO> {
         caseDTO.setName(caseInstance.getName());
         caseDTO.setNumber(caseInstance.getNumber());
         caseDTO.setDefinitionName(messageSource.getMessage(CASE_DEFINITION_NAME_PREFIX + caseInstance.getDefinition().getName()));
-        if (caseInstance.getCurrentStage() != null)
+        if (caseInstance.getCurrentStage() != null) {
             caseDTO.setCurrentStageName(messageSource.getMessage(CASE_STATE_DEFINITION_NAME_PREFIX + caseInstance.getDefinition().getName()
                     + "." + caseInstance.getCurrentStage().getName()));
+            caseDTO.setCaseStateProcessesJson(CaseProcessUtil.toJson(caseInstance.getCurrentStage().getCaseStateDefinition().getProcesses(), messageSource));
+        }
         caseDTO.setCreateDate(Formats.formatFullDate(caseInstance.getCreateDate()));
         caseDTO.setModificationDate(Formats.formatFullDate(caseInstance.getModificationDate()));
+
 
         return caseDTO;
     }
@@ -43,8 +48,7 @@ public class CaseDTO implements Comparable<CaseDTO> {
     }
 
     @Override
-    public int compareTo(CaseDTO caseDTO)
-    {
+    public int compareTo(CaseDTO caseDTO) {
         return this.getNumber().compareTo(caseDTO.getNumber());
     }
 
@@ -102,5 +106,13 @@ public class CaseDTO implements Comparable<CaseDTO> {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getCaseStateProcessesJson() {
+        return caseStateProcessesJson;
+    }
+
+    public void setCaseStateProcessesJson(String caseStateProcessesJson) {
+        this.caseStateProcessesJson = caseStateProcessesJson;
     }
 }

@@ -5,7 +5,7 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 <%@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %>
 
-<div class="modal fade aperte-modal" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+<div class="modal fade aperte-modal" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -26,7 +26,7 @@
   </div><!-- /.modal-dialog -->
 </div>
 
-<div class="modal fade aperte-modal" id="changeOwnerModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+<div class="modal fade aperte-modal" id="changeOwnerModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -49,7 +49,7 @@
   </div><!-- /.modal-dialog -->
 </div>
 
-<div class="modal fade aperte-modal" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+<div class="modal fade aperte-modal" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
 
 
@@ -112,8 +112,6 @@
 	{
 		$('#changeOwnerModal').modal('hide');
 		tempChangeOwner = null;
-		tempChangeOwnerAttrKey = null;
-		tempCommentNeeded = null;
 	}
 	
 	function performCommentModal()
@@ -160,21 +158,20 @@
          $('#action-comment-button').attr("disabled", comment == '');
     }
 	
-	function saveAction(taskId, onSucessFunction)
+	function saveAction(taskId)
 	{
-	    var state = 'OK';
 		clearAlerts();
-		windowManager.showSavingScreen();
+        windowManager.showSavingScreen();
 
 		var errors = [];
-		/* Validate html widgets */
+		<!-- Validate html widgets -->
+
 		$.each(widgets, function() 
 		{
 			var errorMessages = this.validateDataCorrectness();
 			if(!errorMessages)
 			{
 
-				
 			}
 			else
 			{
@@ -188,9 +185,8 @@
 		if(errors.length > 0)
 		{
 			enableButtons();
-			windowManager.hideSavingScreen();
-			state = "ERROR";
-			return state;
+            windowManager.hideSavingScreen();
+			return;
 		}
 		
 		var widgetData = [];
@@ -199,9 +195,9 @@
 			var widgetDataBean = new WidgetDataBean(this.widgetId, this.name, this.getData());
 			widgetData.push(widgetDataBean);
 	    });
-		
-		var JsonWidgetData = JSON.stringify(widgetData, null, 2);
 
+		var JsonWidgetData = JSON.stringify(widgetData, null, 2);
+		var state = 'OK';
 		var newBpmTask = $.post('<portlet:resourceURL id="saveAction"/>',
 		{
 			"taskId": taskId,
@@ -212,32 +208,25 @@
 			if(data.errors != null)
 			{
 				addAlerts(data.errors);
-				state = "ERROR";
 			}
-			if (data.data) {
-			    clearAlerts();
+            if (data.data) {
+                clearAlerts();
                 windowManager.showProcessDataImmediate();
                 $('#process-data-view').empty();
                 $("#process-data-view").append(data.data);
                 checkIfViewIsLoaded();
-				
-				if(onSucessFunction && (typeof onSucessFunction == "function"))
-				{
-					onSucessFunction();
-				}
-			}
-			windowManager.hideSavingScreen();
+            }
+            windowManager.hideSavingScreen();
 		})
 		.always(function() 
-		{ 
-			enableButtons();
-			windowManager.hideSavingScreen();
+		{
+            enableButtons();
+            windowManager.hideSavingScreen();
 		})
 		.fail(function(data) 
 		{
-		    windowManager.hideSavingScreen();
+            windowManager.hideSavingScreen();
 			addAlerts(data.errors);
-			state = "ERROR";
 		});
 		
 		return state;
@@ -275,9 +264,7 @@
 			alertsShown = true;
 		}
 		
-		if ($('#alerts-list h5:contains("'+alertMessage+'")').length === 0) {
-			$('#alerts-list').append('<li><h5>'+alertMessage+'</h5></li>');
-		}
+		$('#alerts-list').append('<li><h5>'+alertMessage+'</h5></li>');
 		
 	}
 	
@@ -285,15 +272,40 @@
 	{
 		$('#alerts-list').empty();
 	}
-	
-	/* Check for comment required field */
+
+
+
+	<!-- Check for comment required field -->
 	function performAction(button, actionName, skipSaving, commentNeeded, changeOwner, changeOwnerAttributeKey, taskId)
 	{
 		if(skipSaving != true)
 		{
 			clearAlerts();
 			
-			var errors = fullValidate(actionName);
+			var errors = [];
+			<!-- Validate html widgets -->
+			$.each(widgets, function()
+			{
+				<!-- Validate technical correctness -->
+                var errorMessages = this.validateDataCorrectness();
+				if(errorMessages)
+				{
+					$.each(errorMessages, function() {
+						errors.push(this);
+						addAlert(this);
+					});
+				}
+
+                <!-- Validate business correctness -->
+				errorMessages = this.validate();
+				if(errorMessages)
+				{
+					$.each(errorMessages, function() {
+						errors.push(this);
+						addAlert(this);
+					});
+				}
+			});
 			
 			if(errors.length > 0)
 			{
@@ -312,7 +324,7 @@
 			
 			
 			$('#action-comment-textarea').val('');
-			$('#action-comment-button').prop("disabled", true);
+			$('#action-comment-button').prop('disabled', true);
 			$('#commentModal').appendTo("body").modal({
 			  keyboard: false
 			});
@@ -351,20 +363,12 @@
 					dataType: 'json',
 					quietMillis: 200,
 					data: function (term, page) {
-						var complaintTypeElement = $('.complaint-case-number');
-						var complaintType = '';
-						if(complaintTypeElement) {
-							complaintType = $('.complaint-case-number').attr('data-complaint-type');
-						}
 						return {
 							q: term, // search term
 							page_limit: 10,
-							controller: "complaintregistrycontroller",
+							controller: "usercontroller",
 							page: page,
-							action: "getAllUsers",
-							inactive: false,
-							sections: complaintType,
-							requiredRolePrefix: "EDIT_COMPLAINT_"
+							action: "getAllUsers"
 						};
 					},
 					results: function (data, page)
@@ -398,105 +402,36 @@
 	
 	function performActionWithoutComment(button, actionName, skipSaving, taskId, commentNeeded, comment, changeOwner, changeOwnerAttributeKey, changeOwnerAttributeValue)
 	{
-		var widgetData = [];
+		var JsonWidgetData = "[{}]";
 
 		if(skipSaving != true)
 		{
-			clearAlerts();
-
-			var errors = [];
-
-			var validateAllEnabled = true;
-
-			$.each(widgets, function() {
-				if (this.isValidateAllEnabled && !this.isValidateAllEnabled(actionName)) {
-					validateAllEnabled = false;
-				}
-			});
-
-			/* Validate html widgets */
-			$.each(widgets, function()
-			{
-				var errorMessages = validateAllEnabled ? this.validate(actionName) :
-								this.partialValidate ? this.partialValidate(actionName) : [];
-
-				$.each(errorMessages, function() {
-					errors.push(this);
-					addAlert(this);
-				});
-			});
-
-			if(errors.length > 0)
-			{
-				enableButtons();
-				return;
-			}
+			var widgetData = [];
 
 			$.each(widgets, function()
 			{
 				var widgetDataBean = new WidgetDataBean(this.widgetId, this.name, this.getData());
 				widgetData.push(widgetDataBean);
 			});
-		}
 
-		var performActionArgs =
-		{
-			button: button,
-			actionName: actionName,
-			skipSaving: skipSaving,
-			taskId: taskId,
-			commentNeeded: commentNeeded,
-			comment: comment,
-			changeOwner: changeOwner,
-			changeOwnerAttributeKey: changeOwnerAttributeKey,
-			changeOwnerAttributeValue: changeOwnerAttributeValue,
-			widgetData: widgetData
-		};
-
-        for (var i = 0; i < widgets.length; ++i)
-        {
-        	var widget = widgets[i];
-
-        	if (widget.beforePerformAction)
-        	{
-        		var handled = widget.beforePerformAction(performActionRequest, performActionArgs);
-
-        		if (handled)
-        		{
-        			return;
-        		}
-        	}
-        }
-
-        // no widget intercepted the action -> default handling
-
-		performActionRequest(performActionArgs);
-	}
-
-	function performActionRequest(args)
-	{
-		var JsonWidgetData = "[{}]";
-
-		if (args.widgetData.length > 0)
-		{
-			JsonWidgetData = JSON.stringify(args.widgetData, null, 2);
+			JsonWidgetData = JSON.stringify(widgetData, null, 2);
 		}
 
 		var newBpmTask = $.post('<portlet:resourceURL id="performAction"/>',
 		{
-			"taskId": args.taskId,
-			"actionName": args.actionName,
-			"skipSaving": args.skipSaving,
-			"commentNeeded": args.commentNeeded,
-			"comment": args.comment,
-			"changeOwner": args.changeOwner,
-			"changeOwnerAttributeKey": args.changeOwnerAttributeKey,
-			"changeOwnerAttributeValue": args.changeOwnerAttributeValue,
+			"taskId": taskId,
+			"actionName": actionName,
+			"skipSaving": skipSaving,
+			"commentNeeded": commentNeeded,
+			"comment": comment,
+			"changeOwner": changeOwner,
+			"changeOwnerAttributeKey": changeOwnerAttributeKey,
+			"changeOwnerAttributeValue": changeOwnerAttributeValue,
 			"widgetData": JsonWidgetData
-		}, null, 'json')
+		})
 		.done(function(data)
 		{
-			/* Errors handling */
+			<!-- Errors handling -->
 			windowManager.clearErrors();
 
 			var errors = [];
@@ -540,7 +475,7 @@
 				queueViewManager.loadCurrentQueue();
 			}
 		})
-		.fail(function(XMLHttpRequest, textStatus, errorThrown) { addAlert(errorThrown); })
+		.fail(function() { addAlerts(data.errors); })
 		.always(function(data)
 		{
 			if(data != null)
@@ -548,8 +483,8 @@
 				enableButtons();
 			}
 			tempChangeOwner = null;
-			tempChangeOwnerAttrKey = null;
-			tempCommentNeeded = null;
+            tempChangeOwnerAttrKey = null;
+            tempCommentNeeded = null;
 		});
 	}
 	
@@ -578,12 +513,6 @@
 		$(window).scrollTop(0);
 	}
 
-    function removeAllButOne(selector)
-    {
-    	while ($(selector).size() > 1)
-    	{
-    		$(selector).last().remove();
-    	}
-    }
+
 //]]>
 </script>

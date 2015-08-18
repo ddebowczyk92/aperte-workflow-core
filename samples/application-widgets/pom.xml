@@ -5,7 +5,7 @@
     <parent>
         <artifactId>samples</artifactId>
         <groupId>org.aperteworkflow</groupId>
-        <version>3.1</version>
+        <version>3.2-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -17,25 +17,25 @@
         <dependency>
             <groupId>org.aperteworkflow</groupId>
             <artifactId>integration-interface</artifactId>
-            <version>3.1</version>
+            <version>3.2-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.aperteworkflow</groupId>
             <artifactId>webapi</artifactId>
-            <version>3.1</version>
+            <version>3.2-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.aperteworkflow</groupId>
             <artifactId>gui-commons</artifactId>
-            <version>3.1</version>
+            <version>3.2-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <artifactId>case-management</artifactId>
             <groupId>org.aperteworkflow</groupId>
-            <version>3.1</version>
+            <version>3.2-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
 
@@ -43,19 +43,19 @@
         <dependency>
             <artifactId>interactive-reports</artifactId>
             <groupId>org.aperteworkflow</groupId>
-            <version>3.1</version>
+            <version>3.2-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <artifactId>bpm-notifications</artifactId>
             <groupId>org.aperteworkflow</groupId>
-            <version>3.1</version>
+            <version>3.2-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <artifactId>files-repository</artifactId>
             <groupId>org.aperteworkflow</groupId>
-            <version>3.1</version>
+            <version>3.2-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <!-- Jackson -->
@@ -234,14 +234,19 @@
                         <ProcessTool-I18N-Property>messages</ProcessTool-I18N-Property>
                         <!--<ProcessTool-Model-Enhancement></ProcessTool-Model-Enhancement>-->
                         <ProcessTool-Spring-Beans>
+                            org.aperteworkflow.samples.application.util.impl.ApplicationSignatureService
                         </ProcessTool-Spring-Beans>
                         <ProcessTool-Widget-View>
                             org.aperteworkflow.samples.application.widgets.view.FillApplicationWidget,
-                            org.aperteworkflow.samples.application.widgets.view.ApplicationInfoWidget
+                            org.aperteworkflow.samples.application.widgets.view.ApplicationInfoWidget,
+                            org.aperteworkflow.samples.application.widgets.view.ApplicationCaseHistoryWidget
                         </ProcessTool-Widget-View>
                         <ProcessTool-Step-Enhancement>
+                            org.aperteworkflow.samples.application.steps.GenerateApplicationCaseNoStep
                         </ProcessTool-Step-Enhancement>
                         <ProcessTool-Mappers>
+                            pl.net.bluesoft.casemanagement.processor.ProcessInstanceMapper,
+                            org.aperteworkflow.samples.application.mappers.ApplicationMapper
                         </ProcessTool-Mappers>
                         <ProcessTool-Controller>
 

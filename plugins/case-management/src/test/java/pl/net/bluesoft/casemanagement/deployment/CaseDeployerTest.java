@@ -63,10 +63,7 @@ public class CaseDeployerTest {
             session.close();
     }
 
-    @Test
-    public void testUnmarshallCaseDefinition() throws Exception {
-        assertEquals("Complaint", caseDefinition.getName());
-    }
+
 
     @Test
     public void testUnmarshallCaseDefinitionPossibleStates() throws Exception {

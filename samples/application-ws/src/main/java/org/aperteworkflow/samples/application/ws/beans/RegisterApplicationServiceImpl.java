@@ -1,6 +1,7 @@
 package org.aperteworkflow.samples.application.ws.beans;
 
 
+import org.apache.commons.lang.StringUtils;
 import org.aperteworkflow.files.IFilesRepositoryFacade;
 import org.aperteworkflow.files.dao.FilesRepositoryAttributeFactory;
 import org.aperteworkflow.files.dao.FilesRepositoryProcessAttributeFactoryImpl;
@@ -17,6 +18,7 @@ import pl.net.bluesoft.rnd.processtool.bpm.StartProcessResult;
 import pl.net.bluesoft.rnd.processtool.model.ProcessInstance;
 import pl.net.bluesoft.rnd.processtool.plugins.ProcessToolRegistry;
 import org.apache.commons.codec.binary.Base64;
+import pl.net.bluesoft.util.lang.StringUtil;
 
 import javax.jws.WebParam;
 import java.io.ByteArrayInputStream;
@@ -82,7 +84,7 @@ public class RegisterApplicationServiceImpl implements RegisterApplicationServic
 
     private void saveFileInRepository(RegisterApplicationRequestType req, ProcessInstance instance) throws UploadFileException {
         String attachment = req.getAttachmentBase64();
-        if(attachment != null) {
+        if(StringUtils.isNotEmpty(attachment)) {
             byte [] fileBytes = Base64.decodeBase64(attachment);
             ByteArrayInputStream bis = new ByteArrayInputStream(fileBytes);
             filesRepoFacade.uploadFile(bis, req.getAttachmentMimeType(), instance, req.getAttachmentName(), "attachment from ws", "ws-test", getAttributesFactory());

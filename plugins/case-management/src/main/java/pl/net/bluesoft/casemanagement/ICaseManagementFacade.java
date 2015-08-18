@@ -51,4 +51,6 @@ public interface ICaseManagementFacade {
     Long getCasesCount(Map<String, Object> params);
 
     CaseStateDefinition getCaseStateDefinitionByName(String name, CaseDefinition definition);
+
+    void updateCaseStage(CaseStage caseStage);
 }

@@ -10,11 +10,12 @@ import pl.net.bluesoft.rnd.processtool.ISettingsProvider;
 import pl.net.bluesoft.rnd.processtool.ProcessToolContext;
 import pl.net.bluesoft.rnd.processtool.bpm.ProcessToolBpmSession;
 import pl.net.bluesoft.rnd.processtool.dict.IDictionaryFacade;
-import pl.net.bluesoft.rnd.processtool.model.BpmTask;
 import pl.net.bluesoft.rnd.processtool.model.IAttributesProvider;
-import pl.net.bluesoft.rnd.processtool.model.ProcessInstance;
 import pl.net.bluesoft.rnd.processtool.model.UserData;
-import pl.net.bluesoft.rnd.processtool.model.config.*;
+import pl.net.bluesoft.rnd.processtool.model.config.IPermission;
+import pl.net.bluesoft.rnd.processtool.model.config.IStateWidget;
+import pl.net.bluesoft.rnd.processtool.model.config.IStateWidgetAttribute;
+import pl.net.bluesoft.rnd.processtool.model.config.ProcessStateConfiguration;
 import pl.net.bluesoft.rnd.processtool.plugins.ButtonGenerator;
 import pl.net.bluesoft.rnd.processtool.plugins.ProcessToolRegistry;
 import pl.net.bluesoft.rnd.processtool.plugins.QueueBean;
@@ -74,15 +75,13 @@ public abstract class AbstractViewBuilder<T extends AbstractViewBuilder> {
 
     protected abstract boolean showGenericButtons();
 
-    public StringBuilder build() throws Exception
-    {
+    public StringBuilder build() throws Exception {
 
         final StringBuilder stringBuilder = new StringBuilder(8 * 1024);
         scriptBuilder.append("<script type=\"text/javascript\">");
         final Document document = Jsoup.parse("");
 
-        if(!hasUserPriviledgesToViewTask())
-        {
+        if (!hasUserPriviledgesToViewTask()) {
             final Element widgetsNode = document.createElement("div")
                     .attr("role", "alert")
                     .attr("class", "alert alert-warning");
@@ -96,7 +95,7 @@ public abstract class AbstractViewBuilder<T extends AbstractViewBuilder> {
             return stringBuilder;
         }
 
-        if(showGenericButtons())
+        if (showGenericButtons())
             buildActionButtons(document);
 
         final Element widgetsNode = document.createElement("div")
@@ -140,7 +139,7 @@ public abstract class AbstractViewBuilder<T extends AbstractViewBuilder> {
     protected void buildWidget(final WidgetHierarchyBean widgetHierarchyBean) {
         IStateWidget widget = widgetHierarchyBean.getWidget();
         IAttributesProvider attributesProvider = widgetHierarchyBean.getAttributesProvider();
-        if(attributesProvider != null && attributesProvider.getProcessInstance() != null) {
+        if (attributesProvider != null && attributesProvider.getProcessInstance() != null) {
             Hibernate.initialize(attributesProvider.getProcessInstance().getProcessAttributes());
             Hibernate.initialize(attributesProvider.getProcessInstance().getProcessSimpleAttributes());
             Hibernate.initialize(attributesProvider.getProcessInstance().getRootProcessInstance());
@@ -269,6 +268,30 @@ public abstract class AbstractViewBuilder<T extends AbstractViewBuilder> {
 
                 buildWidget(childBean);
             }
+        } else if (aliasName.equals("HorizontalLayout")) {
+            Element divContentNode = parent.ownerDocument().createElement("div")
+                    .attr("id", "horizontal_layout" + widget.getId())
+                    .attr("class", "container-fluid");
+            parent.appendChild(divContentNode);
+            Element divRowNode = divContentNode.ownerDocument().createElement("div")
+                    .attr("id", "horizontal_layout_row" + widget.getId())
+                    .attr("class", "row");
+            divContentNode.appendChild(divRowNode);
+
+            for (IStateWidget child : children) {
+                Element divColumnNode = divRowNode.ownerDocument().createElement("div")
+                        .attr("class", "col-md-6");
+                divRowNode.appendChild(divColumnNode);
+                WidgetHierarchyBean childBean = new WidgetHierarchyBean()
+                        .setParent(divColumnNode)
+                        .setWidget(child)
+                        .setAttributesProvider(attributesProvider)
+                        .setForcePrivileges(widgetHierarchyBean.isForcePrivileges())
+                        .setPrivileges(widgetHierarchyBean.getPrivileges());
+
+                buildWidget(childBean);
+            }
+
         } else if (aliasName.equals("SwitchWidgets")) {
             List<IStateWidget> sortedList = new ArrayList<IStateWidget>(children);
 
@@ -314,12 +337,11 @@ public abstract class AbstractViewBuilder<T extends AbstractViewBuilder> {
             viewData.put(IHtmlTemplateProvider.SETTINGS_PROVIDER, settingsProvider);
 
 
-
             for (IStateWidgetAttribute attribute : widget.getAttributes())
                 viewData.put(attribute.getName(), attribute.getValue());
 
-			processHtmlWidget.getViewData(viewData);
-	        Map<String, Object> baseViewData = new HashMap<String, Object>(viewData);
+            processHtmlWidget.getViewData(viewData);
+            Map<String, Object> baseViewData = new HashMap<String, Object>(viewData);
 
             /* Add custom attributes from widget data providers */
 
@@ -331,10 +353,8 @@ public abstract class AbstractViewBuilder<T extends AbstractViewBuilder> {
             String processedView = "";
             try {
                 processedView = templateProvider.processTemplate(aliasName, viewData);
-            }
-            catch(Throwable ex)
-            {
-                logger.log(Level.SEVERE, "Error with Widget ["+aliasName+"]", ex);
+            } catch (Throwable ex) {
+                logger.log(Level.SEVERE, "Error with Widget [" + aliasName + "]", ex);
                 throw new RuntimeException(ex);
             }
 
@@ -467,62 +487,62 @@ public abstract class AbstractViewBuilder<T extends AbstractViewBuilder> {
 
         /* Check if the viewed object is in a terminal state */
 
-		buildGenericActionButtons(genericActionButtons);
+        buildGenericActionButtons(genericActionButtons);
 
         if (!isViewedObjectClosed()) {
-			buildSpecificActionButtons(specificActionButtons);
+            buildSpecificActionButtons(specificActionButtons);
         }
     }
 
-	private void buildGenericActionButtons(Element genericActionButtons) {
-		boolean userCanPerformActions = isUserCanPerformActions();
-		boolean objectIsClosed = isViewedObjectClosed();
+    private void buildGenericActionButtons(Element genericActionButtons) {
+        boolean userCanPerformActions = isUserCanPerformActions();
+        boolean objectIsClosed = isViewedObjectClosed();
 
-		final List<ButtonCreator> buttonCreators = new ArrayList<ButtonCreator>();
+        final List<ButtonCreator> buttonCreators = new ArrayList<ButtonCreator>();
 
-		buttonCreators.add(buildCancelActionButton());
+        buttonCreators.add(buildCancelActionButton());
 
-		if (!objectIsClosed && userCanPerformActions) {
-			buttonCreators.add(buildSaveActionButton());
-		}
+        if (!objectIsClosed && userCanPerformActions) {
+            buttonCreators.add(buildSaveActionButton());
+        }
 
-		Collection<ButtonGenerator> buttonGenerators = processToolRegistry.getGuiRegistry().getButtonGenerators();
+        Collection<ButtonGenerator> buttonGenerators = processToolRegistry.getGuiRegistry().getButtonGenerators();
 
-		if (!buttonCreators.isEmpty()) {
-			ButtonGenerator.Callback callback = new ButtonGenerator.Callback() {
-				@Override
-				public void createButton(int priority, String actionButtonId, String buttonClass, String iconClass,
-										 String messageKey, String descriptionKey, String clickFunction) {
-					buttonCreators.add(new ButtonCreator(priority, actionButtonId, buttonClass, iconClass,
-							messageKey, descriptionKey, clickFunction));
-				}
+        if (!buttonCreators.isEmpty()) {
+            ButtonGenerator.Callback callback = new ButtonGenerator.Callback() {
+                @Override
+                public void createButton(int priority, String actionButtonId, String buttonClass, String iconClass,
+                                         String messageKey, String descriptionKey, String clickFunction) {
+                    buttonCreators.add(new ButtonCreator(priority, actionButtonId, buttonClass, iconClass,
+                            messageKey, descriptionKey, clickFunction));
+                }
 
-				@Override
-				public void appendScript(String script) {
-					scriptBuilder.append(script);
-				}
-			};
+                @Override
+                public void appendScript(String script) {
+                    scriptBuilder.append(script);
+                }
+            };
 
-			for (ButtonGenerator buttonGenerator : buttonGenerators) {
-				buttonGenerator.generate(getViewedObject(), objectIsClosed, userCanPerformActions, callback);
-			}
-		}
+            for (ButtonGenerator buttonGenerator : buttonGenerators) {
+                buttonGenerator.generate(getViewedObject(), objectIsClosed, userCanPerformActions, callback);
+            }
+        }
 
-		Collections.sort(buttonCreators, BY_PRIORITY);
+        Collections.sort(buttonCreators, BY_PRIORITY);
 
-		for (ButtonCreator buttonCreator : buttonCreators) {
-			buttonCreator.create(genericActionButtons);
-		}
-	}
+        for (ButtonCreator buttonCreator : buttonCreators) {
+            buttonCreator.create(genericActionButtons);
+        }
+    }
 
-	private final Comparator<ButtonCreator> BY_PRIORITY = new Comparator<ButtonCreator>() {
-		@Override
-		public int compare(ButtonCreator c1, ButtonCreator c2) {
-			return c1.getPriority() < c2.getPriority() ? -1 : c1.getPriority() > c2.getPriority() ? 1 : 0;
-		}
-	};
+    private final Comparator<ButtonCreator> BY_PRIORITY = new Comparator<ButtonCreator>() {
+        @Override
+        public int compare(ButtonCreator c1, ButtonCreator c2) {
+            return c1.getPriority() < c2.getPriority() ? -1 : c1.getPriority() > c2.getPriority() ? 1 : 0;
+        }
+    };
 
-	protected abstract boolean isUserCanPerformActions();
+    protected abstract boolean isUserCanPerformActions();
 
     protected abstract void buildSpecificActionButtons(final Element specificActionButtons);
 
@@ -540,14 +560,14 @@ public abstract class AbstractViewBuilder<T extends AbstractViewBuilder> {
     protected abstract boolean isViewedObjectClosed();
 
     protected ButtonCreator buildSaveActionButton() {
-		return new ButtonCreator(100,
-				getSaveButtonHtmlId(),
-				"warning",
-				"floppy-save",
-				getSaveButtonMessageKey(),
-				getSaveButtonDescriptionKey(),
-				getSaveButtonClickFunction());
-	}
+        return new ButtonCreator(100,
+                getSaveButtonHtmlId(),
+                "warning",
+                "floppy-save",
+                getSaveButtonMessageKey(),
+                getSaveButtonDescriptionKey(),
+                getSaveButtonClickFunction());
+    }
 
     protected abstract String getSaveButtonClickFunction();
 
@@ -558,47 +578,47 @@ public abstract class AbstractViewBuilder<T extends AbstractViewBuilder> {
     protected abstract String getSaveButtonMessageKey();
 
     protected ButtonCreator buildCancelActionButton() {
-		return new ButtonCreator(200,
-				getCancelButtonHtmlId(),
-				"info",
-				"home",
-				getCancelButtonMessageKey(),
-				getCancelButtonMessageKey(),
-				getCancelButtonClickFunction());
-	}
+        return new ButtonCreator(200,
+                getCancelButtonHtmlId(),
+                "info",
+                "home",
+                getCancelButtonMessageKey(),
+                getCancelButtonMessageKey(),
+                getCancelButtonClickFunction());
+    }
 
-	private class ButtonCreator {
-		private final int priority;
-		private final String actionButtonId;
-		private final String buttonClass;
-		private final String iconClass;
-		private final String messageKey;
-		private final String descriptionKey;
-		private final String clickFunction;
+    private class ButtonCreator {
+        private final int priority;
+        private final String actionButtonId;
+        private final String buttonClass;
+        private final String iconClass;
+        private final String messageKey;
+        private final String descriptionKey;
+        private final String clickFunction;
 
-		public ButtonCreator(int priority, String actionButtonId, String buttonClass, String iconClass, String messageKey,
-							 String descriptionKey, String clickFunction) {
-			this.priority = priority;
-			this.actionButtonId = actionButtonId;
-			this.buttonClass = buttonClass;
-			this.iconClass = iconClass;
-			this.messageKey = messageKey;
-			this.descriptionKey = descriptionKey;
-			this.clickFunction = clickFunction;
-		}
+        public ButtonCreator(int priority, String actionButtonId, String buttonClass, String iconClass, String messageKey,
+                             String descriptionKey, String clickFunction) {
+            this.priority = priority;
+            this.actionButtonId = actionButtonId;
+            this.buttonClass = buttonClass;
+            this.iconClass = iconClass;
+            this.messageKey = messageKey;
+            this.descriptionKey = descriptionKey;
+            this.clickFunction = clickFunction;
+        }
 
-		public int getPriority() {
-			return priority;
-		}
+        public int getPriority() {
+            return priority;
+        }
 
-		public void create(Element parent) {
-			createButton(parent, actionButtonId, buttonClass, iconClass, messageKey, descriptionKey, clickFunction);
-		}
-	}
+        public void create(Element parent) {
+            createButton(parent, actionButtonId, buttonClass, iconClass, messageKey, descriptionKey, clickFunction);
+        }
+    }
 
-	private void createButton(Element parent, String actionButtonId, String buttonClass, String iconClass,
-							  String messageKey, String descriptionKey, String clickFunction) {
-		Element buttonNode = parent.ownerDocument().createElement("button")
+    private void createButton(Element parent, String actionButtonId, String buttonClass, String iconClass,
+                              String messageKey, String descriptionKey, String clickFunction) {
+        Element buttonNode = parent.ownerDocument().createElement("button")
                 .attr("class", buttonClass != null ? "btn btn-" + buttonClass : "btn")
                 .attr("disabled", "true")
                 .attr("id", actionButtonId)
@@ -606,19 +626,19 @@ public abstract class AbstractViewBuilder<T extends AbstractViewBuilder> {
                 .attr("data-placement", "bottom")
                 .attr("title", i18Source.getMessage(descriptionKey));
 
-		Element buttonIcon = parent.ownerDocument().createElement("span")
+        Element buttonIcon = parent.ownerDocument().createElement("span")
                 .attr("class", iconClass != null ? "glyphicon glyphicon-" + iconClass : "glyphicon");
 
-		parent.appendChild(buttonNode);
-		buttonNode.appendChild(buttonIcon);
+        parent.appendChild(buttonNode);
+        buttonNode.appendChild(buttonIcon);
 
-		buttonNode.appendText(i18Source.getMessage(messageKey));
+        buttonNode.appendText(i18Source.getMessage(messageKey));
 
-		scriptBuilder.append("$('#").append(actionButtonId).append("').click(function() { ").append(clickFunction).append("('").append(getViewedObjectId()).append("');  });");
-		scriptBuilder.append("$('#").append(actionButtonId).append("').tooltip();");
-	}
+        scriptBuilder.append("$('#").append(actionButtonId).append("').click(function() { ").append(clickFunction).append("('").append(getViewedObjectId()).append("');  });");
+        scriptBuilder.append("$('#").append(actionButtonId).append("').tooltip();");
+    }
 
-	protected abstract String getCancelButtonHtmlId();
+    protected abstract String getCancelButtonHtmlId();
 
     protected abstract String getCancelButtonClickFunction();
 

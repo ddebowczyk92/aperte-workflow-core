@@ -3,9 +3,10 @@ package pl.net.bluesoft.casemanagement.ui;
 import org.aperteworkflow.webapi.main.ui.AbstractViewBuilder;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import pl.net.bluesoft.casemanagement.model.Case;
-import pl.net.bluesoft.casemanagement.model.CaseStateRole;
+import pl.net.bluesoft.casemanagement.model.*;
+import pl.net.bluesoft.casemanagement.util.CaseProcessUtil;
 import pl.net.bluesoft.rnd.processtool.model.IAttributesProvider;
+import pl.net.bluesoft.rnd.processtool.model.ProcessInstance;
 import pl.net.bluesoft.rnd.processtool.model.config.IStateWidget;
 import pl.net.bluesoft.rnd.processtool.plugins.QueueBean;
 import pl.net.bluesoft.rnd.processtool.web.domain.IHtmlTemplateProvider;
@@ -181,7 +182,19 @@ public class CaseViewBuilder extends AbstractViewBuilder<CaseViewBuilder> {
     }
 
 	@Override
-	protected void buildSpecificActionButtons(final Element specificActionButtons) {}
+	protected void buildSpecificActionButtons(final Element specificActionButtons) {
+        CaseStateDefinition currentState = caseInstance.getCurrentStage().getCaseStateDefinition();
+        List<CaseStateProcess> sortedProcesses = CaseProcessUtil.getSortedProcessesByPriority(currentState.getProcesses());
+        for(CaseStateProcess process : sortedProcesses) {
+            String bId = "action-button-".concat(process.getBpmDefinitionKey());
+            String bClass = process.getProcessActionType();
+            String bIcon = process.getProcessIcon();
+            String bTitle = process.getProcessLabel();
+            String bAction = "caseManagement.startProcess(\""+caseInstance.getId()+"\",\""+process.getBpmDefinitionKey()+"\");";
+            createButton(specificActionButtons, bId, bClass, bIcon, bTitle, bTitle, bAction);
+        }
+    }
+
 
 	protected void createButton(Element parent, String actionButtonId, String buttonClass, String iconClass,
                               String messageKey, String descriptionKey, String clickFunction) {

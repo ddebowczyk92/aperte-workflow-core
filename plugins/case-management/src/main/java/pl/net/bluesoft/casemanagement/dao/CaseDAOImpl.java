@@ -1,19 +1,18 @@
 package pl.net.bluesoft.casemanagement.dao;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.math.NumberUtils;
+
 import org.hibernate.*;
 import org.hibernate.criterion.*;
 import org.hibernate.persister.entity.AbstractEntityPersister;
 import pl.net.bluesoft.casemanagement.model.*;
-import pl.net.bluesoft.casemanagement.model.query.FindComplaintQueryBuilder;
+import pl.net.bluesoft.casemanagement.model.query.FindCaseQueryBuilder;
 import pl.net.bluesoft.rnd.processtool.hibernate.SimpleHibernateBean;
 
 import java.math.BigInteger;
 import java.util.*;
 
-import static pl.net.bluesoft.casemanagement.model.query.FindComplaintQueryBuilder.SelectComplaintCase;
-import static pl.net.bluesoft.casemanagement.model.query.FindComplaintQueryParams.*;
+import static pl.net.bluesoft.casemanagement.model.query.FindCaseQueryBuilder.SelectCase;
+import static pl.net.bluesoft.casemanagement.model.query.FindCaseQueryParams.*;
 
 /**
  * Created by pkuciapski on 2014-04-22.
@@ -182,7 +181,7 @@ public class CaseDAOImpl extends SimpleHibernateBean<Case> implements CaseDAO {
 
     @Override
     public Long getAllNotClosedCasesCount() {
-        String sqlQuery = "select count(*) from "+Case.TABLE+" join "+CaseStage.TABLE+" on "+Case.TABLE+".current_case_stage_id = "+CaseStage.TABLE+".id where "+CaseStage.TABLE+".name ilike 'new' or "+CaseStage.TABLE+".name ilike 'open'";
+        String sqlQuery = "select count(*) from " + Case.TABLE + " join " + CaseStage.TABLE + " on " + Case.TABLE + ".current_case_stage_id = " + CaseStage.TABLE + ".id where " + CaseStage.TABLE + ".name ilike 'new' or " + CaseStage.TABLE + ".name ilike 'open'";
         Query query = getSession().createSQLQuery(sqlQuery);
         BigInteger result = (BigInteger) query.uniqueResult();
         return result.longValue();
@@ -195,7 +194,7 @@ public class CaseDAOImpl extends SimpleHibernateBean<Case> implements CaseDAO {
 
     @Override
     public List<Case> getCasesPaged(final String sortColumnProperty, final boolean sortAscending, final int pageLength, final int pageOffset, Map<String, Object> params) {
-        Query query = getSession().getNamedQuery(SelectComplaintCase);
+        Query query = getSession().getNamedQuery(SelectCase);
         String orderColumnName = ((AbstractEntityPersister) getSession().getSessionFactory().getClassMetadata(Case.class)).getPropertyColumnNames(sortColumnProperty)[0];
         if (orderColumnName == null)
             orderColumnName = sortColumnProperty;
@@ -208,60 +207,28 @@ public class CaseDAOImpl extends SimpleHibernateBean<Case> implements CaseDAO {
     }
 
     private void setQueryParams(Query query, Map<String, Object> params) {
-        setString(PersonName, query, params);
-        setString(Pir, query, params);
-        query.setDate(FlightDate, (Date) params.get(FlightDate));
-        query.setDate(FlightDateTo, (Date) params.get(FlightDateTo));
-        query.setBoolean(FlightDateRange, (Boolean)params.get(FlightDateRange));
-
-        String flightNumber = (String)params.get(FlightNo);
-
-        query.setString(FlightRoute, flightNumber);
-
-        if(StringUtils.isNotEmpty(flightNumber)) {
-            String flightNumberOutput = "";
-            for (String subFlightNumber : flightNumber.split("-")) {
-                String flightNumberPrefix = subFlightNumber.replaceAll("\\d", "");
-                /** Remove leading zeros for regex */
-                String flightNumberDigits = StringUtils.stripStart(subFlightNumber.replaceAll("[^\\d.]", ""), "0");
-
-                if (StringUtils.isNotEmpty(flightNumberOutput))
-                    flightNumberOutput += "@@";
-
-                flightNumberOutput += flightNumberPrefix + "@" + flightNumberDigits;
-
-            }
-            query.setString(FlightNo, flightNumberOutput);
-        }
-        else
-            query.setString(FlightNo, null);
-
-        setString(AssignedPerson, query, params);
         setString(CaseNumber, query, params);
         setString(CaseShortNumber, query, params);
-        setString(ComplaintType, query, params);
-        setString(Categories, query, params);
         setString(Stages, query, params);
         query.setDate(CreateDate, (Date) params.get(CreateDate));
         query.setDate(CreateDateTo, (Date) params.get(CreateDateTo));
-        query.setBoolean(CreateDateRange, (Boolean)params.get(CreateDateRange));
+        query.setBoolean(CreateDateRange, (Boolean) params.get(CreateDateRange));
         setString(TextSearch, query, params);
     }
 
     @Override
     public Long getCasesCount(Map<String, Object> params) {
-        Query query = getSession().getNamedQuery(FindComplaintQueryBuilder.SelectComplaintCaseCount);
+        Query query = getSession().getNamedQuery(FindCaseQueryBuilder.SelectCaseCount);
         setQueryParams(query, params);
         return ((BigInteger) query.uniqueResult()).longValue();
     }
 
     @Override
-    public Long getCasesCountAfterPage()
-    {
+    public Long getCasesCountAfterPage() {
         /** Use it only after getCasesPaged with the same transaction! */
-        SQLQuery query = getSession().createSQLQuery("select case_count from complaint_case_query_count limit 1");
+        SQLQuery query = getSession().createSQLQuery("select case_count from case_query_count limit 1");
         Object result = query.uniqueResult();
-        if(result == null)
+        if (result == null)
             return 0l;
         return ((BigInteger) result).longValue();
     }

@@ -59,14 +59,6 @@ public class SendMailStep implements ProcessToolProcessStep {
     public String invoke(BpmStep step, Map<String, String> params) throws Exception {
         IBpmNotificationService service = getRegistry().getRegisteredService(IBpmNotificationService.class);
 
-		/** Hotfix, remove after 10.06.2015 */
-		if(StringUtils.isNotEmpty(template) && template.equals("complaint_registration_send_pdf"))
-		{
-			String forwardedEmail = step.getProcessInstance().getSimpleAttributeValue("forwardedEmailFix");
-			if(StringUtils.isNotEmpty(forwardedEmail))
-				recipient = forwardedEmail;
-		}
-
 		if (!hasText(recipient)) {
 			return STATUS_OK;
 		}

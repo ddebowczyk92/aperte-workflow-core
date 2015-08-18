@@ -5,7 +5,9 @@ import org.hibernate.annotations.Type;
 import pl.net.bluesoft.rnd.processtool.model.PersistentEntity;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 import static pl.net.bluesoft.casemanagement.model.Constants.CASES_SCHEMA;
 
@@ -94,5 +96,13 @@ public class CaseComment extends PersistentEntity {
 
     public void setCommentType(String commentType) {
         this.commentType = commentType;
+    }
+
+    public String getFormattedDate(String format)
+    {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
+        //TODO user timezone
+        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Europe/Warsaw"));
+        return simpleDateFormat.format(getCreateTime());
     }
 }

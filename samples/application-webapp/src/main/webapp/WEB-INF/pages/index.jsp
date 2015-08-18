@@ -14,6 +14,26 @@
         <h1>Fill application form</h1>
     </div>
     <div class="container">
+    <c:if test="${not empty applicationSent}">
+    <div style="text-align:center;">
+        <c:choose>
+            <c:when test= "${applicationSent}">
+                <div class="alert alert-success" role="alert">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    <span class="sr-only">Info:</span>
+                    <b>Thank you for filling out our form. Your application has been sent</b>
+                </div>
+            </c:when>
+            <c:otherwise>
+                <div class ="alert alert-danger" role="alert">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <span class="sr-only">Error:</span>
+                    <b>An error occured while processing your request. Please try later.</b>
+                </div>
+            </c:otherwise>
+        </c:choose>
+    </div>
+    </c:if>
     <form:form method="POST" modelAttribute="applicationForm" enctype="multipart/form-data" action="${pageContext.request.contextPath}/apply">
         <div class="form-group">
             <label for="name">Name</label>
@@ -35,6 +55,7 @@
     </form:form>
     </div>
 </div>
+<script src="<c:url value="/js/jquery-1.10.2.min.js"/>"></script>
 <script src="<c:url value="/js/bootstrap.min.js"/>"></script>
 </body>
 </html>

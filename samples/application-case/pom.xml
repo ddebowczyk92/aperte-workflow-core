@@ -5,7 +5,7 @@
     <parent>
         <artifactId>samples</artifactId>
         <groupId>org.aperteworkflow</groupId>
-        <version>3.1</version>
+        <version>3.2-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -17,7 +17,7 @@
         <dependency>
             <artifactId>case-management</artifactId>
             <groupId>org.aperteworkflow</groupId>
-            <version>3.1</version>
+            <version>3.2-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
@@ -59,6 +59,8 @@
                     <instructions>
                         <Import-Package>
                             pl.net.bluesoft.casemanagement,
+                            pl.net.bluesoft.rnd.processtool.ui.basewidgets,
+                            org.aperteworkflow.files,
                             *;resolution:=optional
                         </Import-Package>
                         <Embed-Dependency>*;scope=compile|runtime;inline=false</Embed-Dependency>

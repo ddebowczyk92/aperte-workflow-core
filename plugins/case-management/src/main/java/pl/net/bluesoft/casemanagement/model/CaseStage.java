@@ -1,7 +1,10 @@
 package pl.net.bluesoft.casemanagement.model;
 
 import org.hibernate.annotations.Index;
+import pl.net.bluesoft.rnd.processtool.model.IAttributesConsumer;
+import pl.net.bluesoft.rnd.processtool.model.IAttributesProvider;
 import pl.net.bluesoft.rnd.processtool.model.PersistentEntity;
+import pl.net.bluesoft.rnd.processtool.model.ProcessInstance;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -22,7 +25,7 @@ import static pl.net.bluesoft.casemanagement.model.Constants.CASES_SCHEMA;
                         columnNames = {"id"}
                 )
         })
-public class CaseStage extends PersistentEntity {
+public class CaseStage extends PersistentEntity implements IAttributesProvider, IAttributesConsumer {
     public static final String TABLE = CASES_SCHEMA + "." + CaseStage.class.getAnnotation(Table.class).name();
     final static String CASE_STAGE_ID = "case_stage_id";
 
@@ -143,6 +146,11 @@ public class CaseStage extends PersistentEntity {
         }
     }
 
+    @Override
+    public ProcessInstance getProcessInstance() {
+        return null;
+    }
+
     public String getSimpleAttributeValue(String key) {
         CaseStageSimpleAttribute attr = findSimpleAttributeByKey(key);
         if (attr != null)
@@ -173,14 +181,46 @@ public class CaseStage extends PersistentEntity {
 		}
 	}
 
-	public String getSimpleLargeAttributeValue(String key) {
+    @Override
+    public void addAttribute(Object attribute) {
+        addComplexAttribute((CaseStageAttribute) attribute);
+    }
+
+    @Override
+    public void setAttribute(String key, Object attribute) {
+        CaseStageAttribute caseStageAttribute = (CaseStageAttribute) attribute;
+        caseStageAttribute.setKey(key);
+        addComplexAttribute((CaseStageAttribute) attribute);
+    }
+
+    public String getSimpleLargeAttributeValue(String key) {
 		CaseStageSimpleLargeAttribute attr = findSimpleLargeAttributeByKey(key);
 		if (attr != null)
 			return attr.getValue();
 		return null;
 	}
 
-	public CaseStageAttribute getComplexAttribute(String key) {
+    @Override
+    public String getExternalKey() {
+        return getProcessInstance().getExternalKey();
+    }
+
+    @Override
+    public String getDefinitionName() {
+        return getCaseStateDefinition().getName();
+    }
+
+    @Override
+    public Object getAttribute(String key) {
+        return getComplexAttribute(key);
+    }
+
+    @Override
+    public Object getProvider() {
+        return this;
+    }
+
+    public CaseStageAttribute getComplexAttribute(String key) {
 		for (CaseStageAttribute attribute : attributes) {
 			if (attribute.getKey().equals(key)) {
 				return attribute;

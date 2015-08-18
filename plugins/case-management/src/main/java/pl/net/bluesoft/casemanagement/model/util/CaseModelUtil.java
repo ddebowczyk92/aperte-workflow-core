@@ -4,9 +4,7 @@ import org.aperteworkflow.files.dao.FilesRepositoryAttributeFactory;
 import org.aperteworkflow.files.model.FilesRepositoryAttributes;
 import org.aperteworkflow.files.model.IFilesRepositoryAttribute;
 import pl.net.bluesoft.casemanagement.dao.FilesRepositoryCaseAttributeFactoryImpl;
-import pl.net.bluesoft.casemanagement.model.Case;
-import pl.net.bluesoft.casemanagement.model.CaseAttributes;
-import pl.net.bluesoft.casemanagement.model.CaseCommentsAttribute;
+import pl.net.bluesoft.casemanagement.model.*;
 import pl.net.bluesoft.rnd.processtool.model.IAttributesConsumer;
 import pl.net.bluesoft.rnd.processtool.model.IAttributesProvider;
 import pl.net.bluesoft.rnd.processtool.model.ProcessInstance;
@@ -50,5 +48,9 @@ public class CaseModelUtil {
 
 	public static CaseCommentsAttribute getCaseComments(IAttributesProvider provider) {
 		return (CaseCommentsAttribute) provider.getAttribute(CaseAttributes.COMMENTS.value());
+	}
+
+	public static CaseStageCommentsAttribute getCaseStageComments(IAttributesProvider provider) {
+		return (CaseStageCommentsAttribute) provider.getAttribute(CaseStageAttributes.COMMENTS.value());
 	}
 }

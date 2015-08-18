@@ -26,13 +26,13 @@ import static pl.net.bluesoft.casemanagement.model.Constants.*;
 @SqlResultSetMapping(name = "cnt", columns = @ColumnResult(name = "cnt"))
 @NamedNativeQueries({
         @NamedNativeQuery(
-                name = "selectComplaintCase",
-                query = "select * from select_complaint_case(:caseNumber, :caseShortNumber, :personName, :pir, :flightDate, :flightDateTo, :flightDateRange, :flightNo, :flightRoute, :assignedPerson, :in_orderBy, :ascOrder, :pageSize, :currentPage, :complaintType, :createDate, :createDateTo, :createDateRange, :categories, :stages, :textSearch)",
+                name = "selectCase",
+                query = "select * from select_complaint_case(:caseNumber, :caseShortNumber, :in_orderBy, :ascOrder, :pageSize, :currentPage, :createDate, :createDateTo, :createDateRange, :stages, :textSearch)",
                 resultClass = Case.class
         ),
         @NamedNativeQuery(
-                name = "selectComplaintCaseCount",
-                query = "select select_complaint_case_count(:caseNumber, :caseShortNumber, :personName, :pir, :flightDate, :flightDateTo, :flightDateRange, :flightNo, :flightRoute, :assignedPerson, :complaintType, :createDate, :createDateTo, :createDateRange, :categories, :stages, :textSearch) as cnt",
+                name = "selectCaseCount",
+                query = "select select_complaint_case_count(:caseNumber, :caseShortNumber, :createDate, :createDateTo, :createDateRange, :stages, :textSearch) as cnt",
                 resultSetMapping = "cnt"
         )
 })

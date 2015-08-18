@@ -1,13 +1,11 @@
 package pl.net.bluesoft.rnd.pt.ext.bpmnotifications.model;
 
-import pl.net.bluesoft.rnd.processtool.dict.mapping.annotations.entry.Ext;
-
 /**
  * Created by Maciej on 2014-11-12.
  */
 public class IMAPMailAccountProperties
 {
-    private String complaintType;
+    private String profileName;
 
     private String mailProtocol;
 
@@ -131,12 +129,12 @@ public class IMAPMailAccountProperties
         this.mailNTLMDomain = mailNTLMDomain;
     }
 
-    public String getComplaintType() {
-        return complaintType;
+    public String getProfileName() {
+        return profileName;
     }
 
-    public void setProfileName(String complaintType) {
-        this.complaintType = complaintType;
+    public void setProfileName(String profileName) {
+        this.profileName = profileName;
     }
 
     public String getMailSocketFactoryClass() {

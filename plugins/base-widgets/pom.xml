@@ -4,7 +4,7 @@
     <parent>
         <artifactId>plugins</artifactId>
         <groupId>org.aperteworkflow</groupId>
-        <version>3.1</version>
+        <version>3.2-SNAPSHOT</version>
     </parent>
 
     <artifactId>base-widgets</artifactId>
@@ -15,24 +15,24 @@
         <dependency>
             <groupId>org.aperteworkflow</groupId>
             <artifactId>integration-interface</artifactId>
-            <version>3.1</version>
+            <version>3.2-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.aperteworkflow</groupId>
             <artifactId>gui-commons</artifactId>
-            <version>3.1</version>
+            <version>3.2-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.aperteworkflow</groupId>
             <artifactId>xml-utils</artifactId>
-            <version>3.1</version>
+            <version>3.2-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.aperteworkflow</groupId>
             <artifactId>scripting</artifactId>
-            <version>3.1</version>
+            <version>3.2-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
 		<dependency>
@@ -131,6 +131,7 @@
                             pl.net.bluesoft.rnd.processtool.ui.basewidgets.VerticalLayoutWidget,
                             pl.net.bluesoft.rnd.processtool.ui.basewidgets.SwitchWidget,
 							pl.net.bluesoft.rnd.processtool.ui.basewidgets.ProcessDataBlockWidget,
+                            pl.net.bluesoft.rnd.processtool.ui.basewidgets.HorizontalLayoutWidget
                         </ProcessTool-Widget-Enhancement>
 						<!-- pl.net.bluesoft.rnd.processtool.ui.basewidgets.ProcessDataBlockWidget, -->
                         <ProcessTool-Button-Enhancement>
